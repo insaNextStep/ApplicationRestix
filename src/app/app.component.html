@@ -1,12 +1,12 @@
 <header >
 
 <!-- Menu de navigation du site -->
-<ul id="navigation" class="navbar">
-    <li><a href="index.html">Home page</a>
-    <li><a href="reflexions.html">Réflexions</a>
-    <li><a href="ville.html">Ma ville</a>
-    <li><a href="liens.html">Liens</a>
-  </ul>    
+<ul id="nav"><!--
+--><li><a href="#">Accueil</a></li><!--
+--><li><a href="#">Services</a></li><!--
+--><li><a href="#">À propos</a></li><!--
+--><li><a href="#">Contact</a></li>
+</ul>
 </header>
 
 <div class="container" style="margin: 10px;">
@@ -23,8 +23,8 @@
           <li [ngClass]="{'list-group-item': true}">
           <h4 >numéro de transaction -- montant en €</h4>
           </li>
-          <app-transaction *ngFor="let transaction of transactions" 
-                            [transNumero]="transaction.name" 
+          <app-transaction *ngFor="let transaction of transactions"
+                            [transNumero]="transaction.name"
                             [transMontant]="transaction.value" ></app-transaction>
           <div>total : {{totalTrans()}}</div>
           <!--bien penser à mettre entre "" les éléments à récupérer ex "transaction.name"-->
@@ -32,9 +32,10 @@
         <!-- disable permet de desactivé le bouton
         pour associé disable à typeScript [] à la variable isAuth
         =>état associé à une varibale -->
-        <button class="btn btn-success" 
+        <button class="btn btn-success"
                 [disabled]="!isAuth"
-                (click)="onAllumer()">Tout allumer</button>
+                (click)="ajouter(montantAjouter)">+ {{montantAjouter}}</button>
+        <input type="text" class="form-control" [(ngModel)]="montantAjouter">
       </div>
     </div>
   </div>

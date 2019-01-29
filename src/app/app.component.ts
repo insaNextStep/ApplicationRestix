@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /*
 selector  : il s'agit du nom qu'on utilisera comme balise
@@ -16,14 +16,16 @@ styleUrls  : un array contenant un ou plusieurs chemins vers les feuilles de sty
 })
 // exportation des élements
 export class AppComponent {
+  @Input() montantAjouter = 0;
   constructor() {
     // méthode constuction d'un timer
     setTimeout(() => {
       this.isAuth = true;
     }, this.msTemps);
   }
+
   isAuth = false; // autentification par défaut
-  totalTransaction: Number = 0;
+  totalTransaction = 0;
   // tableau de valeur pouvant provenir de l'extérieur
   transactions = [
     {
@@ -42,7 +44,7 @@ export class AppComponent {
 
   msTemps = 4000; // timer pour activer bouton
 
-  // Sommes des transactions
+  // Sommes des transactionss
   totalTrans() {
     let newLocal = 0;
     for (let i = 0; i < this.transactions.length; i++) {
@@ -52,7 +54,10 @@ export class AppComponent {
     return this.totalTransaction;
   }
 
-  onAllumer() {
-    console.log('On allume tout !');
+  ajouter(newLocal) {
+    for (let i = 0; i < this.transactions.length; i++) {
+      this.transactions[i].value = Number(newLocal) + this.transactions[i].value;
+      console.log(this.transactions[i].value + ' --- ' + newLocal);
+    }
   }
 }
