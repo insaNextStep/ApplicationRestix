@@ -1,0 +1,38 @@
+<div class="table-responsive">
+  <table mat-table [dataSource]="listeCompanies" class="mat-elevation-z8">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="employees">
+      <th mat-header-cell *matHeaderCellDef> Nb employés </th>
+      <td mat-cell *matCellDef="let element"> {{element.employees.length}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="creditCards">
+      <th mat-header-cell *matHeaderCellDef> Nb cartes reçue </th>
+      <td mat-cell *matCellDef="let element"> {{element.creditCards.length}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+  </table>
+</div>
+<!--tr mat-header-row *matHeaderRowDef="displayColumns"></tr-->

@@ -1,0 +1,53 @@
+import { Employe } from '../models/Employe.model';
+import { Subject } from 'rxjs/Subject';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeService {
+
+  constructor(private http: HttpClient) { }
+
+  uri = 'http://localhost:3000';
+  private listeEmployes: Employe[] = [];
+  employeSubject = new Subject<Employe[]>();
+
+  // Permet de créer une copie de l'array employes
+  emitEmployes() {
+    this.employeSubject.next(this.listeEmployes.slice());
+  }
+
+  addEmploye(newEmploye: Employe) {
+    this.listeEmployes.push(newEmploye);
+    this.emitEmployes();
+  }
+
+  getListEmployes() {
+    // implémentation de la route (repris de node js dans l'onglet route)
+    // pour imposer la récupération de l'objet res, il faut casté le get avec 
+    // <any[]>
+    return this.http.get<any[]>(this.uri + '/employees/')
+      .subscribe(
+        (res) => {
+          this.listeEmployes = res;
+        },
+        (err) => {
+          console.log('Erreur : ' + err);
+        }); // .pipe(map(res => res));
+  }
+
+  saveEmploye(newEmploye: Employe) {
+    // implémentation de la route (repris de node js dans l'onglet route)
+    return this.http.post(this.uri + '/employees/', newEmploye)
+      .subscribe(
+        () => {
+          console.log('Récupération des données OK');
+        },
+        (err) => {
+          console.log('Erreur : ' + err);
+        }
+      ); // .pipe(map(res => res));
+  }
+}

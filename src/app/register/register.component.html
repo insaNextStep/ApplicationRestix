@@ -1,0 +1,25 @@
+<div class="container">
+
+<form (ngSubmit)="userRegister(form)" #form="ngForm" autocomplete="off">
+  <div class="form-group">
+    <label for="name">Nom :</label>
+    <input type="texg" class="form-control" id="name" name="name" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="phone">Tel :</label>
+    <input type="number" class="form-control" id="phone" name="phone" ngModel>
+  </div>
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="email" name="email" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="company">Entreprise :</label>
+    <input type="email" class="form-control" id="company" name="company" ngModel required>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Remember me</label>
+  </div>
+  <button type="submit" class="btn btn-default" [disabled]="f.invalid">Submit</button>
+</form>
+</div>

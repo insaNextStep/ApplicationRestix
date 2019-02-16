@@ -1,41 +1,6 @@
-<header >
-
-<!-- Menu de navigation du site -->
-<ul id="nav"><!--
---><li><a href="#">Accueil</a></li><!--
---><li><a href="#">Services</a></li><!--
---><li><a href="#">À propos</a></li><!--
---><li><a href="#">Contact</a></li>
-</ul>
-</header>
-
-<div class="container" style="margin: 10px;">
-    <div class="row">
-      <div class="col-sx-12">
-        <h2>Mes transactions</h2>
-        <ul class="list-group">
-          <!--apres avoir mis transNumero en paramètre, nous l'avons transformé
-          en binding si la valeur est un string il faut l'écrire "'text'"
-          <app-transaction [transNumero]="transOne" [transMontant]="10"></app-transaction>
-          <app-transaction [transNumero]="transTwo" [transMontant]="-10"></app-transaction>
-          <app-transaction [transNumero]="transThree" [transMontant]="10"></app-transaction>-->
-          <!-- modification sour forme de fonction de boucle for-->
-          <li [ngClass]="{'list-group-item': true}">
-          <h4 >numéro de transaction -- montant en €</h4>
-          </li>
-          <app-transaction *ngFor="let transaction of transactions"
-                            [transNumero]="transaction.name"
-                            [transMontant]="transaction.value" ></app-transaction>
-          <div>total : {{totalTrans()}}</div>
-          <!--bien penser à mettre entre "" les éléments à récupérer ex "transaction.name"-->
-        </ul>
-        <!-- disable permet de desactivé le bouton
-        pour associé disable à typeScript [] à la variable isAuth
-        =>état associé à une varibale -->
-        <button class="btn btn-success"
-                [disabled]="!isAuth"
-                (click)="ajouter(montantAjouter)">+ {{montantAjouter}}</button>
-        <input type="text" class="form-control" [(ngModel)]="montantAjouter">
-      </div>
-    </div>
+<div class="container">
+  <app-barre-menu></app-barre-menu>
+  <div class="container">
+    <router-outlet></router-outlet>
   </div>
+</div>
