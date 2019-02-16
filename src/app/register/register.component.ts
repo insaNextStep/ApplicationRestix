@@ -11,13 +11,14 @@ import { EmployeeService } from '../services/liste-employee.service';
   providers: [EmployeeService]
 })
 export class RegisterComponent implements OnInit {
-
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {}
 
   newEmployee: Employe;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   userRegister(form: NgForm) {
     this.newEmployee = form.value;
@@ -27,25 +28,25 @@ export class RegisterComponent implements OnInit {
   ajouterEmploye(newEmploye: Employe) {
     this.employeeService.addNewEmployee(newEmploye).subscribe(unEmploye => {
       this.newEmployee = unEmploye as Employe;
-      this.router.navigate(['/list-employees']);
+      this.router.navigate(['list-employees']);
     });
   }
 
-  openCity(evt, cityName) {
-    let i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName('tabcontent');
-    
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = 'none';
-    }
-    
-    tablinks = document.getElementsByClassName('tablinks');
-    
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(' active', '');
-    }
-    
-    document.getElementById(cityName).style.display = 'block';
-    evt.currentTarget.className += ' active';
-  }
+  // openCity(evt, cityName) {
+  //   let i, tabcontent, tablinks;
+  //   tabcontent = document.getElementsByClassName('tabcontent');
+
+  //   for (i = 0; i < tabcontent.length; i++) {
+  //     tabcontent[i].style.display = 'none';
+  //   }
+
+  //   tablinks = document.getElementsByClassName('tablinks');
+
+  //   for (i = 0; i < tablinks.length; i++) {
+  //     tablinks[i].className = tablinks[i].className.replace(' active', '');
+  //   }
+
+  //   document.getElementById(cityName).style.display = 'block';
+  //   evt.currentTarget.className += ' active';
+  // }
 }

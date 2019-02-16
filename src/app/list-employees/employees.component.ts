@@ -5,8 +5,7 @@ import { employee } from '../schemas/schemaEmployee';
 import { EmployeeService } from '../services/liste-employee.service';
 
 
-import { Router } from '@angular/router';
-import { ConsoleReporter } from 'jasmine';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -20,7 +19,7 @@ export class EmployeesComponent implements OnInit {
   listeEmployees: employee[];
   displayColumns = ['id', 'name', 'phone', 'email', 'edit', 'supprimer'];
 
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(private employeeService: EmployeeService, private router: Router, private route: ActivatedRoute) { }
 
   getEmployes() {
     // initialisation de la méthode pour récupérer les employés
@@ -32,18 +31,27 @@ export class EmployeesComponent implements OnInit {
   ajouterEmployer() {
     this.router.navigate(['/register']);
   }
+
   actionEmploye(event: string, id: string) {
     if (event === 'éditer') {
       console.log('Editer : ' + id);
     } else {
       this.employeeService.deleteEmployee(id).subscribe(() => {
-        console.log('Id ' + id + 'supprimer');
-        this.router.navigate(['/list-employees']);
+        this.goPlaces();
       });
     }
   }
 
+  goPlaces() {
+    this.router.navigate(['list-employees']).then(nav => {
+      console.log(nav); // true if navigation is successful
+    }, err => {
+        console.log(err); // when there's an error
+    });
+  }
+
   ngOnInit() {
-    this.getEmployes();
+    this.route.data.subscribe((data: { employee: employee }) => {
+      this.listeEmployees = data.employee as any; });
   }
 }
