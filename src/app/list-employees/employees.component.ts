@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 // ajout du modèle de la base de données à utilisé pour la liste des employés
-import { employee } from '../schemas/schemaEmployee';
+import { IEmployee } from '../schemas/schemaEmployee';
 // importation du service de gestion des employés
 import { EmployeeService } from '../services/liste-employee.service';
 
@@ -16,20 +16,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class EmployeesComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
-  listeEmployees: employee[];
+  listeEmployees: IEmployee[];
   displayColumns = ['id', 'name', 'phone', 'email', 'edit', 'supprimer'];
 
   constructor(private employeeService: EmployeeService, private router: Router, private route: ActivatedRoute) { }
 
   getEmployes() {
     // initialisation de la méthode pour récupérer les employés
-    this.employeeService.getListEmployees().subscribe(employees => {
-      this.listeEmployees = employees as Array<employee>;
-    });
+    this.employeeService.getListEmployees()
+      .subscribe(data => this.listeEmployees = data);
   }
 
   ajouterEmployer() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['register']);
   }
 
   actionEmploye(event: string, id: string) {
@@ -37,10 +36,11 @@ export class EmployeesComponent implements OnInit {
       console.log('Editer : ' + id);
     } else {
       this.employeeService.deleteEmployee(id).subscribe(() => {
-        this.goPlaces();
+        this.getEmployes();
       });
     }
   }
+
 
   goPlaces() {
     this.router.navigate(['list-employees']).then(nav => {
@@ -51,7 +51,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe((data: { employee: employee }) => {
-      this.listeEmployees = data.employee as any; });
+    this.getEmployes();
   }
 }

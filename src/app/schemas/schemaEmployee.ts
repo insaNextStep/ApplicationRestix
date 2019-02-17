@@ -1,6 +1,6 @@
 
 // tslint:disable-next-line:class-name / initialement c'était class au lieu de interface
-export interface employee {
+export interface IEmployee {
   _id: string;
   name: string;
   phone: string;
