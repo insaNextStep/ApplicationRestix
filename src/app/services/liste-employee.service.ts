@@ -9,8 +9,9 @@ import {
   HttpHandler,
   HttpRequest
 } from '@angular/common/http';
-import { employee } from '../schemas/schemaEmployee';
+import { IEmployee } from '../schemas/schemaEmployee';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 // import { HttpClient } from '@angular/common/http';
 // ajout de l'opérateur 'map'
 
@@ -20,7 +21,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EmployeeService {
-  uri = 'http://localhost:3000/employees';
+  private uri = 'http://localhost:3000/employees';
   // création d'un instance avec http
   constructor(private http: HttpClient) {}
 
@@ -31,29 +32,28 @@ export class EmployeeService {
   // const headers = new Headers({'Content-Type': 'application/json'});
   // const options = new RequestOptions({ headers: headers });
 
-  getListEmployees() {
+  getListEmployees(): Observable<IEmployee[]> {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this.http.get(this.uri + '/'); // .pipe(map(res => res));
+    return this.http.get<IEmployee[]>(this.uri + '/'); // .pipe(map(res => res));
   }
 
-  getEmployee(id) {
+  getEmployee(id): Observable<IEmployee[]> {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this.http.get(this.uri + '/' + id); // .pipe(map(res => res));
+    return this.http.get<IEmployee[]>(this.uri + '/' + id); // .pipe(map(res => res));
   }
 
   addNewEmployee(newEmployee) {
     // implémentation de la route (repris de node js dans l'onglet route)
     const headers = new HttpHeaders();
     headers.append('Content-type', 'application/json');
-    return this.http.post(this.uri + '/add/', newEmployee); // , { headers: this.headers })
-    // .pipe(map(res => res));
+    return this.http.post(this.uri + '/add/', newEmployee); // , { headers: this.headers }).pipe(map(res => res));
   }
 
   deleteEmployee(id: string) {
-    return this.http.get(this.uri + '/delete/' + id);
+    return this.http.get(this.uri + '/delete/' + id).pipe(map(res => res));
   }
 
   editEmployee(id: string) {
-    return this.http.get(this.uri + '/edit/' + id);
+    return this.http.get(this.uri + '/edit/' + id).pipe(map(res => res));
   }
 }

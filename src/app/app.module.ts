@@ -40,14 +40,10 @@ import { ChopService } from './services/liste-chop.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { EmployeResolver } from './resolvers/employe.resolver';
 
 // déclaration des routes:
 const appRoutes: Routes = [
-  {
-    path: 'list-employees', component: EmployeesComponent, resolve: {
-      employe: EmployeResolver
-  } },
+  { path: 'list-employees', component: EmployeesComponent },
   { path: 'list-cards', component: CardsComponent },
   { path: 'list-companies', component: CompaniesComponent },
   { path: 'list-chops', component: ChopsComponent },
