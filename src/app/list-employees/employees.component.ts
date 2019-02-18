@@ -6,7 +6,6 @@ import { EmployeeService } from '../services/liste-employee.service';
 
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 
 @Component({

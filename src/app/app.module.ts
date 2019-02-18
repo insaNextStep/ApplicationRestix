@@ -30,6 +30,9 @@ import { CardsComponent } from './list-cards/cards.component';
 import { ChopsComponent } from './list-chops/chops.component';
 import { CompaniesComponent } from './list-companies/companies.component';
 import { TransactionsComponent } from './list-transactions/transactions.component';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 // service créer
 import { EmployeeService } from './services/liste-employee.service';
@@ -37,9 +40,7 @@ import { CardService } from './services/liste-card.service';
 import { CompanyService } from './services/liste-company.service';
 import { TransactionService } from './services/liste-transaction.service';
 import { ChopService } from './services/liste-chop.service';
-import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 // déclaration des routes:
 const appRoutes: Routes = [
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
   { path: 'list-transactions', component: TransactionsComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
   { path: '',   redirectTo: '/', pathMatch: 'full' },
 ];
 
@@ -82,7 +84,7 @@ const appRoutes: Routes = [
     NgxMaskModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
-  providers: [EmployeeService, CardService, CompanyService, ChopService, TransactionService],
+  providers: [AuthService, EmployeeService, CardService, CompanyService, ChopService, TransactionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

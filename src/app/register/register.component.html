@@ -1,9 +1,9 @@
 <div class="container">
 
-<form (ngSubmit)="userRegister(form)" #form="ngForm" autocomplete="off">
+<form (ngSubmit)="donneesFormulaire(form)" #form="ngForm" autocomplete="off">
   <div class="form-group">
     <label for="name">Nom :</label>
-    <input type="texg" class="form-control" id="name" name="name" ngModel required>
+    <input type="text" class="form-control" id="name" name="name" ngModel required>
   </div>
   <div class="form-group">
     <label for="phone">Tel :</label>
@@ -15,11 +15,11 @@
   </div>
   <div class="form-group">
     <label for="company">Entreprise :</label>
-    <input type="email" class="form-control" id="company" name="company" ngModel required>
+    <input type="text" class="form-control" id="company" name="company" ngModel required>
   </div>
   <div class="checkbox">
     <label><input type="checkbox"> Remember me</label>
   </div>
-  <button type="submit" class="btn btn-default" [disabled]="f.invalid">Submit</button>
+  <button type="submit" class="btn btn-default" [disabled]="form.invalid">Submit</button>
 </form>
 </div>

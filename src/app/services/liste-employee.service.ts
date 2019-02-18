@@ -18,13 +18,6 @@ export class EmployeeService {
   // création d'un instance avec http
   constructor(private http: HttpClient) {}
 
-  // private handleError(error: any): Promise<any> {
-  //   console.error('Une erreur est survenue : ', error);
-  //   return Promise.reject(error.message || error);
-  // }
-  // const headers = new Headers({'Content-Type': 'application/json'});
-  // const options = new RequestOptions({ headers: headers });
-
   getListEmployees(): Observable<IEmployee[]> {
     // implémentation de la route (repris de node js dans l'onglet route)
     return this.http.get<IEmployee[]>(this.uri + '/'); // .pipe(map(res => res));

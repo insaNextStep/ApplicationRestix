@@ -1,35 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { Employe } from '../models/Employe.model';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../services/liste-employee.service';
+import { AuthService } from '../services/auth.service';
+import { IEmployee } from '../schemas/schemaEmployee';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [EmployeeService]
+  providers: [EmployeeService, AuthService]
 })
 export class RegisterComponent implements OnInit {
   constructor(
-    private employeeService: EmployeeService,
+    private _employee: EmployeeService,
     private router: Router
   ) {}
 
-  newEmployee: Employe;
+  newEmployee: IEmployee;
 
   ngOnInit() {}
 
-  userRegister(form: NgForm) {
+  donneesFormulaire(form: NgForm) {
     this.newEmployee = form.value;
     this.ajouterEmploye(this.newEmployee);
   }
 
-  ajouterEmploye(newEmploye: Employe) {
-    this.employeeService.addNewEmployee(newEmploye).subscribe(unEmploye => {
-      this.newEmployee = unEmploye as Employe;
-      this.router.navigate(['list-employees']);
-    });
+  ajouterEmploye(newEmploye: IEmployee) {
+    this._employee.addNewEmployee(newEmploye).subscribe(
+      res => {
+        this.router.navigate(['list-employees']);
+        console.log(res);
+      },
+      err => console.log(err)
+    );
   }
 
   // openCity(evt, cityName) {

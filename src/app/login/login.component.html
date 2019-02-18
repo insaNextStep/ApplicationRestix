@@ -1,17 +1,17 @@
 <div class="container">
 
-  <form action="/action_page.php">
+  <form class="form" autocomplete="off">
     <div class="form-group">
       <label for="email">Email address:</label>
-      <input type="email" class="form-control" id="email">
+      <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" name="email">
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd">
+      <input [(ngModel)]="compteUtilisateur.password" type="password" class="form-control" name="password">
     </div>
     <div class="checkbox">
       <label><input type="checkbox"> Remember me</label>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button (click)="donneesFormulaire()"  class="btn btn-default">Submit</button>
   </form>
 </div>
