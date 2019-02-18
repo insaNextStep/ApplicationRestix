@@ -6,6 +6,7 @@ import { EmployeeService } from '../services/liste-employee.service';
 
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -17,11 +18,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class EmployeesComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
   listeEmployees: IEmployee[];
-  displayColumns = ['id', 'name', 'phone', 'email', 'edit', 'supprimer'];
+  displayColumns = ['id', 'name', 'phone', 'email', 'company', 'edit', 'supprimer'];
 
   constructor(private employeeService: EmployeeService, private router: Router, private route: ActivatedRoute) { }
 
-  getEmployes() {
+  afficherListeEmployes() {
     // initialisation de la méthode pour récupérer les employés
     this.employeeService.getListEmployees()
       .subscribe(data => this.listeEmployees = data);
@@ -35,22 +36,13 @@ export class EmployeesComponent implements OnInit {
     if (event === 'éditer') {
       console.log('Editer : ' + id);
     } else {
-      this.employeeService.deleteEmployee(id).subscribe(() => {
-        this.getEmployes();
+      this.employeeService.DissocierEmployee(id).subscribe(() => {
+        this.afficherListeEmployes();
       });
     }
   }
 
-
-  goPlaces() {
-    this.router.navigate(['list-employees']).then(nav => {
-      console.log(nav); // true if navigation is successful
-    }, err => {
-        console.log(err); // when there's an error
-    });
-  }
-
   ngOnInit() {
-    this.getEmployes();
+    this.afficherListeEmployes();
   }
 }

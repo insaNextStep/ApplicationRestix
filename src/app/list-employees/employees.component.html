@@ -30,6 +30,12 @@
   </ng-container>
 
     <!-- Symbol Column -->
+  <ng-container matColumnDef="company">
+    <th mat-header-cell *matHeaderCellDef> Entreprise </th>
+    <td mat-cell *matCellDef="let element"> {{(element.company && element.company.name?element.company.name:'Dissocier')}} </td>
+  </ng-container>
+
+    <!-- Symbol Column -->
     <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef id="finTab"> edit </th>
         <td mat-cell *matCellDef="let element" id="finTab"> <span class="btn btn-primary" (click)="actionEmploye('éditer', element._id)">Editer</span> </td>

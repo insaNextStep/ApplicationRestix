@@ -3,19 +3,12 @@ import { Injectable } from '@angular/core';
 // import { Http, Response, Headers } from '@angular/http';
 import {
   HttpClient,
-  HttpHeaders,
-  HttpEvent,
-  HttpInterceptor,
-  HttpHandler,
-  HttpRequest
+  HttpHeaders
 } from '@angular/common/http';
+
 import { IEmployee } from '../schemas/schemaEmployee';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-// import { HttpClient } from '@angular/common/http';
-// ajout de l'opérateur 'map'
-
-// import { headersToString } from 'selenium-webdriver/http';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +43,11 @@ export class EmployeeService {
   }
 
   deleteEmployee(id: string) {
-    return this.http.get(this.uri + '/delete/' + id).pipe(map(res => res));
+    return this.http.get(this.uri + '/delete/' + id); // .pipe(map(res => res));
+  }
+
+  DissocierEmployee(id: string): Observable<IEmployee[]> {
+    return this.http.get<IEmployee[]>(this.uri + '/dissocierEmploye/' + id); // .pipe(map(res => res));
   }
 
   editEmployee(id: string) {
