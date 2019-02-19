@@ -29,8 +29,9 @@ export class RegisterComponent implements OnInit {
   ajouterEmploye(newEmploye: IEmployee) {
     this._employee.addNewEmployee(newEmploye).subscribe(
       res => {
-        this.router.navigate(['list-employees']);
         console.log(res);
+        // localStorage.setItem('token', res.token);
+        this.router.navigate(['list-employees']);
       },
       err => console.log(err)
     );

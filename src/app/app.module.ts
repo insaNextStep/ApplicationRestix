@@ -8,7 +8,7 @@ import {
   MatInputModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { TransactionComponent } from './transaction/transaction.component';
@@ -33,6 +33,7 @@ import { TransactionsComponent } from './list-transactions/transactions.componen
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { EmployeViewComponent } from './employe-view/employe-view.component';
 
 // service créer
 import { EmployeeService } from './services/liste-employee.service';
@@ -41,10 +42,21 @@ import { CompanyService } from './services/liste-company.service';
 import { TransactionService } from './services/liste-transaction.service';
 import { ChopService } from './services/liste-chop.service';
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 // déclaration des routes:
 const appRoutes: Routes = [
-  { path: 'list-employees', component: EmployeesComponent },
+  {
+    path: 'employeView',
+    component: EmployeViewComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'list-employees',
+    component: EmployeesComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'list-cards', component: CardsComponent },
   { path: 'list-companies', component: CompaniesComponent },
   { path: 'list-chops', component: ChopsComponent },
@@ -52,7 +64,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: '',   redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -67,7 +79,8 @@ const appRoutes: Routes = [
     CompaniesComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    EmployeViewComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +97,21 @@ const appRoutes: Routes = [
     NgxMaskModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
-  providers: [AuthService, EmployeeService, CardService, CompanyService, ChopService, TransactionService],
+  providers: [
+    TokenInterceptorService,
+    AuthService,
+    AuthGuard,
+    EmployeeService,
+    CardService,
+    CompanyService,
+    ChopService,
+    TransactionService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

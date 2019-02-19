@@ -20,4 +20,16 @@ export class AuthService {
     return this.http.post<any>(this._loginUrl, employe);
   }
 
+  loggin() {
+    // !! permet de convertir un retour en boolean au lieu de sa valeur physique
+    const localBoolean = !!localStorage.getItem('token');
+    console.log('valeur de localBoolean : ' + localBoolean);
+    return localBoolean;
+  }
+
+  getToken() {
+    const tokenData = localStorage.getItem('token');
+    return tokenData;
+  }
+
 }

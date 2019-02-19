@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +9,21 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   compteUtilisateur = {};
-  constructor(private _auth: AuthService) {}
+  constructor(private _auth: AuthService, private _route: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   donneesFormulaire() {
     this._auth
       .LoginEmployee(this.compteUtilisateur)
-      .subscribe(res => console.log(res), err => console.log(err));
+      .subscribe(
+        res => {
+          console.log(res);
+          // enregistrement local du token
+          localStorage.setItem('token', res.token);
+          this._route.navigate(['/employeView']);
+        },
+        err => console.log(err));
   }
 
 }

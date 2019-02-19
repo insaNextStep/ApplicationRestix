@@ -1,3 +1,26 @@
-<p>
-  edit-employe works!
-</p>
+<div class="container">
+
+  <form (ngSubmit)="donneesFormulaire(form)" #form="ngForm" autocomplete="off">
+    <div class="form-group">
+      <label for="name">Nom :</label>
+      <input [(ngModel)]="compteUtilisateur.name" type="text" class="form-control" name="name" ngModel required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Tel :</label>
+      <input [(ngModel)]="compteUtilisateur.phone" type="number" class="form-control" id="phone" name="phone" ngModel>
+    </div>
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" id="email" name="email" ngModel required>
+    </div>
+    <div class="form-group">
+      <label for="company">Entreprise :</label>
+      <input type="text" class="form-control" id="company" name="company" ngModel required>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-default" [disabled]="form.invalid">Submit</button>
+  </form>
+  </div>
+  
