@@ -4,9 +4,8 @@ import { IEmployee } from '../schemas/schemaEmployee';
 // importation du service de gestion des employés
 import { EmployeeService } from '../services/liste-employee.service';
 
-
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { HttpHeaderResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-liste-employees',
@@ -17,18 +16,38 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class EmployeesComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
   listeEmployees: IEmployee[];
-  displayColumns = ['id', 'name', 'phone', 'email', 'company', 'edit', 'supprimer'];
+  displayColumns = [
+    'id',
+    'name',
+    'phone',
+    'email',
+    'company',
+    'edit',
+    'supprimer'
+  ];
 
-  constructor(private employeeService: EmployeeService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private _router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   afficherListeEmployes() {
     // initialisation de la méthode pour récupérer les employés
-    this.employeeService.getListEmployees()
-      .subscribe(data => this.listeEmployees = data);
+    this.employeeService.getListEmployees().subscribe(
+      res => (this.listeEmployees = res),
+      err => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            this._router.navigate(['login']);
+          }
+        }
+      }
+    );
   }
 
   ajouterEmployer() {
-    this.router.navigate(['register']);
+    this._router.navigate(['register']);
   }
 
   actionEmploye(event: string, id: string) {
