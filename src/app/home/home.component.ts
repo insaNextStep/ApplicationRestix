@@ -1,17 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import { first } from 'rxjs/operators';
+import { IEmployee } from '../_models/employee.interface';
+import { EmployeeService } from '../_services/employee.service';
+import { AuthService } from '../_services/auth.service';
 
-@Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
-})
+@Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit {
+    currentEmploye: IEmployee;
+    employeFromApi: IEmployee[];
 
-  constructor(private router: Router) { }
+    constructor(
+        private _employeeService: EmployeeService,
+        private _authService: AuthService
+    ) {
+        // this.currentEmploye = this._authService.currentEmployeValue;
+    }
 
-  ngOnInit() {
-
-  }
-
+    ngOnInit() {
+        this._employeeService.getEmployee(this.currentEmploye._id).pipe(first()).subscribe(employe => {
+            this.employeFromApi = employe;
+        });
+    }
 }

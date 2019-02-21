@@ -1,0 +1,6 @@
+export enum allowedRoles {
+  EMPLOYE = 'EMPLOYE',
+  ADMIN = 'ADMIN',
+  ENTREPRISE = 'ENTREPRISE',
+  COMMERCANT = 'COMMERCANT'
+}

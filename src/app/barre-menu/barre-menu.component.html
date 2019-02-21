@@ -7,21 +7,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
 
       <ul class="nav navbar-nav">
-        <li><a routerLink="list-employees" routerLinkActive="active">
+        <li><a class="nav-link" routerLink="employees" routerLinkActive="active">
             Employés</a></li>
-        <li><a class="nav-link" routerLink="list-companies" routerLinkActive="active">
+        <li><a class="nav-link" routerLink="companies" routerLinkActive="active">
             Companies</a></li>
-        <li><a class="nav-link" routerLink="list-transaction" routerLinkActive="active">
+        <li><a class="nav-link" routerLink="transaction" routerLinkActive="active">
             Transactions</a></li>
-        <li><a routerLink="list-chop" routerLinkActive="active">
+        <li><a class="nav-link" routerLink="chop" routerLinkActive="active">
             Commerçant</a></li>
       </ul>
 
       <ul class="nav navbar-nav droit">
-        <li><a class="nav-link" routerLink="login" routerLinkActive="active">
-          Connexion</a></li>
+        <li><a *ngIf="!_authService.loggedIn()" class="nav-link" routerLink="login" routerLinkActive="active">
+            Connexion</a></li>
+        <li><a *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">
+          Deconnexion</a></li>
         <li><a class="nav-link" routerLink="home" routerLinkActive="active">
-          Home</a></li>
+            Home</a></li>
       </ul>
 
     </div>

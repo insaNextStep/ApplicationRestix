@@ -12,6 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { TransactionComponent } from './transaction/transaction.component';
+import { JwtModule } from '@auth0/angular-jwt';
 import { NgxMaskModule } from 'ngx-mask';
 /*
 Pour pouvoir utiliser le two-way binding,
@@ -25,25 +26,36 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // component créer
 import { AppComponent } from './app.component';
-import { EmployeesComponent } from './list-employees/employees.component';
-import { CardsComponent } from './list-cards/cards.component';
-import { ChopsComponent } from './list-chops/chops.component';
-import { CompaniesComponent } from './list-companies/companies.component';
-import { TransactionsComponent } from './list-transactions/transactions.component';
+import { EmployeesComponent } from './companies/list-employees/employees.component';
+import { CardsComponent } from './admin/cards/cards.component';
+import { ChopsComponent } from './chops/chops.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { EmployeViewComponent } from './employe-view/employe-view.component';
+import { RegisterComponent } from './companies/add-employe/register.component';
+import { LoginComponent } from './Authentification/login/login.component';
+import { EmployeViewComponent } from './employees/employe-view/employe-view.component';
 
 // service créer
-import { EmployeeService } from './services/liste-employee.service';
-import { CardService } from './services/liste-card.service';
-import { CompanyService } from './services/liste-company.service';
-import { TransactionService } from './services/liste-transaction.service';
-import { ChopService } from './services/liste-chop.service';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './auth.guard';
-import { TokenInterceptorService } from './token-interceptor.service';
+import { EmployeeService } from './_services/employee.service';
+import { CardService } from './_services/card.service';
+import { CompanyService } from './_services/company.service';
+import { TransactionService } from './_services/transaction.service';
+import { ChopService } from './_services/chop.service';
+import { AuthService } from './_services/auth.service';
+
+// interceptor
+// import { TokenInterceptor } from './_helpers/token.interceptor';
+import { AdminComponent } from './admin/admin.component';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
+import { AuthGuard } from './_guards/auth.guard';
+// import { CanActivate } from '@angular/router/src/utils/preactivation';
+
+export function getToken() {
+  return localStorage.getItem('token');
+}
 
 // déclaration des routes:
 const appRoutes: Routes = [
@@ -53,17 +65,24 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'list-employees',
+    path: 'employees',
     component: EmployeesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {allowedRoles: 'EMPLOYE'}
   },
-  { path: 'list-cards', component: CardsComponent },
-  { path: 'list-companies', component: CompaniesComponent },
-  { path: 'list-chops', component: ChopsComponent },
-  { path: 'list-transactions', component: TransactionsComponent },
+  { path: 'cards', component: CardsComponent },
+  {
+    path: 'companies',
+    component: CompaniesComponent,
+    canActivate: [AuthGuard],
+    data: {allowedRoles: 'ENTREPRISE'}
+  },
+  { path: 'chops', component: ChopsComponent },
+  { path: 'transactions', component: TransactionsComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'accessdenied', component: AccessdeniedComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' }
 ];
 
@@ -80,7 +99,9 @@ const appRoutes: Routes = [
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    EmployeViewComponent
+    EmployeViewComponent,
+    AdminComponent,
+    AccessdeniedComponent
   ],
   imports: [
     BrowserModule,
@@ -95,10 +116,16 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     NgxMaskModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true })
+    RouterModule.forRoot(appRoutes),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getToken,
+        whitelistedDomains: ['localhost:3000']
+      }
+    })
   ],
   providers: [
-    TokenInterceptorService,
+    // TokenInterceptor,
     AuthService,
     AuthGuard,
     EmployeeService,
@@ -106,11 +133,13 @@ const appRoutes: Routes = [
     CompanyService,
     ChopService,
     TransactionService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorService,
-      multi: true
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true
+    // },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,57 @@
+<div class="container">
+
+<form (ngSubmit)="donneesFormulaire(form)" #form="ngForm" >
+  <div class="form-group">
+    <label for="firstname">Prénom :</label>
+    <input type="text" class="form-control" id="firstname" name="firstname" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="lastname">NOM :</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="phone">Téléphone :</label>
+    <input type="number" class="form-control" id="phone" name="phone" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="email">email :</label>
+    <input type="email" class="form-control" id="email" name="email" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="numberStreet">Numéro Rue</label>
+    <input type="number" class="form-control" id="numberStreet" name="numberStreet" ngModel>
+  </div>
+  <div class="form-group">
+    <label for="typeStreet">Type de rue</label>
+    <input type="text" class="form-control" id="typeStreet" name="typeStreet" ngModel required>
+  </div>
+  <div class="form-group">
+    <label for="street">Nom Rue</label>
+    <input type="text" class="form-control" id="street" name="street" ngModel required>
+  </div>
+
+  <div class="form-group">
+    <label for="codePostal">Code postal</label>
+    <input type="number" class="form-control" id="codePostal" name="codePostal" ngModel>
+  </div>
+  <div class="form-group">
+    <label for="city">Commune:</label>
+    <input type="text" class="form-control" id="city" name="city" ngModel required>
+  </div>
+
+  <div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" class="form-control" id="password" name="password" ngModel required>
+    </div>
+    <div class="form-group">
+      <label for="passwordConf">Confirmation mot de passe</label>
+      <input type="password" class="form-control" id="passwordConf" name="passwordConf" ngModel required>
+    </div>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox"> Remember me</label>
+  </div>
+  <button type="submit" class="btn btn-default" >Submit</button>
+</form>
+</div>
