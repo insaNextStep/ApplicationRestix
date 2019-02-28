@@ -14,12 +14,12 @@ export class CompanyService {
 
   getListeCompanies() {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this.http.get(this.uri + '/companies/');
+    return this.http.get(this.uri + '/');
   }
 
   getCompany(id) {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this.http.get(`${this.uri}/companies/${id}`);
+    return this.http.get(`${this.uri}/${id}`);
   }
 
   getCompanyName(id) {

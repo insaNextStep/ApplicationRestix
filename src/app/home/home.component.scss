@@ -1,9 +1,19 @@
-.container{
-  float: left;
+.rectangle {
+	height:160px;
+	margin-bottom:40px;
+  display:table;
+  margin-right: 10px;
 }
-.block {
-  float:left;
-  background-color: aqua;
-	width:200px;
-	height:200px;
+
+
+.texte_encadre_noir {
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:16px;
+	color:#fff;
+	display:table-cell; 
+	vertical-align:middle; 
+	width:100%; 
+	margin:0 auto; 
+  text-align:center;
+  float: right;
 }

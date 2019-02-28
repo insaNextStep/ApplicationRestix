@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private uri = 'http://localhost:3000/list-employees';
+  private uri = 'http://localhost:3000/employees';
   // création d'un instance avec http
   constructor(private http: HttpClient) {}
 
@@ -43,7 +43,12 @@ export class EmployeeService {
     return this.http.get<IEmployee[]>(this.uri + '/dissocierEmploye/' + id); // .pipe(map(res => res));
   }
 
-  editEmployee(id: string) {
-    return this.http.get(this.uri + '/edit/' + id).pipe(map(res => res));
+  editEmployee(id: string): Observable<IEmployee[]> {
+    return this.http.get<IEmployee[]>(this.uri + '/edit/' + id).pipe(map(res => res));
   }
+
+  emailExist(email: string): Observable<IEmployee[]> {
+    return this.http.get<IEmployee[]>(this.uri + '/email/' + email).pipe(map(res => res));
+  }
+
 }

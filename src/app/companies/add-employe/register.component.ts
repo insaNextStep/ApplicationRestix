@@ -15,22 +15,23 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class RegisterComponent implements OnInit {
   constructor(
-    private _sEmployee: EmployeeService,
-    private _sCompany: CompanyService,
-    private router: Router,
+    private _employeeService: EmployeeService,
+    private _companyService: CompanyService,
+    private _router: Router,
     private _jwtHelperService: JwtHelperService,
     private _authService: AuthService
   ) {}
 
   private newEmployee: IEmployee;
   private actuelCompany: any;
+  private loginExist = false;
 
   ngOnInit() {
     // console.log(this._authService.currentEmployeValue);
     const token = this._authService.getToken();
     const decodeToken = this._jwtHelperService.decodeToken(token);
     // console.log('Companyid : ' + decodeToken.subject);
-    this._sCompany.getCompanyName(decodeToken.subject).subscribe(
+    this._companyService.getCompanyName(decodeToken.subject).subscribe(
       res => {
         this.actuelCompany = res;
         console.log(this.actuelCompany);
@@ -48,12 +49,20 @@ export class RegisterComponent implements OnInit {
 
   private ajouterEmploye(newEmploye: any) {
     newEmploye.company = this.actuelCompany.company;
-    this._sEmployee.addNewEmployee(newEmploye).subscribe(
+    this._employeeService.addNewEmployee(newEmploye).subscribe(
       res => {
         console.log(res);
-        this.router.navigate(['employees']);
+        this._router.navigate(['employees']);
       },
       err => console.log(err)
+    );
+  }
+
+  focusOutFunction(event: string) {
+    const email = event['path'][0].value;
+    this._employeeService.emailExist(email).subscribe(
+      res => this.loginExist = true,
+      err => this.loginExist = false
     );
   }
 

@@ -1,31 +1,34 @@
-<nav class="navbar navbar-default" id="barNav">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand font-bold">RESTIX</a>
+<nav class="navbar navbar-default navbar-fixed-top barNav">
+  <div class="container-fluid">
+    <div class="navbar-header justify-content-start">
+      <a class="navbar-brand font-weight-bold" routerLink="home" routerLinkActive="active">
+        RESTIX</a>
     </div>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-
-      <ul class="nav navbar-nav">
-        <li><a class="nav-link" routerLink="employees" routerLinkActive="active">
-            Employés</a></li>
-        <li><a class="nav-link" routerLink="companies" routerLinkActive="active">
-            Companies</a></li>
-        <li><a class="nav-link" routerLink="transaction" routerLinkActive="active">
-            Transactions</a></li>
-        <li><a class="nav-link" routerLink="chop" routerLinkActive="active">
-            Commerçant</a></li>
-      </ul>
-
-      <ul class="nav navbar-nav droit">
-        <li><a *ngIf="!_authService.loggedIn()" class="nav-link" routerLink="login" routerLinkActive="active">
-            Connexion</a></li>
-        <li><a *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">
+    <hr>
+    <nav class="nav  nav-pills justify-content-start">
+      <li class="nav-item"><a class="nav-link" routerLink="/employees" routerLinkActive="active">
+          Employés</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/companies" routerLinkActive="active">
+          Companies</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/newCommercant" routerLinkActive="active">
+          Commerçant</a></li>
+    </nav>
+    <hr>
+    <nav class="nav  nav-pills justify-content-end">
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" *ngIf="!_authService.loggedIn()">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" role="button" aria-haspopup="true"
+          aria-expanded="false">
+          Connexion
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="login">Employés</a>
+          <a class="dropdown-item" routerLink="login">Entreprise</a>
+        </div>
+      </li>
+      <li class="nav-item"><a *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">
           Deconnexion</a></li>
-        <li><a class="nav-link" routerLink="home" routerLinkActive="active">
-            Home</a></li>
-      </ul>
+    </nav>
 
-    </div>
   </div>
 </nav>

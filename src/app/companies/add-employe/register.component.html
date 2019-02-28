@@ -15,7 +15,8 @@
   </div>
   <div class="form-group">
     <label for="email">email :</label>
-    <input type="email" class="form-control" id="email" name="email" ngModel required>
+    <input type="email" class="form-control" id="email" name="email" ngModel required (focusout)="focusOutFunction($event)">
+    <p class="alert-danger" *ngIf="loginExist" style="text-align: center" >LOGIN DEJA ENREGISTRE</p>
   </div>
   <div class="form-group">
     <label for="numberStreet">Numéro Rue</label>

@@ -11,8 +11,8 @@ import { map } from 'rxjs/operators';
 
 export class AuthService {
   // déclaration des chemins d'accès
-  private _addUrl = 'http://localhost:3000/list-employees/add';
-  private _loginUrl = 'http://localhost:3000/list-employees/login';
+  private _addUrl = 'http://localhost:3000/employees/add';
+  private _loginUrl = 'http://localhost:3000/employees/login';
 
   private currentEmployeSubject: BehaviorSubject<IEmployee>;
   public currentEmploye: Observable<IEmployee>;
