@@ -27,9 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // component créer
 import { AppComponent } from './app.component';
-import { EmployeesComponent } from './companies/list-employees/employees.component';
+import { EmployeesComponent } from './admin/list-employees/employees.component';
 import { CardsComponent } from './admin/cards/cards.component';
-import { CompaniesComponent } from './companies/companies.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './companies/add-employe/register.component';
@@ -40,6 +39,10 @@ import { LoginEmployeComponent } from './Authentification/login/login-employe/lo
 import { VueTransactionComponent } from './employe/vue-transaction/vue-transaction.component';
 import { EditProfileComponent } from './employe/edit-profile/edit-profile.component';
 import { ActiveCompteComponent } from './employe/active-compte/active-compte.component';
+import { NewCommercantComponent } from './Authentification/register/new-commercant/new-commercant.component';
+import { ListCommercantComponent } from './admin/list-commercant/list-commercant.component';
+import { EditCommercantComponent } from './admin/edit-commercant/edit-commercant.component';
+import { CompaniesComponent } from './admin/list-entreprises/companies.component';
 
 // service créer
 import { EmployeeService } from './_services/employee.service';
@@ -56,9 +59,6 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { NewCommercantComponent } from './Authentification/register/new-commercant/new-commercant.component';
-import { ListCommercantComponent } from './admin/list-commercant/list-commercant.component';
-import { EditCommercantComponent } from './admin/edit-commercant/edit-commercant.component';
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
 
@@ -70,7 +70,13 @@ export function getToken() {
 const appRoutes: Routes = [
 
   {
-    path: 'employees',
+    path: 'ActiveCompte',
+    component: ActiveCompteComponent,
+    // canActivate: [AuthGuard],
+    // data: { allowedRoles: 'ENTREPRISE' }
+  },
+  {
+    path: 'listEmployes',
     component: EmployeesComponent,
     // canActivate: [AuthGuard],
     // data: { allowedRoles: 'ENTREPRISE' }
@@ -82,7 +88,7 @@ const appRoutes: Routes = [
     // data: { allowedRoles: 'ADMIN' }
   },
   {
-    path: 'companies',
+    path: 'listEntreprises',
     component: CompaniesComponent,
     // canActivate: [AuthGuard],
     // data: { allowedRoles: 'ADMIN' }
@@ -94,17 +100,19 @@ const appRoutes: Routes = [
     // data: { allowedRoles: 'ADMIN' }
   },
   {
-    path: 'listCommercant',
+    path: 'listCommercants',
     component: ListCommercantComponent,
     // canActivate: [AuthGuard],
     // data: { allowedRoles: 'ADMIN' }
   },
   { path: 'newEntreprise', component: NewEntrepriseComponent },
+  { path: 'editEntreprise/:id', component: NewEntrepriseComponent },
   { path: 'newCommercant', component: NewCommercantComponent },
-  { path: 'edit/:id', component: NewCommercantComponent },
+  { path: 'editCommercant/:id', component: NewCommercantComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login/entreprise', component: LoginEntrepriseComponent },
+  { path: 'login/employe', component: LoginEmployeComponent },
   { path: 'accessdenied', component: AccessdeniedComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

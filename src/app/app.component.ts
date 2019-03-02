@@ -24,7 +24,7 @@ export class AppComponent {
     // }, this.msTemps);
   }
 
-  // isAuth = false; // autentification par défaut
+  isAuth = false; // autentification par défaut
   // totalTransaction = 0;
   // // tableau de valeur pouvant provenir de l'extérieur
   // transactions = [

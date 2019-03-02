@@ -6,6 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { EmployeeService } from '../_services/employee.service';
 import { map } from 'rxjs/operators';
+import { ICompany } from '../_models/company.interface';
+import { AppComponent } from '../app.component';
 
 @Injectable({ providedIn: 'root' })
 
@@ -23,6 +25,7 @@ export class AuthService {
     private _httpClient: HttpClient,
     private _router: Router,
     private _jwtHelperService: JwtHelperService,
+    private _appComponent: AppComponent
   ) {
     this.currentEmployeSubject = new BehaviorSubject<IEmployee>(
       JSON.parse(localStorage.getItem('currentEmploye'))
@@ -30,7 +33,7 @@ export class AuthService {
     this.currentEmploye = this.currentEmployeSubject.asObservable();
   }
 
-  private uri = 'http://localhost:3000/list-employees';
+  private uri = 'http://localhost:3000/employees';
 
   isAuthorized(allowedRoles: string[]): boolean {
     // check if the list of allowed roles is empty, if empty, authorize the user to access the page
@@ -54,7 +57,7 @@ export class AuthService {
     return allowedRoles.includes(this.getRole());
   }
 
-  public get currentEmployeValue(): IEmployee {
+  public get currentEmployeValue(): any {
     return this.currentEmployeSubject.value;
   }
 
@@ -62,8 +65,16 @@ export class AuthService {
     return this._httpClient.post<IEmployee>(this._addUrl, employe);
   }
 
+  registerEntreprise(entreprise) {
+    return this._httpClient.post<ICompany>(this._addUrl, entreprise);
+  }
+
   loginEmployee(employe) {
     return this._httpClient.post<any>(this._loginUrl, employe);
+  }
+
+  loginEntreprise(entreprise) {
+    return this._httpClient.post<any>(this._loginUrl, entreprise);
   }
 
   loggedIn() {
@@ -77,6 +88,7 @@ export class AuthService {
     localStorage.removeItem('role');
     this.currentEmployeSubject.next(null);
     this._router.navigate(['home']);
+    this._appComponent.isAuth = false;
   }
 
   getToken() {

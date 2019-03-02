@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommercantService } from 'src/app/_services/commercant.service';
 import { MCommercant } from 'src/app/_models/commercant.model';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-commercant',
@@ -14,6 +15,7 @@ export class NewCommercantComponent implements OnInit {
   commercant: MCommercant;
   status = 'Formulaire d\'inscription';
   idCommercant = '';
+  private loginExist = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -76,8 +78,22 @@ export class NewCommercantComponent implements OnInit {
       this._commercantService.addCommercant(newCommercant);
     } else {
       console.log('event : update');
-      this._commercantService.updateCommercant(newCommercant, this.idCommercant);
+      this._commercantService.updateCommercant(newCommercant, this.idCommercant).pipe(first())
+      .subscribe(
+        () => {
+          this._router.navigate(['/listCommercant']);
+        },
+        err => console.log('Erreur : ' + err)
+      );
     }
-    this._router.navigate(['/listCommercant']);
+    // this._router.navigate(['/listCommercant']);
+  }
+
+  focusOutFunction(event: string) {
+    const email = event['path'][0].value;
+    this._commercantService.emailExist(email).subscribe(
+      res => this.loginExist = true,
+      err => this.loginExist = false
+    );
   }
 }

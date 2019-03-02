@@ -17,10 +17,9 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
   constructor(
     private _commercantService: CommercantService,
     private _router: Router
-  ) { }
+  ) {this.afficherListeCommercants(); }
 
   initList() {
-    this.afficherListeCommercants();
     this.commercantSubscription = this._commercantService.commercantSubject.subscribe(
       (commercants: MCommercant[]) => {
         this.commercants = commercants;
@@ -36,7 +35,6 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
   afficherListeCommercants() {
     // initialisation de la méthode pour récupérer les employés
     this._commercantService.getListCommercant();
-    console.log(this.commercantSubscription);
   }
 
   ajouterCommercant() {
@@ -45,7 +43,8 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
 
   actionCommercant(event, id) {
     if (event === 'editer') {
-      this._router.navigate(['/edit', id]);
+      this._router.navigate(['/editCommercant', id]);
+
     } else {
       this._commercantService
         .deleteCommercant(id)
@@ -59,7 +58,6 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
         );
     }
   }
-
   ngOnDestroy() {
     this.commercantSubscription.unsubscribe();
   }

@@ -1,3 +1,18 @@
-<p>
-  login-employe works!
-</p>
+<h1>{{titre}}</h1>
+<div class="container">
+
+  <form class="form" autocomplete="off">
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" name="email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input [(ngModel)]="compteUtilisateur.password" type="password" class="form-control" name="password">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox"> Remember me</label>
+    </div>
+    <button (click)="donneesFormulaire()"  class="btn btn-default">Submit</button>
+  </form>
+</div>

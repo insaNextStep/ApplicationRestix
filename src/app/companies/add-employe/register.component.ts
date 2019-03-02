@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
     const token = this._authService.getToken();
     const decodeToken = this._jwtHelperService.decodeToken(token);
     // console.log('Companyid : ' + decodeToken.subject);
-    this._companyService.getCompanyName(decodeToken.subject).subscribe(
+    this._companyService.getEntrepriseName(decodeToken.subject).subscribe(
       res => {
         this.actuelCompany = res;
         console.log(this.actuelCompany);
@@ -59,11 +59,14 @@ export class RegisterComponent implements OnInit {
   }
 
   focusOutFunction(event: string) {
-    const email = event['path'][0].value;
+    // const email =
+    if (event['path'][0].value) {
+    const email = (event['path'][0].value) ;
     this._employeeService.emailExist(email).subscribe(
       res => this.loginExist = true,
       err => this.loginExist = false
-    );
+      );
+    }
   }
 
   // openCity(evt, cityName) {

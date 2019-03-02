@@ -22,7 +22,7 @@ export class CommercantService {
 
   getListCommercant() {
     // implémentation de la route (repris de node js dans l'onglet route)
-    this._httpClient.get<any[]>(this.uri + '/list').subscribe(
+    this._httpClient.get<any[]>(`${this.uri}/list/`).subscribe(
       res => {
         this.commercants = res;
         this.emitCommercant();
@@ -35,7 +35,7 @@ export class CommercantService {
   getCommercant(id: string): Observable<MCommercant[]> {
     // implémentation de la route (repris de node js dans l'onglet route)
     return this._httpClient
-      .get<MCommercant[]>(this.uri + '/' + id)
+      .get<MCommercant[]>(`${this.uri}/${id}`)
       .pipe(map(res => res));
   }
 
@@ -57,23 +57,14 @@ export class CommercantService {
     return this._httpClient
       .put(`${this.uri}/update/${id}`, commercant)
       .pipe(map(res => res));
-      // .subscribe(
-      //   (res: any) => {
-      //     console.log('Enregistrement terminé');
-      //     // this.commercants.push(res);
-      //     this.emitCommercant();
-      //   },
-      //   err => console.log('Erreur : ' + err)
-      // );
   }
 
 
   deleteCommercant(id: string) {
-    // const headers = new HttpHeaders();
-    // headers.append('Content-type', 'application/json');
-    // headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     return this._httpClient.delete(`${this.uri}/delete/${id}`).pipe(map(res => res));
   }
 
-
+  emailExist(email: string): Observable<MCommercant[]> {
+    return this._httpClient.get<MCommercant[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
+  }
 }

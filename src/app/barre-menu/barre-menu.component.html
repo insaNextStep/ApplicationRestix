@@ -6,11 +6,11 @@
     </div>
     <hr>
     <nav class="nav  nav-pills justify-content-start">
-      <li class="nav-item"><a class="nav-link" routerLink="/employees" routerLinkActive="active">
+      <li class="nav-item"><a class="nav-link" routerLink="/listEmployes" routerLinkActive="active">
           Employés</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/companies" routerLinkActive="active">
+      <li class="nav-item"><a class="nav-link" routerLink="/listEntreprises" routerLinkActive="active">
           Companies</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/newCommercant" routerLinkActive="active">
+      <li class="nav-item"><a class="nav-link" routerLink="/listCommercants" routerLinkActive="active">
           Commerçant</a></li>
     </nav>
     <hr>
@@ -22,8 +22,8 @@
           Connexion
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="login">Employés</a>
-          <a class="dropdown-item" routerLink="login">Entreprise</a>
+          <a class="dropdown-item" routerLink="login/employe">Employé</a>
+          <a class="dropdown-item" routerLink="login/entreprise">Entreprise</a>
         </div>
       </li>
       <li class="nav-item"><a *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">
