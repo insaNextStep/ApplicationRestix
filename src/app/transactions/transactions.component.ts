@@ -13,18 +13,18 @@ import { TransactionService } from '../_services/transaction.service';
 export class TransactionsComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
   listetransactions: ITransaction[];
-  displayColumns = ['_id', 'name', 'phone', 'email'];
+  displayColumns = ['_id', 'name', 'tel', 'email'];
 
   constructor(private transactionService: TransactionService) {}
 
-  getEmployes() {
-    // initialisation de la méthode pour récupérer les employés
-    this.transactionService.getListetransactions().subscribe(transactions  => {
-    this.listetransactions = transactions as Array<ITransaction>;
-    });
-  }
+  // getEmployes(id) {
+  //   // initialisation de la méthode pour récupérer les employés
+  //   this.transactionService.getListTransactions(id).subscribe(transactions  => {
+  //   this.listetransactions = transactions as Array<ITransaction>;
+  //   });
+  // }
 
   ngOnInit() {
-    this.getEmployes();
+    // this.getEmployes();
   }
 }

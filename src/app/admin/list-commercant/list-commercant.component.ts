@@ -13,16 +13,20 @@ import { first } from 'rxjs/operators';
 export class ListCommercantComponent implements OnInit, OnDestroy {
   commercants: MCommercant[];
   commercantSubscription: Subscription;
-  displayColumns = ['name', 'phone', 'email', 'editer', 'supprimer'];
+  displayColumns = ['name', 'tel', 'email', 'editer', 'supprimer'];
+
   constructor(
     private _commercantService: CommercantService,
     private _router: Router
-  ) {this.afficherListeCommercants(); }
+  ) {
+    this.afficherListeCommercants();
+  }
 
   initList() {
     this.commercantSubscription = this._commercantService.commercantSubject.subscribe(
       (commercants: MCommercant[]) => {
         this.commercants = commercants;
+        console.log(commercants);
       }
     );
     this._commercantService.emitCommercant();
@@ -33,6 +37,7 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
   }
 
   afficherListeCommercants() {
+    console.log('\n\n ********************* afficher liste des commercant ********************* \n');
     // initialisation de la méthode pour récupérer les employés
     this._commercantService.getListCommercant();
   }
@@ -44,7 +49,6 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
   actionCommercant(event, id) {
     if (event === 'editer') {
       this._router.navigate(['/editCommercant', id]);
-
     } else {
       this._commercantService
         .deleteCommercant(id)
@@ -52,7 +56,6 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.afficherListeCommercants();
-            // this.initList();
           },
           err => console.log('Erreur : ' + err)
         );

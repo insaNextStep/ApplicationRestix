@@ -4,68 +4,77 @@ import { Router } from '@angular/router';
 import { EmployeeService } from '../../_services/employee.service';
 import { AuthService } from '../../_services/auth.service';
 import { IEmployee } from '../../_models/employee.interface';
-import { CompanyService } from 'src/app/_services/company.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { EntrepriseService } from 'src/app/_services/company.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [EmployeeService, AuthService, CompanyService]
+  providers: [EmployeeService, AuthService, EntrepriseService]
 })
 export class RegisterComponent implements OnInit {
   constructor(
-    private _employeeService: EmployeeService,
-    private _companyService: CompanyService,
+    private _employeService: EmployeeService,
+    private _entrepriseService: EntrepriseService,
     private _router: Router,
     private _jwtHelperService: JwtHelperService,
     private _authService: AuthService
   ) {}
 
   private newEmployee: IEmployee;
-  private actuelCompany: any;
-  private loginExist = false;
+  private actuelEntreprise: any;
+  loginExist = false;
 
   ngOnInit() {
     // console.log(this._authService.currentEmployeValue);
     const token = this._authService.getToken();
-    const decodeToken = this._jwtHelperService.decodeToken(token);
-    // console.log('Companyid : ' + decodeToken.subject);
-    this._companyService.getEntrepriseName(decodeToken.subject).subscribe(
-      res => {
-        this.actuelCompany = res;
-        console.log(this.actuelCompany);
-      },
-      err => {
-        console.log('erreur :' + err);
-      }
-    );
+    if (token) {
+      const decodeToken = this._jwtHelperService.decodeToken(token);
+      // console.log('Companyid : ' + decodeToken.subject);
+      this._entrepriseService.getEntrepriseName(decodeToken.subject).subscribe(
+        res => {
+          this.actuelEntreprise = res;
+          console.log(this.actuelEntreprise);
+        },
+        err => {
+          console.log('erreur :' + err);
+        }
+      );
+    } else {
+      this.actuelEntreprise = '';
+    }
   }
 
-  donneesFormulaire(form: NgForm) {
+  private donneesFormulaire(form: NgForm) {
     this.newEmployee = form.value;
+    console.log('actuel entreprise : ' + this.actuelEntreprise.entreprise);
+    console.log('donnée formulaire :');
+    console.log(this.newEmployee);
     this.ajouterEmploye(this.newEmployee);
   }
 
-  private ajouterEmploye(newEmploye: any) {
-    newEmploye.company = this.actuelCompany.company;
-    this._employeeService.addNewEmployee(newEmploye).subscribe(
+  ajouterEmploye(newEmploye: any) {
+    newEmploye.entreprise = this.actuelEntreprise.entreprise;
+    this._employeService.addNewEmployee(newEmploye).subscribe(
       res => {
         console.log(res);
-        this._router.navigate(['employees']);
+        this._router.navigate(['mesEmployes']);
       },
       err => console.log(err)
     );
   }
 
   focusOutFunction(event: string) {
-    // const email =
+    this.loginExist = false;
     if (event['path'][0].value) {
-    const email = (event['path'][0].value) ;
-    this._employeeService.emailExist(email).subscribe(
-      res => this.loginExist = true,
-      err => this.loginExist = false
-      );
+      const email = event['path'][0].value;
+      this._entrepriseService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = true;
+        }
+      });
     }
   }
 

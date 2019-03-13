@@ -3,22 +3,22 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { MEntreprise } from 'src/app/_models/entreprise.model';
-import { CompanyService } from 'src/app/_services/company.service';
+import { EntrepriseService } from 'src/app/_services/entreprise.service';
 
 @Component({
   selector: 'app-companies',
   templateUrl: './companies.component.html',
   styleUrls: ['./companies.component.scss'],
-  providers: [CompanyService]
+  providers: [EntrepriseService]
 })
 export class CompaniesComponent implements OnInit, OnDestroy {
 
   entreprises: MEntreprise[];
   entrepriseSubscription: Subscription;
-  displayColumns = ['name', 'phone', 'email', 'employees', 'creditCards', 'editer', 'supprimer'];
+  displayColumns = ['name', 'tel', 'email', 'employes', 'editer', 'supprimer'];
 
   constructor(
-    private _EntrepriseService: CompanyService,
+    private _EntrepriseService: EntrepriseService,
     private _router: Router
   ) {
     this.afficherListeEntreprise();

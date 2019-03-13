@@ -4,9 +4,9 @@ export interface ICard {
   _id: string;
   number: number;
   status: string;
-  company: object;
-  companyId: string;
-  employee: object;
-  employeeId: string;
+  entrerpise: object;
+  entrerpiseId: string;
+  employe: object;
+  employeId: string;
   url: string;
 }

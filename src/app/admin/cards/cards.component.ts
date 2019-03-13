@@ -13,7 +13,7 @@ import { CardService } from '../../_services/card.service';
 export class CardsComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
   listeCards: ICard[];
-  displayColumns = ['number', 'status', 'company', 'employee', 'url'];
+  displayColumns = ['number', 'status', 'entreprise', 'employe', 'url'];
 
   constructor(private cardService: CardService) {}
 

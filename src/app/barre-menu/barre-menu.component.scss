@@ -10,3 +10,14 @@
 .nav-link{
   color: azure;
 }
+
+@media (max-width: 768px){
+  #navbarNav{
+    position: absolute;
+    top: 70px;
+  } 
+
+  .navbar-nav.navbar-left{
+    background-color: green;
+  }
+}

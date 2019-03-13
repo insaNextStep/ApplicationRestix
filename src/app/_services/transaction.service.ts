@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { HttpClient } from '@angular/common/http';
 // ajout de l'opérateur 'map'
 import { map } from 'rxjs/operators';
+import { MTransaction } from '../_models/transactions.model';
+import { Observable, Subject } from 'rxjs';
 
 // import { headersToString } from 'selenium-webdriver/http';
 
@@ -12,31 +14,50 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class TransactionService {
-  uri = 'http://localhost:3000';
-  // création d'un instance avec http
-  constructor(private http: HttpClient) {}
+  private transactions: MTransaction[] = [];
+  transactionSubject = new Subject<MTransaction[]>();
 
-  getListetransactions() {
-    // implémentation de la route (repris de node js dans l'onglet route)
-    return this.http.get(this.uri + '/Transactions/'); // .pipe(map(res => res));
+  constructor(private _httpClient: HttpClient) {}
+
+  private uriEmploye = 'http://localhost:3000/employes/transactions';
+
+  emitTransaction() {
+    this.transactionSubject.next(this.transactions.slice());
   }
 
-  getTransaction(id) {
+  getListTransactions(id: string) {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this.http.get(this.uri + '/Transactions/${id}'); // .pipe(map(res => res));
+    this._httpClient.get<any[]>(`${this.uriEmploye}/list/`).subscribe(
+      res => {
+        this.transactions = res;
+        this.emitTransaction();
+        // console.log(this.transactions);
+      },
+      err => console.log('Erreur : ' + err)
+    );
   }
 
-  // addNewTransactions(newTransactions) {
-  // implémentation de la route (repris de node js dans l'onglet route)
-  // const headers = new HttpHeaders();
-  // headers.append('Content-type', 'application/json');
-  // return this.http.post(this.uri + '/Transactionss/', newTransactions, { headers: this.headers });
-  // .pipe(map(res => res));
+  getTransactions(id: string): Observable<MTransaction[]> {
+    // implémentation de la route (repris de node js dans l'onglet route)
+    return this._httpClient
+      .get<MTransaction[]>(`${this.uriEmploye}/${id}`)
+      .pipe(map(res => res));
+  }
+
+  // getTransactions(id) {
+  //   console.log(`getTransactions(${id})`);
+  //   return this._httpClient.get(`${this.uriEmploye}/transactions/${id}`);
   // }
 
-  // deleteTransaction(id) {
-  //   // implémentation de la route (repris de node js dans l'onglet route)
-  //   return this.http.delete(this.uri + '/Transactions/${id}');
-  //     // .pipe(map(res => res));
-  // }
+  getListTransaction() {
+    // implémentation de la route (repris de node js dans l'onglet route)
+    this._httpClient.get<any[]>(`${this.uriEmploye}/list/`).subscribe(
+      res => {
+        this.transactions = res;
+        this.emitTransaction();
+        // console.log(this.commercants);
+      },
+      err => console.log('Erreur : ' + err)
+    );
+  }
 }

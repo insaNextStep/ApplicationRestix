@@ -1,0 +1,74 @@
+<div class="container">
+  <H1>Liste des employés</H1>
+  <div>
+    <button class="btn btn-success" (click)="ajouterEmployer()">Ajouter Employés</button>
+  </div>
+  <br>
+<table mat-table [dataSource]="liste" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="id" hidden="true">
+    <th mat-header-cell *matHeaderCellDef hidden="true"> No. </th>
+    <td mat-cell *matCellDef="let element" hidden="true"> {{element._id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="nom">
+    <th mat-header-cell *matHeaderCellDef> Nom </th>
+    <td mat-cell *matCellDef="let element"> {{element.nom}} {{element.prenom}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="tel">
+    <th mat-header-cell *matHeaderCellDef> tel </th>
+    <td mat-cell *matCellDef="let element" > {{element.tel}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="restix">
+      <th mat-header-cell *matHeaderCellDef> restix </th>
+      <td mat-cell *matCellDef="let element"> {{element.restix}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+  <ng-container matColumnDef="entreprise">
+    <th mat-header-cell *matHeaderCellDef> Entreprise </th>
+    <td mat-cell *matCellDef="let element"> {{(element.entreprise && element.entreprise.nomEntreprise?element.entreprise.nomEntreprise:'Dissocier')}} </td>
+  </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="soldeJ">
+        <th mat-header-cell *matHeaderCellDef> soldeJ </th>
+        <td mat-cell *matCellDef="let element"> {{element.soldeJour?element.soldeJour:0}} </td>
+      </ng-container>
+
+          <!-- Symbol Column -->
+    <ng-container matColumnDef="soldeT">
+      <th mat-header-cell *matHeaderCellDef> soldeT </th>
+      <td mat-cell *matCellDef="let element"> {{element.soldeTotal?element.soldeTotal:0}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef id="finTab"> edit </th>
+        <td mat-cell *matCellDef="let element" id="finTab"> <span class="btn btn-primary" (click)="actionEmploye('éditer', element._id)">Editer</span> </td>
+      </ng-container>
+
+        <!-- Symbol Column -->
+  <ng-container matColumnDef="supprimer">
+      <th mat-header-cell *matHeaderCellDef id="finTab"> supprimer </th>
+      <td mat-cell *matCellDef="let element" id="finTab"> <span class="btn btn-danger" (click)="actionEmploye('supprimer', element._id)">Supprimer</span> </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+</table>
+<!--tr mat-header-row *matHeaderRowDef="displayColumns"></tr-->
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

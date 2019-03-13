@@ -55,7 +55,7 @@ export class CommercantService {
   updateCommercant(commercant, id) {
     console.log(commercant);
     return this._httpClient
-      .put(`${this.uri}/update/${id}`, commercant)
+      .patch(`${this.uri}/update/${id}`, commercant)
       .pipe(map(res => res));
   }
 

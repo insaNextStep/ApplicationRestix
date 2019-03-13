@@ -1,12 +1,15 @@
 
 // tslint:disable-next-line:class-name / initialement c'était class au lieu de interface
-export interface ICompany {
+export interface IEntreprise {
   _id: string;
-  name: string;
-  phone: number;
+  nomEntreprise: string;
+  tel: number;
   email: string;
-  employees: object;
+  employes: object;
   creditCards: object;
+  ibanEntreprise: string;
+  numEntreprise: number;
+  siretEntreprise: number;
   role: string;
   token?: string;
 }

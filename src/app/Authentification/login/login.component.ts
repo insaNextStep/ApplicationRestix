@@ -70,14 +70,14 @@ export class LoginComponent implements OnInit {
   donneesFormulaire() {
     console.log('this.compteUtilisateur :');
     console.log(this.compteUtilisateur);
-    this._authService.loginEmployee(this.compteUtilisateur).subscribe(
+    this._authService.loginEmploye(this.compteUtilisateur).subscribe(
       res => {
         console.log(res);
         //       // enregistrement local du token
-        const token = localStorage.setItem('token', res.token);
-        const role = localStorage.setItem('role', res.role);
+        // const token = localStorage.setItem('token', res.token);
+        // const role = localStorage.setItem('role', res.role);
         //       console.log('token : ' + token + '\nrole : ' + role);
-        this._router.navigate(['employees']);
+        this._router.navigate(['employes']);
       },
       err => console.log(err)
     );

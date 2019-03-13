@@ -48,9 +48,12 @@ export class NewCommercantComponent implements OnInit {
 
   editCommercant(commercant) {
     this.commercantForm.patchValue({
-      name: commercant.name,
-      phone: commercant.phone,
-      email: commercant.email
+      nomCommercant: commercant.nomCommercant,
+      tel: commercant.tel,
+      email: commercant.email,
+      ibanCommercant: commercant.ibanCommercant,
+      siretCommercant: commercant.siretCommercant,
+      tpe: commercant.tpe
     });
   }
 
@@ -60,40 +63,53 @@ export class NewCommercantComponent implements OnInit {
 
   initForm() {
     this.commercantForm = this._formBuilder.group({
-      name: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      nomCommercant: ['', Validators.required],
+      tel: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      ibanCommercant: ['', Validators.required],
+      siretCommercant: ['', Validators.required],
+      tpe: ['', Validators.required]
     });
   }
 
   onSubmitForm(event) {
     const formValue = this.commercantForm.value;
     const newCommercant = new MCommercant(
-      formValue['name'],
-      formValue['phone'],
-      formValue['email']
+      formValue['nomCommercant'],
+      formValue['tel'],
+      formValue['email'],
+      formValue['ibanCommercant'],
+      formValue['siretCommercant'],
+      formValue['tpe'],
     );
     if (event === 'Formulaire d\'inscription') {
       console.log('event : add');
       this._commercantService.addCommercant(newCommercant);
+      this._router.navigate(['/listCommercants']);
     } else {
       console.log('event : update');
-      this._commercantService.updateCommercant(newCommercant, this.idCommercant).pipe(first())
+      this._commercantService.updateCommercant(newCommercant, this.idCommercant)
+      .pipe(first())
       .subscribe(
         () => {
-          this._router.navigate(['/listCommercant']);
+          this._router.navigate(['/listCommercants']);
         },
         err => console.log('Erreur : ' + err)
       );
     }
-    // this._router.navigate(['/listCommercant']);
+    // this._router.navigate(['/listCommercants']);
   }
 
   focusOutFunction(event: string) {
-    const email = event['path'][0].value;
-    this._commercantService.emailExist(email).subscribe(
-      res => this.loginExist = true,
-      err => this.loginExist = false
-    );
+    this.loginExist = false;
+    if (event['path'][0].value) {
+      const email = event['path'][0].value;
+      this._commercantService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = true;
+        }
+      });
+    }
   }
 }

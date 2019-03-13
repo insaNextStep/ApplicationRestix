@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from '../_services/employee.service';
+import { EmployeService } from '../_services/employe.service';
 import { first } from 'rxjs/operators';
-import { IEmployee } from '../_models/employee.interface';
+import { IEmploye } from '../_models/employe.interface';
 
 @Component({
   selector: 'app-admin',
@@ -9,12 +9,12 @@ import { IEmployee } from '../_models/employee.interface';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  employes: IEmployee[] = [];
-  constructor(private employeeService: EmployeeService) {}
+  employes: IEmploye[] = [];
+  constructor(private _employeService: EmployeService) {}
 
   ngOnInit() {
-    this.employeeService
-      .getListEmployees()
+    this._employeService
+      .getListEmployes()
       .pipe(first())
       .subscribe(employes => {
         this.employes = employes;

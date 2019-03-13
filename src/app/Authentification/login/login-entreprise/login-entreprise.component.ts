@@ -52,17 +52,17 @@ export class LoginEntrepriseComponent implements OnInit {
   }
 
   donneesFormulaire() {
-    console.log('this.compteUtilisateur :');
+    console.log('login Entreprise :');
     console.log(this.compteUtilisateur);
     this._authService.loginEntreprise(this.compteUtilisateur).subscribe(
       res => {
         console.log(res);
         //       // enregistrement local du token
-        const token = localStorage.setItem('token', res.token);
-        const role = localStorage.setItem('role', res.role);
+        // const token = localStorage.setItem('token', res.token);
+        // const role = localStorage.setItem('role', res.role);
         //       console.log('token : ' + token + '\nrole : ' + role);
         this._appComponent.isAuth = true;
-        this._router.navigate(['employees']);
+        this._router.navigate(['/mesEmployes']);
       },
       err => console.log(err)
     );

@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     const allowedRoles = next.data.allowedRoles;
     console.log('AuthGuard - allowedRoles : ' + allowedRoles);
     const isAuthorized = this._authService.isAuthorized(allowedRoles);
-
+    console.log('autorisation :', isAuthorized);
     if (!isAuthorized) {
       if (this._authService.loggedIn()) {
         this._router.navigate(['accessdenied']);
@@ -32,24 +32,25 @@ export class AuthGuard implements CanActivate {
   }
 
   // canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-  //     console.log('authGuard');
-  //     // obtenir les rôles autorisés pour cette route:
-  //     const allowedRoles = route.data.allowedRoles;
-  //     console.log('authguard : \nallowedRoles :');
-  //     console.log(allowedRoles);
-  //     const isAuthorized = this._authService.isAuthorized(allowedRoles);
-  //     console.log('authguard : \nisAuthorized :');
-  //     console.log(isAuthorized);
-  //     if (!isAuthorized) {
-  //       // si non autorisé, redirection vers la page acces refusé
-  //       this._router.navigate(['/accessdenied']);
-  //     }
-  //     return true; // isAuthorized;
+  //   console.log('authGuard');
+  //   // obtenir les rôles autorisés pour cette route:
+  //   const allowedRoles = route.data.allowedRoles;
+  //   console.log('authguard : \nallowedRoles :');
+  //   console.log(allowedRoles);
+  //   const isAuthorized = this._authService.isAuthorized(allowedRoles);
+  //   console.log('authguard : \nisAuthorized :');
+  //   console.log(isAuthorized);
+  //   // if (!isAuthorized) {
+  //   //   // si non autorisé, redirection vers la page acces refusé
+  //   //   this._router.navigate(['/accessdenied']);
+  //   // }
+  //   //     return true; // isAuthorized;
 
-  // if (this._authService.loggedIn()) {
-  //   return true;
-  // } else {
-  //   this._router.navigate(['login']);
-  //   return false;
+  //   if (this._authService.loggedIn()) {
+  //     return true;
+  //   } else {
+  //     this._router.navigate(['home']);
+  //     return false;
+  //   }
   // }
 }

@@ -5,18 +5,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MEntreprise } from '../_models/entreprise.model';
-import { ICompany } from '../_models/company.interface';
+import { IEntreprise } from '../_models/entreprise.interface';
 
 // import { headersToString } from 'selenium-webdriver/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyService {
+export class EntrepriseService {
   private entreprises: MEntreprise[] = [];
   entrepriseSubject = new Subject<MEntreprise[]>();
 
-  private uri = 'http://localhost:3000/companies';
+  private uri = 'http://localhost:3000/entreprises';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
@@ -44,12 +44,14 @@ export class CompanyService {
   }
 
   getEntrepriseName(id) {
-    console.log(`getCompanyName(${id})`);
+    console.log(`getEntrepriseName(${id})`);
     return this._httpClient.get(`${this.uri}/name/${id}`);
   }
 
   getMesEmployes(id) {
-    return this._httpClient.get(`${this.uri}/name/${id}`);
+    return this._httpClient
+    .get(`${this.uri}/mesEmployes/${id}`)
+    .pipe(map(res => res));
   }
 
   addEntreprise(entreprise: MEntreprise) {
@@ -68,7 +70,7 @@ export class CompanyService {
   updateEntreprise(entreprise, id) {
     console.log(entreprise);
     return this._httpClient
-      .put(`${this.uri}/update/${id}`, entreprise)
+      .patch(`${this.uri}/update/${id}`, entreprise)
       .pipe(map(res => res));
   }
 
@@ -76,7 +78,7 @@ export class CompanyService {
     return this._httpClient.delete(`${this.uri}/delete/${id}`).pipe(map(res => res));
   }
 
-  emailExist(email: string): Observable<ICompany[]> {
-    return this._httpClient.get<ICompany[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
+  emailExist(email: string): Observable<IEntreprise[]> {
+    return this._httpClient.get<IEntreprise[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
   }
 }
