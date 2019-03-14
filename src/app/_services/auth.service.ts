@@ -15,8 +15,11 @@ import { IUser } from '../_models/user';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // déclaration des chemins d'accès
-  private _UrlEmploye = 'http://localhost:3000/employes';
-  private _UrlEntreprise = 'http://localhost:3000/entreprises';
+  private _UrlEmploye = 'https://restix.herokuapp.com/employes';
+  private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
+
+  // private _UrlEmploye = 'http://localhost:3000/employes';
+  // private _UrlEntreprise = 'http://localhost:3000/entreprises';
 
   private currentEmployeSubject: BehaviorSubject<IUser>;
   public currentEmploye: Observable<IUser>;

@@ -11,7 +11,7 @@ import { IEntreprise } from 'src/app/_models/entreprise.interface';
   styleUrls: ['./login-entreprise.component.scss']
 })
 export class LoginEntrepriseComponent implements OnInit {
-  public compteUtilisateur: IEntreprise;
+  compteUtilisateur: any = {};
   titre = 'Zone de connexion entreprise';
   constructor(
     private _authService: AuthService,
@@ -19,38 +19,36 @@ export class LoginEntrepriseComponent implements OnInit {
     private userIdle: UserIdleService,
     private route: ActivatedRoute,
     private _appComponent: AppComponent
-  ) { }
+  ) {}
 
   ngOnInit() {
     // Start watching for user inactivity.
-    this.userIdle.startWatching();
-
-    // Start watching when user idle is starting.
-    this.userIdle.onTimerStart().subscribe(count => console.log(count));
-
-    // Start watch when time is up.
-    this.userIdle.onTimeout().subscribe(() => this._authService.logout());
+    // this.userIdle.startWatching();
+    // // Start watching when user idle is starting.
+    // this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    // // Start watch when time is up.
+    // this.userIdle.onTimeout().subscribe(() => this._authService.logout());
   }
 
-  stop() {
-    console.log('stop');
-    this.userIdle.stopTimer();
-  }
+  // stop() {
+  //   console.log('stop');
+  //   this.userIdle.stopTimer();
+  // }
 
-  stopWatching() {
-    console.log('stopWatching');
-    this.userIdle.stopWatching();
-  }
+  // stopWatching() {
+  //   console.log('stopWatching');
+  //   this.userIdle.stopWatching();
+  // }
 
-  startWatching() {
-    console.log('startWatching');
-    this.userIdle.startWatching();
-  }
+  // startWatching() {
+  //   console.log('startWatching');
+  //   this.userIdle.startWatching();
+  // }
 
-  restart() {
-    console.log('restart');
-    this.userIdle.resetTimer();
-  }
+  // restart() {
+  //   console.log('restart');
+  //   this.userIdle.resetTimer();
+  // }
 
   donneesFormulaire() {
     console.log('login Entreprise :');

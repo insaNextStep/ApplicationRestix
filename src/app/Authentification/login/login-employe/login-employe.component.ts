@@ -11,8 +11,10 @@ import { IEmploye } from 'src/app/_models/employe.interface';
   styleUrls: ['./login-employe.component.scss']
 })
 export class LoginEmployeComponent implements OnInit {
-  compteUtilisateur: IEmploye;
+
+  compteUtilisateur: any = {};
   titre = 'Zone de connexion employé';
+
   constructor(
     private _authService: AuthService,
     private _router: Router,
@@ -23,34 +25,34 @@ export class LoginEmployeComponent implements OnInit {
 
   ngOnInit() {
     // Start watching for user inactivity.
-    this.userIdle.startWatching();
+    // this.userIdle.startWatching();
 
-    // Start watching when user idle is starting.
-    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    // // Start watching when user idle is starting.
+    // this.userIdle.onTimerStart().subscribe(count => console.log(count));
 
-    // Start watch when time is up.
-    this.userIdle.onTimeout().subscribe(() => this._authService.logout());
+    // // Start watch when time is up.
+    // this.userIdle.onTimeout().subscribe(() => this._authService.logout());
   }
 
-  stop() {
-    console.log('stop');
-    this.userIdle.stopTimer();
-  }
+  // stop() {
+  //   console.log('stop');
+  //   this.userIdle.stopTimer();
+  // }
 
-  stopWatching() {
-    console.log('stopWatching');
-    this.userIdle.stopWatching();
-  }
+  // stopWatching() {
+  //   console.log('stopWatching');
+  //   this.userIdle.stopWatching();
+  // }
 
-  startWatching() {
-    console.log('startWatching');
-    this.userIdle.startWatching();
-  }
+  // startWatching() {
+  //   console.log('startWatching');
+  //   this.userIdle.startWatching();
+  // }
 
-  restart() {
-    console.log('restart');
-    this.userIdle.resetTimer();
-  }
+  // restart() {
+  //   console.log('restart');
+  //   this.userIdle.resetTimer();
+  // }
 
   donneesFormulaire() {
     console.log('this.compteUtilisateur :');

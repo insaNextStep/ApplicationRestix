@@ -12,7 +12,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CardService {
-  uri = 'http://localhost:3000';
+  // uri = 'http://localhost:3000';
+  private uri = 'https://restix.herokuapp.com';
   // création d'un instance avec http
   constructor(private http: HttpClient) {}
 
