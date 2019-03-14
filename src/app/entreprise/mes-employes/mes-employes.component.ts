@@ -92,6 +92,10 @@ export class MesEmployesComponent implements OnInit {
     // this.afficherListeEmployes();
   }
 
+  ajouterEmployer() {
+    this._router.navigate(['newEmploye']);
+  }
+
   // ngOnDestroy(): void {
   //   //Called once, before the instance is destroyed.
   //   //Add 'implements OnDestroy' to the class.

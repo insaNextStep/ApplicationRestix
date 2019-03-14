@@ -15,7 +15,7 @@ export class NewCommercantComponent implements OnInit {
   commercant: MCommercant;
   status = 'Formulaire d\'inscription';
   idCommercant = '';
-  private loginExist = false;
+  loginExist = false;
 
   constructor(
     private _formBuilder: FormBuilder,

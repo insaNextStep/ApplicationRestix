@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserIdleService } from 'angular-user-idle';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
+import { IEmploye } from 'src/app/_models/employe.interface';
 
 @Component({
   selector: 'app-login-employe',
@@ -10,7 +11,7 @@ import { AppComponent } from 'src/app/app.component';
   styleUrls: ['./login-employe.component.scss']
 })
 export class LoginEmployeComponent implements OnInit {
-  compteUtilisateur = {};
+  compteUtilisateur: IEmploye;
   titre = 'Zone de connexion employé';
   constructor(
     private _authService: AuthService,

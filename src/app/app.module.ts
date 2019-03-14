@@ -14,11 +14,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { TransactionComponent } from './transaction/transaction.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxMaskModule } from 'ngx-mask';
 import { UserIdleModule } from 'angular-user-idle';
-import { GaugeChartComponent } from 'angular-gauge-chart';
+// import { GaugeChartComponent } from 'angular-gauge-chart';
 /*
 Pour pouvoir utiliser le two-way binding,
 il vous faut importer  FormsModule  depuis
@@ -33,7 +32,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { EmployesComponent } from './admin/list-employes/employes.component';
 import { CardsComponent } from './admin/cards/cards.component';
-import { TransactionsComponent } from './transactions/transactions.component';
 import { HomeComponent } from './home/home.component';
 import { NewEmployeComponent } from './entreprise/add-employe/new-employe.component';
 import { LoginComponent } from './Authentification/login/login.component';
@@ -63,8 +61,6 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { TestTableauComponent } from './test-tableau/test-tableau.component';
-import { TableEmployesComponent } from './table-employes/table-employes.component';
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
 
@@ -114,7 +110,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'listEmployes',
-    component: TableEmployesComponent,
+    component: EmployesComponent,
     canActivate: [AuthGuard],
     data: { allowedRoles: 'ADMIN' }
   },
@@ -143,12 +139,9 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    GaugeChartComponent,
-    TransactionComponent,
     BarreMenuComponent,
     EmployesComponent,
     CardsComponent,
-    TransactionsComponent,
     CompaniesComponent,
     HomeComponent,
     LoginComponent,
@@ -164,8 +157,6 @@ const appRoutes: Routes = [
     NewCommercantComponent,
     ListCommercantComponent,
     MesEmployesComponent,
-    TestTableauComponent,
-    TableEmployesComponent
   ],
   imports: [
     BrowserModule,

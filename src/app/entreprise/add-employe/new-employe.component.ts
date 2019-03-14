@@ -22,7 +22,7 @@ export class NewEmployeComponent implements OnInit {
   idEmploye = '';
   private actuelEntreprise: any;
 
-  private loginExist = false;
+  loginExist = false;
 
   constructor(
     private _formBuilder: FormBuilder,

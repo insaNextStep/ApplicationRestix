@@ -11,5 +11,6 @@ export interface IEntreprise {
   numEntreprise: number;
   siretEntreprise: number;
   role: string;
+  password: string;
   token?: string;
 }

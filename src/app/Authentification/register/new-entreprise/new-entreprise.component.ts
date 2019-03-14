@@ -18,7 +18,7 @@ export class NewEntrepriseComponent implements OnInit {
   status = 'Formulaire d\'inscription';
   idEntreprise = '';
 
-  private loginExist = false;
+  loginExist = false;
 
   constructor(
     private _formBuilder: FormBuilder,
