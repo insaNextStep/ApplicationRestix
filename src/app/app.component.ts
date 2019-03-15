@@ -17,6 +17,7 @@ styleUrls  : un array contenant un ou plusieurs chemins vers les feuilles de sty
 // exportation des élements
 export class AppComponent {
   // @Input() montantAjouter = 0;
+  isAuth = false; // autentification par défaut
   constructor() {
     // méthode constuction d'un timer
     // setTimeout(() => {
@@ -24,7 +25,10 @@ export class AppComponent {
     // }, this.msTemps);
   }
 
-  isAuth = false; // autentification par défaut
+  getUrl() {
+    return `url(../assets/imgs/background-photo.jpg)`;
+  }
+
   // totalTransaction = 0;
   // // tableau de valeur pouvant provenir de l'extérieur
   // transactions = [

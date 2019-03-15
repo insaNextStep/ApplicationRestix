@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {LayoutModule} from '@angular/cdk/layout';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -61,6 +62,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { BackgroundImageResolver } from './background-image.resolver';
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
 
@@ -133,7 +135,14 @@ const appRoutes: Routes = [
   { path: 'login/entreprise', component: LoginEntrepriseComponent },
   { path: 'login/employe', component: LoginEmployeComponent },
   { path: 'accessdenied', component: AccessdeniedComponent },
-  { path: '**', redirectTo: '/home', pathMatch: 'full' }
+  {
+    path: '**',
+    redirectTo: '/home',
+    pathMatch: 'full',
+    resolve: {
+      background: BackgroundImageResolver
+    }
+  }
 ];
 
 @NgModule({
@@ -169,6 +178,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatPaginatorModule,
     MatFormFieldModule,
+    LayoutModule,
     MatSortModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -193,6 +203,7 @@ const appRoutes: Routes = [
     EntrepriseService,
     TransactionService,
     CommercantService,
+    BackgroundImageResolver,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

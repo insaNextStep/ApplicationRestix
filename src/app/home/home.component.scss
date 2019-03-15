@@ -1,20 +1,95 @@
-.column {
-	height:160px;
-	width: 160px;
-	margin-bottom:40px;
-  display:table;
-  margin-right: 10px;
+// .column {
+// 	height:160px;
+// 	width: 160px;
+// 	margin-bottom:40px;
+//   display:table;
+//   margin-right: 10px;
+// }
+
+
+// .texte_encadre_noir {
+// 	font-family:Georgia, "Times New Roman", Times, serif;
+// 	font-size:16px;
+// 	color:#fff;
+// 	display:table-cell; 
+// 	vertical-align:middle; 
+// 	width:100%; 
+// 	margin:0 auto; 
+//   text-align:center;
+//   float: right;
+// }
+
+/* Basic */
+
+
+* {
+  font-family: Calibri;
+  color: dimgrey;
 }
 
 
-.texte_encadre_noir {
-	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:16px;
-	color:#fff;
-	display:table-cell; 
-	vertical-align:middle; 
-	width:100%; 
-	margin:0 auto; 
-  text-align:center;
-  float: right;
+h5 {
+  color: cornflowerblue;
+  font-weight: bolder;
+}
+
+.hr {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+
+.hr::before,
+.hr::after {
+  content: '';
+  flex: 1;
+  margin: 0 .25em;
+  border-bottom: 1px solid #000;
+}
+
+.bandeau_top {
+  display: table-row;
+  height: 8%;
+  width: 100%;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #5f4bea);
+  position: fixed;
+}
+
+.bandeau_bottom {
+  display: table-row;
+  height: 8%;
+  width: 100%;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), #5f4bea);
+  left: 0;
+  position: fixed;
+  bottom: 0;
+}
+
+.position {
+  position: absolute;
+  top: 25%;
+  right: 1em;
+  /* pour IE9 et + ce hack ci-dessous peut être fait avec les commentaires conditionnels d'IE :
+[if gte IE 9]
+@media only screen {
+	#selecteur {
+			filter: none;
+	}
+}
+/*Ie9+*/
+}
+
+.ombre {
+  box-shadow: -4px -4px 11px 7px rgba(119, 119, 119, 0.75);
+  -moz-box-shadow: -4px -4px 11px 7px rgba(119, 119, 119, 0.75);
+  -webkit-box-shadow: -4px -4px 11px 7px rgba(119, 119, 119, 0.75);
+}
+
+.logo {
+  display: block;
+  position: fixed;
+  top: 5%;
+  left: 3%;
+  max-width: 100%;
+  height: auto;
 }
