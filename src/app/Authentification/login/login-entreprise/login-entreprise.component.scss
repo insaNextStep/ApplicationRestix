@@ -1,3 +1,27 @@
 .container{
-  width:  40%;
+  width:  350px;
+}
+
+.card {
+  min-width: 300px;
+  display: block;
+}
+
+.hr {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+
+.hr::before,
+.hr::after {
+  content: '';
+  flex: 1;
+  margin: 0 .25em;
+  border-bottom: 1px solid #000;
+}
+
+.form-check-label {
+  margin-bottom: 0;
+  margin-left: 15px;
 }

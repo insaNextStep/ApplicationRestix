@@ -1,33 +1,38 @@
-<div>
-  <h1><span>{{status}}</span></h1>
-</div>
-<div class="col-sm-8 col-sm-offset-2">
-  <form [formGroup]="commercantForm" (ngSubmit)="onSubmitForm(status)" >
-    <div class="form-group">
-      <label for="nomCommercant">Enseigne commercant</label>
-      <input type="text" class="form-control" id="nomCommercant" formControlName="nomCommercant" ngModel required>
-    </div>
-    <div class="form-group">
-      <label for="tel">Telephone</label>
-      <input type="number" class="form-control" id="tel" formControlName="tel" ngModel required>
-    </div>
-    <div class="form-group">
-      <label for="email">email</label>
-      <input type="email" class="form-control" id="email" formControlName="email" (focusout)="focusOutFunction($event)" ngModel required>
-      <p class="alert-danger" *ngIf="loginExist" style="text-align: center" >ADRESSE MAIL DEJA ENREGISTREE</p>
-    </div>
-    <div class="form-group">
-      <label for="ibanCommercant">IBAN</label>
-      <input type="string" class="form-control" id="ibanCommercant" formControlName="ibanCommercant" ngModel required>
-    </div>
-    <div class="form-group">
-      <label for="siretCommercant">SIRET</label>
-      <input type="string" class="form-control" id="siretCommercant" formControlName="siretCommercant" ngModel required>
-    </div>
-    <div class="form-group">
-      <label for="tpe">numero TPE</label>
-      <input type="number" class="form-control" id="tpe" formControlName="tpe" ngModel required>
-    </div>  
-    <button type="submit" class="btn btn-primary" [disabled]="commercantForm.invalid">Soumettre</button>
-  </form>
+<div class="container">
+  <div>
+    <h1><span>{{status}}</span></h1>
+  </div>
+  <div class="col-sm-8 col-sm-offset-2">
+    <form [formGroup]="commercantForm" (ngSubmit)="onSubmitForm(status)">
+      <div class="form-group">
+        <label for="nomCommercant">Enseigne commercant</label>
+        <input type="text" class="form-control" id="nomCommercant" formControlName="nomCommercant" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="tel">Telephone</label>
+        <input type="number" class="form-control" id="tel" formControlName="tel" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" (focusout)="focusOutFunction($event)"
+          ngModel required>
+        <p class="alert-danger" *ngIf="loginExist" style="text-align: center">ADRESSE MAIL DEJA ENREGISTREE</p>
+      </div>
+      <div class="form-group">
+        <label for="ibanCommercant">IBAN</label>
+        <input type="string" class="form-control" id="ibanCommercant" formControlName="ibanCommercant" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="siretCommercant">SIRET</label>
+        <input type="string" class="form-control" id="siretCommercant" formControlName="siretCommercant" ngModel
+          required>
+      </div>
+      <div class="form-group">
+        <label for="tpe">numero TPE</label>
+        <input type="number" class="form-control" id="tpe" formControlName="tpe" ngModel required>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="commercantForm.invalid">Soumettre</button>
+    </form>
+  </div>
+
 </div>

@@ -1,16 +1,4 @@
 
-
-      <div class="bandeau_top"></div>
-      <div class="bandeau_bottom"></div>
-
-      <div class="logo">
-        <div class="container">
-          <div class="row">
-            <img src="../../assets/img/logo.png" class=" img-fluid">
-          </div>
-        </div>
-      </div>
-
       <div class="container">
         <div class="row">
           <div class="position">
@@ -18,19 +6,19 @@
               <div class="card" style="background-color: rgba(255, 255, 255, 0.1); border: 0 none">
                 <img class="card-img-top ombre" src="../../assets/img/commercant.png" alt="Commercant">
                 <div class="card-footer">
-                  <a routerLink="/newCommercant" routerLinkActive="active" class="ombre btn btn-info  btn-block">Commerçant</a>
+                  <a (click)="checkConnect('COMMERCANT')"  class="ombre btn btn-info  btn-block">Commerçant</a>
                 </div>
               </div>
               <div class="card" style="background-color: rgba(255, 255, 255, 0.1); border: 0 none">
                 <img class="card-img-top ombre" src="../../assets/img/employe.png" alt="Image">
                 <div class="card-footer">
-                  <a routerLink="/login/employe" routerLinkActive="active" class="ombre btn btn-info  btn-block">Employé</a>
+                  <a (click)="checkConnect('EMPLOYE')" class="ombre btn btn-info  btn-block">Employé</a>
                 </div>
               </div>
               <div class="card" style="background-color: rgba(255, 255, 255, 0.1); border: 0 none">
                 <img class="card-img-top ombre" src="../../assets/img/employeur.png" alt="Image">
                 <div class="card-footer">
-                  <a routerLink="/login/entreprise" routerLinkActive="active" class="ombre btn btn-info  btn-block">Employeur</a>
+                  <a (click)="checkConnect('ENTREPRISE')" class="ombre btn btn-info  btn-block">Employeur</a>
                 </div>
               </div>
             </div>

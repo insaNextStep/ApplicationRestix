@@ -47,24 +47,6 @@ h5 {
   border-bottom: 1px solid #000;
 }
 
-.bandeau_top {
-  display: table-row;
-  height: 8%;
-  width: 100%;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #5f4bea);
-  position: fixed;
-}
-
-.bandeau_bottom {
-  display: table-row;
-  height: 8%;
-  width: 100%;
-  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), #5f4bea);
-  left: 0;
-  position: fixed;
-  bottom: 0;
-}
-
 .position {
   position: absolute;
   top: 25%;
@@ -85,11 +67,8 @@ h5 {
   -webkit-box-shadow: -4px -4px 11px 7px rgba(119, 119, 119, 0.75);
 }
 
-.logo {
-  display: block;
-  position: fixed;
-  top: 5%;
-  left: 3%;
-  max-width: 100%;
-  height: auto;
+body {
+  background-image: url("../../assets/img/background-photo.jpg");
+  background-repeat: no-repeat, repeat;
+  background-color: #cccccc;
 }

@@ -10,6 +10,8 @@ import { EntrepriseService } from './entreprise.service';
 import { map } from 'rxjs/operators';
 import { AppComponent } from '../app.component';
 import { IUser } from '../_models/user';
+import { ICommercant } from '../_models/commercant.interface';
+import { CommercantService } from './commercant.service';
 // import { AppComponent } from '../app.component';
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +19,7 @@ export class AuthService {
   // déclaration des chemins d'accès
   private _UrlEmploye = 'https://restix.herokuapp.com/employes';
   private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
+  private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
 
   // private _UrlEmploye = 'http://localhost:3000/employes';
   // private _UrlEntreprise = 'http://localhost:3000/entreprises';
@@ -34,12 +37,17 @@ export class AuthService {
   private currentEntrepriseSubject: BehaviorSubject<IUser>;
   entreprise: IEntreprise;
 
+  public currentCommercant: Observable<IUser>;
+  private currentCommercantSubject: BehaviorSubject<IUser>;
+  commercant: ICommercant;
+
   constructor(
     private _httpClient: HttpClient,
     private _router: Router,
     private _jwtHelperService: JwtHelperService,
     private _employeService: EmployeService,
-    private _entrepriseService: EntrepriseService
+    private _entrepriseService: EntrepriseService,
+    private _commercantService: CommercantService
   ) {
     // get token from local storage or state management
     // const currentUser = localStorage.getItem('currentUser');
@@ -100,6 +108,12 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  public get currentCommercantValue(): any {
+    console.log('\n\n ********************* currentCommercantValue');
+    console.log('current Commercant subject', this.currentUserSubject);
+    return this.currentUserSubject.value;
+  }
+
   public get currentEntrepriseValue(): any {
     return this.currentUserSubject.value;
   }
@@ -116,6 +130,11 @@ export class AuthService {
 
   registerEntreprise(entreprise) {
     return this._entrepriseService.addEntreprise(entreprise);
+    // return this._httpClient.post<IEntreprise>(`${this._UrlEntreprise}/addEntreprise`, entreprise);
+  }
+
+  registerCommercant(commercant) {
+    return this._commercantService.addCommercant(commercant);
     // return this._httpClient.post<IEntreprise>(`${this._UrlEntreprise}/addEntreprise`, entreprise);
   }
 
@@ -149,6 +168,18 @@ export class AuthService {
       );
   }
 
+  loginCommercant(commercant) {
+    console.log('loginCommercant');
+    return this._httpClient
+      .post<any>(`${this._UrlCommercant}/loginCommercant`, commercant)
+      .pipe(
+        map(user => {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        })
+      );
+  }
+
   loggedIn() {
     // !! permet de convertir un retour en boolean au lieu de sa valeur physique
     return !!localStorage.getItem('currentUser');
@@ -171,7 +202,11 @@ export class AuthService {
 
   getRole() {
     console.log('GetRole');
-    return this.currentUserValue['role'];
+    if (!!this.currentUserValue) {
+      return this.currentUserValue['role'];
+    } else {
+      return false;
+    }
   }
 
   statusAdmin() {

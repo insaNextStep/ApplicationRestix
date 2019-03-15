@@ -26,7 +26,68 @@ export class HomeComponent implements OnInit {
     return null;
   }
 
+  // routerLink="/login/employe" routerLinkActive="active"
+  async checkConnect(item) {
+    if (this._authService.loggedIn()) {
+      switch (item) {
+        case 'EMPLOYE':
+          console.log('employe', item);
+          if (item === this._authService.getRole()) {
+            this._router.navigate(['/ActiveCompte']);
+          } else {
+            this._router.navigate(['/']);
+          }
+          break;
+
+        case 'ENTREPRISE':
+          console.log('entreprise', item);
+          if (item === this._authService.getRole()) {
+            this._router.navigate(['/mesEmployes']);
+          } else {
+            this._router.navigate(['/']);
+          }
+          break;
+
+        case 'COMMERCANT':
+          console.log('commercant', item);
+          if (item === this._authService.getRole()) {
+            this._router.navigate(['/']);
+          } else {
+            this._router.navigate(['/']);
+          }
+          break;
+
+        default:
+          this._router.navigate(['/']);
+          break;
+      }
+    } else {
+      switch (item) {
+        case 'EMPLOYE':
+          console.log('non employe', item);
+          this._router.navigate(['/login/employe']);
+          break;
+
+        case 'ENTREPRISE':
+          console.log('non entreprise', item);
+          this._router.navigate(['/login/entreprise']);
+          break;
+
+        case 'COMMERCANT':
+          console.log('non entreprise', item);
+          this._router.navigate(['/newCommercant']);
+          break;
+
+        default:
+          this._router.navigate(['/']);
+          break;
+      }
+    }
+    // const role = this._authService.getRole();
+    // console.log('item:', item, 'role', role, 'auth', auth);
+  }
+
   ngOnInit(): void {
-    // this.backgroundImage = this._route.snapshot.data['background'];
+    this.backgroundImage = this._route.snapshot.data['background'];
   }
 }

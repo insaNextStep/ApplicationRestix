@@ -46,6 +46,7 @@ import { NewCommercantComponent } from './Authentification/register/new-commerca
 import { ListCommercantComponent } from './admin/list-commercant/list-commercant.component';
 import { CompaniesComponent } from './admin/list-entreprises/companies.component';
 import { MesEmployesComponent } from './entreprise/mes-employes/mes-employes.component';
+import { LogincommercantComponent } from './Authentification/login/login-commercant/login-commercant.component';
 
 // service créer
 import { EmployeService } from './_services/employe.service';
@@ -63,6 +64,7 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { BackgroundImageResolver } from './background-image.resolver';
+
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
 
@@ -166,6 +168,7 @@ const appRoutes: Routes = [
     NewCommercantComponent,
     ListCommercantComponent,
     MesEmployesComponent,
+    LogincommercantComponent,
   ],
   imports: [
     BrowserModule,
