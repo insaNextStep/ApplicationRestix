@@ -70,7 +70,7 @@ export class EmployeService {
   //   return this._httpClient.put<any>(`${this.uri}/edit/${id}`).pipe(map(res => res));
   // }
 
-  getEmployeName(id) {
+  getEmployeName(id: string) {
     console.log(`getEmployeName(${id})`);
     return this._httpClient.get(`${this.uri}/name/${id}`);
   }
@@ -86,7 +86,7 @@ export class EmployeService {
       .pipe(map(res => res));
   }
 
-  getSolde(id) {
+  getSolde(id: string) {
     console.log(`getSolde(${id})`);
     return this._httpClient.get(`${this.uri}/solde/${id}`);
   }
