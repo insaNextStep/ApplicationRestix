@@ -1,10 +1,11 @@
-.container {
-  width: 350px;
-}
+
 
 .card {
   min-width: 300px;
   display: block;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 0 none;
+  margin-top: 20%
 }
 
 .hr {
@@ -22,7 +23,7 @@
 }
 
 .bgimg {
-  // background-image: url('src/assets/img/employe.jpg');
+  background-image: url('src/assets/img/employe.jpg');
   height: 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;

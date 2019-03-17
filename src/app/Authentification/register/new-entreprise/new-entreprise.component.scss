@@ -1,8 +1,31 @@
 .bgimg {
-    // background-image: url('src/assets/img/employeur.jpg');
+    background-image: url('/assets/img/employeur.jpg');
     height:100vh;
     background-repeat: no-repeat;
     background-attachment: fixed;    
     // position: fixed
     // widows: 100%;
+  }
+
+  .container {
+    width: 350px;
+  }
+  
+  .card {
+    min-width: 300px;
+    display: block;
+  }
+  
+  .hr {
+    display: flex;
+    align-items: center;
+    margin: 1em 0;
+  }
+  
+  .hr::before,
+  .hr::after {
+    content: '';
+    flex: 1;
+    margin: 0 .25em;
+    border-bottom: 1px solid #000;
   }

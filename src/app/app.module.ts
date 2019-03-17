@@ -65,10 +65,8 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { BackgroundImageResolver } from './background-image.resolver';
 import { AlertComponent } from './_directives/alert.component';
 import { AlertService } from './_services/alert.service';
-import { LayoutComponent } from './layout/layout.component';
 import { MesVentesComponent } from './commercant/mes-ventes/mes-ventes.component';
 
 
@@ -82,13 +80,6 @@ const serverBackEnd = 'localhost:3000';
 
 // déclaration des routes:
 const appRoutes: Routes = [
-  {
-    path: 'Layout',
-    component: LayoutComponent,
-    resolve: {
-      background: BackgroundImageResolver
-    }
-  },
   {
     path: 'ActiveCompte',
     component: ActiveCompteComponent,
@@ -155,9 +146,6 @@ const appRoutes: Routes = [
     path: '**',
     redirectTo: '/home',
     pathMatch: 'full',
-    resolve: {
-      background: BackgroundImageResolver
-    }
   }
 ];
 
@@ -184,7 +172,6 @@ const appRoutes: Routes = [
     MesEmployesComponent,
     LogincommercantComponent,
     AlertComponent,
-    LayoutComponent,
     MesVentesComponent
   ],
   imports: [
@@ -226,7 +213,6 @@ const appRoutes: Routes = [
     EntrepriseService,
     TransactionService,
     CommercantService,
-    BackgroundImageResolver,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
