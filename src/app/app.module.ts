@@ -69,6 +69,7 @@ import { BackgroundImageResolver } from './background-image.resolver';
 import { AlertComponent } from './_directives/alert.component';
 import { AlertService } from './_services/alert.service';
 import { LayoutComponent } from './layout/layout.component';
+import { MesVentesComponent } from './commercant/mes-ventes/mes-ventes.component';
 
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
@@ -184,6 +185,7 @@ const appRoutes: Routes = [
     LogincommercantComponent,
     AlertComponent,
     LayoutComponent,
+    MesVentesComponent
   ],
   imports: [
     BrowserModule,
