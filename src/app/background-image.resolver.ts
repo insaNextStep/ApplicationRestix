@@ -13,7 +13,7 @@ export class BackgroundImageResolver implements Resolve<any> {
   ) {}
 
   resolve = (): Observable<any> =>
-    this.http.get('../assets/imgs/background-photo.jpg', { responseType: 'blob' }).pipe(
+    this.http.get('../assets/img/background-photo.jpg', { responseType: 'blob' }).pipe(
       map( image => {
         const blob: Blob = new Blob([image], { type: 'image/jpeg' });
         const imageStyle = `url(${window.URL.createObjectURL(blob)})`;

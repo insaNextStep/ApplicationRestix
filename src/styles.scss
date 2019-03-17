@@ -3,16 +3,22 @@
 
 
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Trebuchet MS', Arial, sans-serif
+}
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .bandeau_bottom {
-    display: table-row;
-    height: 8%;
-    width: 100%;
-    background-image: linear-gradient(to left, rgba(0, 0, 0, 0), #5f4bea);
-    left: 0;
-    position: fixed;
-    bottom: 0;
-  }
+  display: table-row;
+  height: 8%;
+  width: 100%;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), #5f4bea);
+  left: 0;
+  position: fixed;
+  bottom: 0;
+}
+

@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeService } from 'src/app/_services/employe.service';
 import { Router } from '@angular/router';
 import { IEmploye } from 'src/app/_models/employe.interface';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -20,15 +20,14 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class MesEmployesComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
-  // liste: any;
-  // listeEmploye: IEmploye[];
-  // listeEntreprise: IEntreprise[];
-  listeEmployes = new MatTableDataSource<IEntreprise>();
-  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  // EntrepriseSubscription: Subscription;
-  displayColumns = [ 'nom', 'tel', 'email', 'restix'];
+  liste: any;
+  listeEmploye: IEmploye[];
+  listeEntreprise: IEntreprise[];
+  // listeEmployes = new MatTableDataSource<IEntreprise>(this.liste);
+  EntrepriseSubscription: Subscription;
+  displayColumns = ['id', 'nom', 'tel', 'email', 'restix', 'edit', 'supprimer'];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private _entrepriseService: EntrepriseService,
@@ -42,10 +41,8 @@ export class MesEmployesComponent implements OnInit {
     // initialisation de la méthode pour récupérer les employés
     this._entrepriseService.getMesEmployes(id).subscribe(
       (res: any) => {
-        this.listeEmployes = res.employes;
-        console.log('\n\n\npaginator');
-        console.log(this.paginator);
-        console.log(this.listeEmployes);
+        this.liste = res.employes;
+        console.log(this.liste);
       },
       err => {
         if (err instanceof HttpErrorResponse) {
@@ -84,9 +81,10 @@ export class MesEmployesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listeEmployes.paginator = this.paginator;
+
     // console.log('employeId : ' + decodeToken.subject);
     this.afficherListeEmployes(this.idEntreprise());
+    // this.listeEmployes.paginator = this.paginator;
     // this.afficherListeEmployes();
   }
 

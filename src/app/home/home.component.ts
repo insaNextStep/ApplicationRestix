@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
 
   // parallaxImage = '../../assets/imgs/background-photo.jpg';
   backgroundImage = '../assets/imgs/background-photo.jpg';
+  colorFlag: string;
+  isBackgroundRed: string;
 
   get backgroundImageUrl() {
     if (this.backgroundImage) {
@@ -24,6 +26,16 @@ export class HomeComponent implements OnInit {
     }
 
     return null;
+  }
+
+  getMyStyles() {
+    const myStyles = {
+      'background-image': !this.isBackgroundRed
+        ? 'url(\'../assets/imgs/background-photo.jpg\')'
+        : 'url(\'../assets/imgs/background-photo.jpg\')',
+      color: this.colorFlag ? 'black' : 'yellow'
+    };
+    return myStyles;
   }
 
   // routerLink="/login/employe" routerLinkActive="active"
@@ -75,7 +87,7 @@ export class HomeComponent implements OnInit {
 
         case 'COMMERCANT':
           console.log('non entreprise', item);
-          this._router.navigate(['/newCommercant']);
+          this._router.navigate(['/login/commercant']);
           break;
 
         default:

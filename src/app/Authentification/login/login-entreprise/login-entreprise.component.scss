@@ -21,7 +21,11 @@
   border-bottom: 1px solid #000;
 }
 
-.form-check-label {
-  margin-bottom: 0;
-  margin-left: 15px;
+.bgimg {
+  background-image: url('src/assets/img/employeur.jpg');
+  height:100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;    
+  // position: fixed
+  // widows: 100%;
 }

@@ -68,4 +68,10 @@ export class CommercantService {
   emailExist(email: string): Observable<MCommercant[]> {
     return this._httpClient.get<MCommercant[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
   }
+
+  getMesVentes(id) {
+    return this._httpClient
+    .get(`${this.uri}/mesVentes/${id}`)
+    .pipe(map(res => res));
+  }
 }

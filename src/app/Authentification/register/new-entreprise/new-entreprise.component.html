@@ -1,30 +1,34 @@
-<div>
-  <h1><span>{{status}}</span></h1>
-</div>
-<div class="col-sm-8 col-sm-offset-2">
-  <form [formGroup]="entrepriseForm" (ngSubmit)="onSubmitForm(status)" >
-    <div class="form-group">
-      <label for="nomEntreprise">Nom entreprise</label>
-      <input type="text" class="form-control" id="nomEntreprise" formControlName="nomEntreprise">
-    </div>
-    <div class="form-group">
-      <label for="tel">Telephone</label>
-      <input type="number" class="form-control" id="tel" formControlName="tel">
-    </div>
-    <div class="form-group">
-      <label for="email">email</label>
-      <input type="email" class="form-control" id="email" formControlName="email" (focusout)="focusOutFunction($event)" ngModel required>
-      <p class="alert-danger" *ngIf="loginExist" style="text-align: center" >ADRESSE MAIL DEJA ENREGISTREE</p>
-      <a class="btn btn-primary" *ngIf="loginExist" routerLink="/login/entreprise" routerLinkActive="active">ici pour se connecter</a>
-    </div>
-    <div class="form-group">
-      <label for="ibanEntreprise">ibanEntreprise</label>
-      <input type="text" class="form-control" id="ibanEntreprise" formControlName="ibanEntreprise">
-    </div>
-    <div class="form-group">
-      <label for="siretEntreprise">siretEntreprise</label>
-      <input type="number" class="form-control" id="siretEntreprise" formControlName="siretEntreprise">
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="entrepriseForm.invalid || loginExist">Soumettre</button>
-  </form>
+<div class="bgimg">
+  <div>
+    <h1><span>{{status}}</span></h1>
+  </div>
+  <div class="col-sm-8 col-sm-offset-2">
+    <form [formGroup]="entrepriseForm" (ngSubmit)="onSubmitForm(status)">
+      <div class="form-group">
+        <label for="nomEntreprise">Nom entreprise</label>
+        <input type="text" class="form-control" id="nomEntreprise" formControlName="nomEntreprise">
+      </div>
+      <div class="form-group">
+        <label for="tel">Telephone</label>
+        <input type="number" class="form-control" id="tel" formControlName="tel">
+      </div>
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" (focusout)="focusOutFunction($event)"
+          ngModel required>
+        <p class="alert-danger" *ngIf="loginExist" style="text-align: center">ADRESSE MAIL DEJA ENREGISTREE</p>
+        <a class="btn btn-primary" *ngIf="loginExist" routerLink="/login/entreprise" routerLinkActive="active">ici pour
+          se connecter</a>
+      </div>
+      <div class="form-group">
+        <label for="ibanEntreprise">ibanEntreprise</label>
+        <input type="text" class="form-control" id="ibanEntreprise" formControlName="ibanEntreprise">
+      </div>
+      <div class="form-group">
+        <label for="siretEntreprise">siretEntreprise</label>
+        <input type="number" class="form-control" id="siretEntreprise" formControlName="siretEntreprise">
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="entrepriseForm.invalid || loginExist">Soumettre</button>
+    </form>
+  </div>
 </div>

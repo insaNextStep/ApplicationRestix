@@ -4,6 +4,7 @@ import { UserIdleService } from 'angular-user-idle';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
 import { IEmploye } from 'src/app/_models/employe.interface';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'app-login-employe',
@@ -18,8 +19,9 @@ export class LoginEmployeComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private userIdle: UserIdleService,
-    private route: ActivatedRoute,
+    private _alertService: AlertService,
+    private _userIdle: UserIdleService,
+    private _route: ActivatedRoute,
     private _appComponent: AppComponent
   ) { }
 
@@ -67,7 +69,10 @@ export class LoginEmployeComponent implements OnInit {
         this._appComponent.isAuth = true;
         this._router.navigate(['/ActiveCompte']);
       },
-      err => console.log(err)
+      err => {
+        this._alertService.error(err);
+        console.log(err);
+      }
     );
   }
 }

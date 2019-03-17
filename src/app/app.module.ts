@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {LayoutModule} from '@angular/cdk/layout';
+// MDB Angular Free
+import { WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -64,6 +66,9 @@ import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { AccessdeniedComponent } from './accessdenied/accessdenied.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { BackgroundImageResolver } from './background-image.resolver';
+import { AlertComponent } from './_directives/alert.component';
+import { AlertService } from './_services/alert.service';
+import { LayoutComponent } from './layout/layout.component';
 
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
@@ -76,6 +81,13 @@ const serverBackEnd = 'localhost:3000';
 
 // déclaration des routes:
 const appRoutes: Routes = [
+  {
+    path: 'Layout',
+    component: LayoutComponent,
+    resolve: {
+      background: BackgroundImageResolver
+    }
+  },
   {
     path: 'ActiveCompte',
     component: ActiveCompteComponent,
@@ -136,6 +148,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login/entreprise', component: LoginEntrepriseComponent },
   { path: 'login/employe', component: LoginEmployeComponent },
+  { path: 'login/commercant', component: LogincommercantComponent },
   { path: 'accessdenied', component: AccessdeniedComponent },
   {
     path: '**',
@@ -169,6 +182,8 @@ const appRoutes: Routes = [
     ListCommercantComponent,
     MesEmployesComponent,
     LogincommercantComponent,
+    AlertComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -184,6 +199,8 @@ const appRoutes: Routes = [
     LayoutModule,
     MatSortModule,
     AppRoutingModule,
+    WavesModule,
+    ButtonsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NgxMaskModule,
@@ -200,6 +217,7 @@ const appRoutes: Routes = [
   providers: [
     // TokenInterceptor,
     AuthService,
+    AlertService,
     AuthGuard,
     EmployeService,
     CardService,

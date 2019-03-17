@@ -67,8 +67,12 @@ h5 {
   -webkit-box-shadow: -4px -4px 11px 7px rgba(119, 119, 119, 0.75);
 }
 
-body {
-  background-image: url("../../assets/img/background-photo.jpg");
-  background-repeat: no-repeat, repeat;
-  background-color: #cccccc;
+
+.bgimg {
+  background-image: url('src/assets/img/background-photo.jpg');
+  height:100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;    
+  // position: fixed
+  // widows: 100%;
 }

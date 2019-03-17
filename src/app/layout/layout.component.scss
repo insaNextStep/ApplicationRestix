@@ -1,0 +1,26 @@
+.app-header {
+    padding: 15px;
+    background-color: #3b3b3b;
+  }
+   
+  .app-title {
+    margin: 0;
+    color: #ffffff;
+  }
+   
+  .app-content {
+    display: flex;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+   
+  .card {
+    margin: auto;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+  }
+   
+  .card-body {
+    padding: 30px;
+  }
