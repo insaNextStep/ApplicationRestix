@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
 import { IEmploye } from 'src/app/_models/employe.interface';
 import { AlertService } from 'src/app/_services/alert.service';
+import { EmployeService } from 'src/app/_services/employe.service';
 
 @Component({
   selector: 'app-login-employe',
@@ -15,6 +16,8 @@ export class LoginEmployeComponent implements OnInit {
 
   compteUtilisateur: any = {};
   titre = 'Zone de connexion employé';
+  loginExist = false;
+  errPassword = false;
 
   constructor(
     private _authService: AuthService,
@@ -22,6 +25,7 @@ export class LoginEmployeComponent implements OnInit {
     private _alertService: AlertService,
     private _userIdle: UserIdleService,
     private _route: ActivatedRoute,
+    private _employeService: EmployeService,
     private _appComponent: AppComponent
   ) { }
 
@@ -69,10 +73,20 @@ export class LoginEmployeComponent implements OnInit {
         this._appComponent.isAuth = true;
         this._router.navigate(['/ActiveCompte']);
       },
-      err => {
-        this._alertService.error(err);
-        console.log(err);
-      }
+        err => this.errPassword = true
     );
   }
+
+  focusOutFunction(event: string) {
+    if (event['path'][0].value) {
+      const email = event['path'][0].value;
+      this._employeService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = false;
+        } else {
+           this.loginExist = true;
+        }
+      });
+  }}
 }

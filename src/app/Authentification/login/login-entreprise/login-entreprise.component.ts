@@ -4,6 +4,7 @@ import { UserIdleService } from 'angular-user-idle';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
 import { IEntreprise } from 'src/app/_models/entreprise.interface';
+import { EntrepriseService } from 'src/app/_services/entreprise.service';
 
 @Component({
   selector: 'app-login-entreprise',
@@ -13,12 +14,16 @@ import { IEntreprise } from 'src/app/_models/entreprise.interface';
 export class LoginEntrepriseComponent implements OnInit {
   compteUtilisateur: any = {};
   titre = 'Zone de connexion entreprise';
+  loginExist = false;
+  errPassword = false;
+
   constructor(
     private _authService: AuthService,
     private _router: Router,
     private userIdle: UserIdleService,
     private route: ActivatedRoute,
-    private _appComponent: AppComponent
+    private _appComponent: AppComponent,
+    private _entrepriseService: EntrepriseService
   ) {}
 
   ngOnInit() {
@@ -63,7 +68,20 @@ export class LoginEntrepriseComponent implements OnInit {
         this._appComponent.isAuth = true;
         this._router.navigate(['/mesEmployes']);
       },
-      err => console.log(err)
+      err => this.errPassword = true
     );
   }
+
+  focusOutFunction(event: string) {
+    if (event['path'][0].value) {
+      const email = event['path'][0].value;
+      this._entrepriseService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = false;
+        } else {
+           this.loginExist = true;
+        }
+      });
+  }}
 }

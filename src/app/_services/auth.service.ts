@@ -23,6 +23,7 @@ export class AuthService {
 
   // private _UrlEmploye = 'http://localhost:3000/employes';
   // private _UrlEntreprise = 'http://localhost:3000/entreprises';
+  // private _UrlCommercant = 'http://localhost:3000/commercants';
 
   private currentEmployeSubject: BehaviorSubject<IUser>;
   public currentEmploye: Observable<IUser>;

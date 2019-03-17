@@ -13,18 +13,31 @@
          <img src="../../assets/img/logo.png" class=" img-fluid"></a>
     </div>
     <hr>
-    <!--nav class="nav  nav-pills justify-content-start">
-      <!--li class="nav-item"><a class="nav-link" routerLink="/listEmployes" routerLinkActive="active">
-          Employés</a></li>
+
+    <nav class="nav  nav-pills justify-content-start" *ngIf="menuEmploye">
       <li class="nav-item"><a class="nav-link" routerLink="/listEntreprises" routerLinkActive="active">
-          Companies</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/listCommercants" routerLinkActive="active">
-          Commerçant</a></li>
+       Opposition carte </a></li>
+      <li class="nav-item"><a class="nav-link" (click)="editProfil(actuelUtilisateur)">
+       Mon profile</a></li>
       <li class="nav-item"><a class="nav-link" routerLink="/ActiveCompte" routerLinkActive="active">
-          Active-Compte</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/Layout" routerLinkActive="active">
-        Layout</a></li>
-    </nav-->
+       Mes dépenses</a></li>
+    </nav>
+
+    <nav class="nav  nav-pills justify-content-start" *ngIf="menuEntreprise">
+        <li class="nav-item"><a class="nav-link" routerLink="/listEntreprises" routerLinkActive="active">
+         Demande carte </a></li>
+        <li class="nav-item"><a class="nav-link" >
+         Mon profile</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/ActiveCompte" routerLinkActive="active">
+         Mes employes</a></li>
+      </nav>   
+
+      <nav class="nav  nav-pills justify-content-start" *ngIf="menuCommercant">
+          <li class="nav-item"><a class="nav-link" routerLink="/listCommercants" routerLinkActive="active">
+           Mon profile</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/ActiveCompte" routerLinkActive="active">
+           Mes ventes</a></li>
+        </nav>   
 
     <hr>
     <nav class="nav  nav-pills justify-content-end">

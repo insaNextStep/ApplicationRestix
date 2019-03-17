@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserIdleService } from 'angular-user-idle';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
-import { ICommercant } from 'src/app/_models/commercant.interface';
+import { CommercantService } from 'src/app/_services/commercant.service';
 
 @Component({
   selector: 'app-login-commercant',
@@ -13,12 +13,14 @@ import { ICommercant } from 'src/app/_models/commercant.interface';
 export class LogincommercantComponent implements OnInit {
   compteUtilisateur: any = {};
   titre = 'Zone de connexion commercant';
+  loginExist = false;
+  errPassword = false;
+
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private userIdle: UserIdleService,
-    private route: ActivatedRoute,
-    private _appComponent: AppComponent
+    private _appComponent: AppComponent,
+    private _commercantService: CommercantService
   ) {}
 
   ngOnInit() {
@@ -61,9 +63,23 @@ export class LogincommercantComponent implements OnInit {
         // const role = localStorage.setItem('role', res.role);
         //       console.log('token : ' + token + '\nrole : ' + role);
         this._appComponent.isAuth = true;
-        this._router.navigate(['/mesEmployes']);
+        this.errPassword = false;
+        this._router.navigate(['/mesVentes']);
       },
-      err => console.log(err)
+      err => this.errPassword = true
     );
   }
+
+  focusOutFunction(event: string) {
+    if (event['path'][0].value) {
+      const email = event['path'][0].value;
+      this._commercantService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = false;
+        } else {
+           this.loginExist = true;
+        }
+      });
+  }}
 }

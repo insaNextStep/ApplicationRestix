@@ -21,14 +21,14 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class MesEmployesComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
   // liste: any;
-  // listeEmploye: IEmploye[];
+  listeEmployes: IEmploye[];
   // listeEntreprise: IEntreprise[];
-  listeEmployes = new MatTableDataSource<IEntreprise>();
+  // listeEmployes = new MatTableDataSource<IEntreprise>();
   // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   // EntrepriseSubscription: Subscription;
   displayColumns = [ 'nom', 'tel', 'email', 'restix'];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private _entrepriseService: EntrepriseService,
@@ -44,7 +44,7 @@ export class MesEmployesComponent implements OnInit {
       (res: any) => {
         this.listeEmployes = res.employes;
         console.log('\n\n\npaginator');
-        console.log(this.paginator);
+        // console.log(this.paginator);
         console.log(this.listeEmployes);
       },
       err => {
@@ -84,7 +84,7 @@ export class MesEmployesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listeEmployes.paginator = this.paginator;
+    // this.listeEmployes.paginator = this.paginator;
     // console.log('employeId : ' + decodeToken.subject);
     this.afficherListeEmployes(this.idEntreprise());
     // this.afficherListeEmployes();

@@ -11,7 +11,7 @@ import {
   MatInputModule,
   MatPaginatorModule,
   MatFormFieldModule,
-  MatSortModule
+  MatSortModule, MatSidenavModule, MatIconModule, MatListModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -134,9 +134,14 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     data: { allowedRoles: ['COMMERCANT', 'ADMIN'] }
   },
+  {
+    path: 'mesVentes',
+    component: MesVentesComponent,
+    canActivate: [AuthGuard],
+    data: { allowedRoles: ['COMMERCANT', 'ADMIN'] }
+  },
   { path: 'newEntreprise', component: NewEntrepriseComponent },
   { path: 'newCommercant', component: NewCommercantComponent },
-
   { path: 'home', component: HomeComponent },
   { path: 'login/entreprise', component: LoginEntrepriseComponent },
   { path: 'login/employe', component: LoginEmployeComponent },
@@ -201,7 +206,10 @@ const appRoutes: Routes = [
         tokenGetter: getToken,
         whitelistedDomains: [serverBackEnd]
       }
-    })
+    }),
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     // TokenInterceptor,

@@ -1,55 +1,44 @@
 <div class="bgimg">
-
   <div class="container" style="width: 50%; float: left;">
-
     <div class="formulaire">
-      <div class="container">
+      <div class="container cadreForm">
         <div class="row">
-          <div class="card" style="background-color: rgba(255, 255, 255, 0.6); border: 0 none; margin-top: 20%">
-            <br>
-            <form>
-              <div class="form-group">
-                <label for="num_ident">EMAIL</label>
-                <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" name="email">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">MOT DE PASSE</label>
-                <input [(ngModel)]="compteUtilisateur.password" type="password" class="form-control" name="password">
-              </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="souvenir">
-                <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label><br /><br />
-              </div>
-              <div class="form-group">
-                <h6> J'ai oublié mon <a href="mailto:mon@adresse.fr">mot de passe</a></h6>
-              </div>
-              <br />
-              <div style="margin:auto">
-                <a (click)="donneesFormulaire()" class="ombre btn btn-danger  btn-block">Accéder à mon compte</a><br />
-                <div class="hr">OU</div>
+          <div class="card" id="divCard">
+            <div class="card" id="cardInt">
+              <br>
+              <form>
+                <div class="form-group">
+                  <label for="num_ident">EMAIL</label>
+                  <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" name="email"
+                    (focusout)="focusOutFunction($event)">
+                  <p class="alert-danger" *ngIf="loginExist" style="text-align: center">Utilisateur inconnu</p>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">MOT DE PASSE</label>
+                  <input [(ngModel)]="compteUtilisateur.password" type="password" class="form-control" name="password">
+                  <p class="alert-danger" *ngIf="errPassword" style="text-align: center">Erreur de mot de passe</p>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="souvenir">
+                  <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label><br /><br />
+                </div>
+                <div class="form-group">
+                  <h6> J'ai oublié mon <a href="mailto:mon@adresse.fr">mot de passe</a></h6>
+                </div>
                 <br />
-                <button routerLink="/newEntreprise" routerLinkActive="active" class="ombre btn btn-info btn-block">Créer
-                  un compte</button>
-              </div>
-            </form>
+                <div style="margin:auto">
+                  <a (click)="donneesFormulaire()" class="ombre btn btn-danger  btn-block">Accéder à mon compte</a><br />
+                  <div class="hr">OU</div>
+                  <br />
+                  <button routerLink="/newEntreprise" routerLinkActive="active" class="ombre btn btn-info btn-block">Créer
+                    un compte</button>
+                </div>
+              </form>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
-
-    <!--form class="form" autocomplete="off">
-    <div class="form-group">
-      <label for="email">Email address:</label>
-      <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" name="email">
-    </div>
-    <div class="form-group">
-      <label for="pwd">Password:</label>
-      <input [(ngModel)]="compteUtilisateur.password" type="password" class="form-control" name="password">
-    </div>
-    <div class="checkbox">
-      <label><input type="checkbox">Remember me</label>
-    </div>
-    <button (click)="donneesFormulaire()"  class="btn btn-default">Submit</button>
-  </form-->
   </div>
 </div>

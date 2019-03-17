@@ -1,10 +1,20 @@
-.container{
-  width:  350px;
+.cadreForm {
+  width: 350px;
 }
 
-.card {
+#cardInt {
   min-width: 300px;
+  max-width: 300px;
+  background-color: rgba(255, 255, 255, 0.0);
+  border: 0 none;
+  margin: 0 auto;
+}
+#divCard{
+  min-width: 350px;
   display: block;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 0 none;
+  margin-top: 25%;
 }
 
 .hr {
@@ -20,6 +30,11 @@
   margin: 0 .25em;
   border-bottom: 1px solid #000;
 }
+
+.form-check-label {
+  margin-left: 20px;
+}
+
 
 .bgimg {
   background-image: url('src/assets/img/employeur.jpg');

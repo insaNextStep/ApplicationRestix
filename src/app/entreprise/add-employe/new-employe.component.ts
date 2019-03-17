@@ -18,7 +18,7 @@ export class NewEmployeComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   employeForm: FormGroup;
   employe: MEmploye;
-  status = 'Formulaire d\'inscription';
+  status = 'Nouvel Employe';
   idEmploye = '';
   private actuelEntreprise: any;
 
