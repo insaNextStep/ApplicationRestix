@@ -21,8 +21,11 @@ export class MesVentesComponent implements OnInit {
   listeEntreprise: IEntreprise[];
   // listeVentess = new MatTableDataSource<IEntreprise>(this.liste);
   CommercantSubscription: Subscription;
-  displayColumns = ['id', 'nom', 'tel', 'email', 'restix', 'edit', 'supprimer'];
-
+  displayColumns = ['refTransaction', 'formatDate', 'montant'];
+  actuelEmploye: any = '';
+  transactions: any;
+  transactionsSubscription: Subscription;
+  tableau = [];
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -37,8 +40,8 @@ export class MesVentesComponent implements OnInit {
     // initialisation de la méthode pour récupérer les employés
     this._commercantService.getMesVentes(id).subscribe(
       (res: any) => {
-        this.liste = res.transactions;
-        console.log(this.liste);
+        this.transactions = res;
+        console.log(this.transactions.sort((a, b) => b.date.localeCompare(a.date)));
       },
       err => {
         if (err instanceof HttpErrorResponse) {

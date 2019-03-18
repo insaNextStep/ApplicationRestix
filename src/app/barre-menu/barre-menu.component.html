@@ -33,9 +33,9 @@
       </nav>   
 
       <nav class="nav  nav-pills justify-content-start" *ngIf="menuCommercant">
-          <li class="nav-item"><a class="nav-link" routerLink="/listCommercants" routerLinkActive="active">
+          <li class="nav-item"><a class="nav-link" (click)="editProfil(actuelUtilisateur)">
            Mon profile</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/ActiveCompte" routerLinkActive="active">
+          <li class="nav-item"><a class="nav-link" routerLink="/mesVentes" routerLinkActive="active">
            Mes ventes</a></li>
         </nav>   
 

@@ -42,7 +42,7 @@ export class ActiveCompteComponent implements OnInit, OnDestroy {
     if (token) {
       // décoder le token et récupérer l'id de l'employe
       const decodeToken = this._jwtHelperService.decodeToken(token);
-      console.log('employeId : ' + decodeToken.subject);
+      console.log('employeId : ' + decodeToken);
 
       // this.afficherTransactions(decodeToken.subject);
       this.initList(decodeToken.subject);

@@ -196,8 +196,13 @@ export class AuthService {
   }
 
   getToken() {
-    console.log('GetRole');
-    return this.currentUserValue['token'];
+    console.log('getToken');
+    // return this.currentUserValue['token'];
+    if (!!this.currentUserValue) {
+      return this.currentUserValue['token'];
+    } else {
+      return false;
+    }
     // return localStorage.getItem('currentUser');
   }
 

@@ -7,6 +7,7 @@ import { IEmploye } from '../../_models/employe.interface';
 import { MEmploye } from 'src/app/_models/employe.model';
 import { first } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Location } from '@angular/common';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
 
 @Component({
@@ -31,7 +32,8 @@ export class NewEmployeComponent implements OnInit {
     private route: ActivatedRoute,
     private _jwtHelperService: JwtHelperService,
     private _entrepriseService: EntrepriseService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _location: Location
   ) {
     console.log(this.status);
     if (this.route.params['value'].id) {
@@ -99,7 +101,8 @@ export class NewEmployeComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => {
-            this._router.navigate(['/mesEmployes']);
+            this._location.back();
+            // this._router.navigate(['/mesEmployes']);
           },
           err => console.log('Erreur : ' + err)
         );

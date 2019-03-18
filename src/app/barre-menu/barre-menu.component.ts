@@ -14,16 +14,23 @@ export class BarreMenuComponent implements OnInit {
   menuEntreprise = false;
   menuCommercant = false;
   actuelUtilisateur = '';
-  constructor(public _authService: AuthService, private _router: Router, private _jwtHelperService: JwtHelperService) {
-    _router.events
+  constructor(
+    public _authService: AuthService,
+    private _router: Router,
+    private _jwtHelperService: JwtHelperService
+  ) {
+    this._router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         console.log('currentUserValue', this.idUtilisateur());
-        const role = this._authService.getRole();
+        const role = this._authService.getRole()
+          ? this._authService.getRole()
+          : '';
+
         console.log(event.url, role);
         switch (role) {
           case 'EMPLOYE':
-            if (event.url === '/ActiveCompte') {
+            if (event.url === '/ActiveCompte' && this._authService.loggedIn()) {
               this.menuEmploye = true;
               this.menuCommercant = false;
               this.menuEntreprise = false;
@@ -46,9 +53,10 @@ export class BarreMenuComponent implements OnInit {
             }
             break;
           default:
-          this.menuEmploye = false;
-          this.menuCommercant = false;
-          this.menuEntreprise = false;
+            console.log('aucun menu');
+            this.menuEmploye = false;
+            this.menuCommercant = false;
+            this.menuEntreprise = false;
             break;
         }
       });
@@ -69,12 +77,25 @@ export class BarreMenuComponent implements OnInit {
   }
 
   editProfil(id) {
+    const role = this._authService.getRole() ? this._authService.getRole() : '';
     console.log('id', id);
-    this._router.navigate(['/editEmploye', id]);
+
+    switch (role) {
+      case 'EMPLOYE':
+        this._router.navigate(['/editEmploye', id]);
+        break;
+      case 'ENTREPRISE':
+        this._router.navigate(['/editEmploye', id]);
+        break;
+      case 'COMMERCANT':
+        this._router.navigate(['/editEmploye', id]);
+        break;
+      default:
+        break;
+    }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
 
 export class AppBarreMenu {}
