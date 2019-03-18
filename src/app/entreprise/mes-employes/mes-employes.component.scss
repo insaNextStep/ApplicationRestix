@@ -1,3 +1,11 @@
+
+
+.container {
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 450px; 
+  float: center;
+}
+
 th {
     background-color: #a39eff;
     border: none;
@@ -11,7 +19,7 @@ th {
   
   table {
     float: left;
-    width: 60%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -33,11 +41,13 @@ th {
     padding-right: 5px;
     padding-left: 5px;
   }
+
   .bgimg {
     background-image: url('/assets/img/employeur.jpg');
     height:100vh;
     background-repeat: no-repeat;
-    background-attachment: fixed;    
+    background-attachment: fixed;   
+    min-width: 450px;  
     // position: fixed
     // widows: 100%;
   }

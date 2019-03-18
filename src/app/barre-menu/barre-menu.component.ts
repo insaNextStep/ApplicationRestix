@@ -76,6 +76,10 @@ export class BarreMenuComponent implements OnInit {
     }
   }
 
+  ajouterEmployer() {
+    this._router.navigate(['newEmploye']);
+  }
+
   editProfil(id) {
     const role = this._authService.getRole() ? this._authService.getRole() : '';
     console.log('id', id);

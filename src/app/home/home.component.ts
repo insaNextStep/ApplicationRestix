@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
         case 'COMMERCANT':
           console.log('commercant', item);
           if (item === this._authService.getRole()) {
-            this._router.navigate(['/']);
+            this._router.navigate(['/mesVentes']);
           } else {
             this._router.navigate(['/']);
           }

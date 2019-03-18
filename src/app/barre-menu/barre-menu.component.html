@@ -24,14 +24,16 @@
     </nav>
 
     <nav class="nav  nav-pills justify-content-start" *ngIf="menuEntreprise">
-        <li class="nav-item"><a class="nav-link" routerLink="/listEntreprises" routerLinkActive="active">
+        <li class="nav-item"><a class="nav-link" href="#">
          Demande carte </a></li>
+         <li class="nav-item"><a class="nav-link" (click)="ajouterEmployer()">
+          employe+ </a></li>         
         <li class="nav-item"><a class="nav-link" >
          Mon profile</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/ActiveCompte" routerLinkActive="active">
+        <li class="nav-item"><a class="nav-link" routerLink="/mesEmployes" routerLinkActive="active">
          Mes employes</a></li>
       </nav>   
-
+      
       <nav class="nav  nav-pills justify-content-start" *ngIf="menuCommercant">
           <li class="nav-item"><a class="nav-link" (click)="editProfil(actuelUtilisateur)">
            Mon profile</a></li>

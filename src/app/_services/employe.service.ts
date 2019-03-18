@@ -22,8 +22,8 @@ export class EmployeService {
   // transactionSubject:  new Subject<MTransaction[]>();
 
   employeSubject = new Subject<MEmploye[]>();
-  // private uri = 'http://localhost:3000/employes';
-  private uri = 'https://restix.herokuapp.com/employes';
+  private uri = 'http://localhost:3000/employes';
+  // private uri = 'https://restix.herokuapp.com/employes';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
@@ -88,7 +88,9 @@ export class EmployeService {
 
   getSolde(id: string) {
     console.log(`getSolde(${id})`);
-    return this._httpClient.get(`${this.uri}/solde/${id}`);
+    const solde = this._httpClient.get(`${this.uri}/solde/${id}`);
+    console.log('solde', solde );
+    return solde;
   }
 
 }
