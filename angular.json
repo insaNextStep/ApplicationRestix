@@ -42,7 +42,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/restix.ico",
+              "src/favicon.ico",
               "src/assets",
               "src/assets/img",
               "src/assets/css"
@@ -111,7 +111,7 @@
             ],
             "scripts": [],
             "assets": [
-              "src/restix.ico",
+              "src/favicon.ico",
               "src/assets",
               "src/assets/img",
               "src/assets/css"              

@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 // importer les fonctionnalité de HTTP pour travailler avec les méthode réposne/header
 // import { Http, Response, Headers } from '@angular/http';
-import {
-  HttpClient,
-  HttpHeaders
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-import { IEmploye } from '../_models/employe.interface';
-import { map } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
-import { MEmploye } from '../_models/employe.model';
-import { ITransaction } from '../_models/transaction.interface';
-import { MTransaction } from '../_models/transactions.model';
+import { IEmploye } from "../_models/employe.interface";
+import { map } from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { MEmploye } from "../_models/employe.model";
+import { ITransaction } from "../_models/transaction.interface";
+import { MTransaction } from "../_models/transactions.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class EmployeService {
   private employes: MEmploye[] = [];
@@ -22,7 +19,7 @@ export class EmployeService {
   // transactionSubject:  new Subject<MTransaction[]>();
 
   employeSubject = new Subject<MEmploye[]>();
-  private uri = 'http://localhost:3000/employes';
+  private uri = "http://localhost:3000/employes";
   // private uri = 'https://restix.herokuapp.com/employes';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
@@ -33,24 +30,26 @@ export class EmployeService {
 
   getListEmployes(): Observable<IEmploye[]> {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this._httpClient.get<IEmploye[]>(`${this.uri}/list`).pipe(map(res => res));
+    return this._httpClient
+      .get<IEmploye[]>(`${this.uri}/list`)
+      .pipe(map(res => res));
   }
 
   getEmploye(id: string): Observable<IEmploye[]> {
     // implémentation de la route (repris de node js dans l'onglet route)
-    return this._httpClient.get<IEmploye[]>(`${this.uri}/${id}`).pipe(map(res => res));
+    return this._httpClient
+      .get<IEmploye[]>(`${this.uri}/${id}`)
+      .pipe(map(res => res));
   }
 
   addNewEmploye(newEmploye) {
-    return this._httpClient
-    .post(`${this.uri}/add/`, newEmploye)
-    .subscribe(
+    return this._httpClient.post(`${this.uri}/add/`, newEmploye).subscribe(
       (res: any) => {
-        console.log('Enregistrement terminé');
+        console.log("Enregistrement terminé");
         this.employes.push(res);
         this.emitEmploye();
       },
-      err => console.log('Erreur : ' + err)
+      err => console.log("Erreur : " + err)
     );
     // implémentation de la route (repris de node js dans l'onglet route)
     // const headers = new HttpHeaders();
@@ -59,11 +58,15 @@ export class EmployeService {
   }
 
   deleteEmploye(id: string) {
-    return this._httpClient.delete(`${this.uri}/delete/${id}`).pipe(map(res => res));
+    return this._httpClient
+      .delete(`${this.uri}/delete/${id}`)
+      .pipe(map(res => res));
   }
 
   DissocierEmploye(id: string): Observable<IEmploye[]> {
-    return this._httpClient.get<IEmploye[]>(`${this.uri}/dissocierEmploye/${id}`); // .pipe(map(res => res));
+    return this._httpClient.get<IEmploye[]>(
+      `${this.uri}/dissocierEmploye/${id}`
+    ); // .pipe(map(res => res));
   }
 
   // editEmployee(id: string): Observable<IEmploye[]> {
@@ -76,7 +79,9 @@ export class EmployeService {
   }
 
   emailExist(email: string): Observable<IEmploye[]> {
-    return this._httpClient.get<any>(`${this.uri}/email/${email}`).pipe(map(res => res));
+    return this._httpClient
+      .get<any>(`${this.uri}/email/${email}`)
+      .pipe(map(res => res));
   }
 
   updateEmploye(employe, id) {
@@ -86,11 +91,8 @@ export class EmployeService {
       .pipe(map(res => res));
   }
 
-  getSolde(id: string) {
+  getSolde(id) {
     console.log(`getSolde(${id})`);
-    const solde = this._httpClient.get(`${this.uri}/solde/${id}`);
-    console.log('solde', solde );
-    return solde;
+    return this._httpClient.get(`${this.uri}/solde/${id}`);
   }
-
 }
