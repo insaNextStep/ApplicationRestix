@@ -22,14 +22,15 @@ body {
   bottom: 0;
 }
 
-@media  screen and (max-width: 600px) {
-  div.container {
-    float: center;
-  }
-}
-
-@media  screen and (min-width: 600px) {
-  div.container #affichageInfo {
-    float: left;
-  }
+footer {
+  // position: absolute;
+  // bottom: 0;
+  display: table-row;
+  text-align: center;
+  height: 40px;
+  width: 100%;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), #5f4bea);
+  left: 0;
+  position: fixed;
+  bottom: 0;
 }

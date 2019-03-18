@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 // importer les fonctionnalité de HTTP pour travailler avec les méthode réposne/header
 // import { Http, Response, Headers } from '@angular/http';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 
-import { IEmploye } from "../_models/employe.interface";
-import { map } from "rxjs/operators";
-import { Observable, Subject } from "rxjs";
-import { MEmploye } from "../_models/employe.model";
-import { ITransaction } from "../_models/transaction.interface";
+import { IEmploye } from '../_models/employe.interface';
+import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { MEmploye } from '../_models/employe.model';
+import { ITransaction } from '../_models/transaction.interface';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class EmployeService {
   private employes: MEmploye[] = [];
@@ -44,11 +44,11 @@ export class EmployeService {
   addNewEmploye(newEmploye) {
     return this._httpClient.post(`${this.uri}/add/`, newEmploye).subscribe(
       (res: any) => {
-        console.log("Enregistrement terminé");
+        console.log('Enregistrement terminé');
         this.employes.push(res);
         this.emitEmploye();
       },
-      err => console.log("Erreur : " + err)
+      err => console.log('Erreur : ' + err)
     );
     // implémentation de la route (repris de node js dans l'onglet route)
     // const headers = new HttpHeaders();

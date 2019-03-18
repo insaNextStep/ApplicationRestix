@@ -59,6 +59,9 @@ export class BarreMenuComponent implements OnInit {
           default:
             console.log('aucun menu');
             this.menuActif = false;
+            this.menuEmploye = false;
+            this.menuCommercant = false;
+            this.menuEntreprise = false;
             break;
         }
       });

@@ -26,7 +26,7 @@ export class MesEmployesComponent implements OnInit {
   // listeEmployes = new MatTableDataSource<IEntreprise>();
   // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   // EntrepriseSubscription: Subscription;
-  displayColumns = [ 'nom', 'tel', 'email', 'restix'];
+  displayColumns = [ 'nom', 'restix', 'action'];
 
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 

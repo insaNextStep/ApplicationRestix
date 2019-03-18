@@ -4,11 +4,11 @@
 
 <div class="topnav" id="myTopnav" >
   <a class="nav-link" routerLink="/" routerLinkActive="active" >RESTIX</a>
-  <a class="nav-link" *ngIf="menuEmploye" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
-  <a class="nav-link" *ngIf="menuEmploye" routerLink="/ActiveCompte" routerLinkActive="active" >Mes dépenses</a>
-  <a class="nav-link" *ngIf="menuEntreprise" class="nav-link" (click)="ajouterEmployer()" >AjouterEmployer </a>
-  <a class="nav-link" *ngIf="menuEntreprise" routerLink="/mesEmployes" routerLinkActive="active">Mes employes</a>
-  <a class="nav-link" *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">Deconnexion</a>
+  <a class="nav-link navleft" *ngIf="menuEmploye" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
+  <a class="nav-link navleft" *ngIf="menuEmploye" routerLink="/ActiveCompte" routerLinkActive="active" >Mes dépenses</a>
+  <a class="nav-link navleft" *ngIf="menuEntreprise" class="nav-link" (click)="ajouterEmployer()" >AjouterEmployer </a>
+  <a class="nav-link navleft" *ngIf="menuEntreprise" routerLink="/mesEmployes" routerLinkActive="active">Mes employes</a>
+  <a class="nav-link navleft" *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">Deconnexion</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
