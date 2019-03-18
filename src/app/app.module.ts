@@ -76,7 +76,8 @@ export function getToken() {
   return localStorage.getItem('token');
 }
 
-const serverBackEnd = 'localhost:3000';
+// const serverBackEnd = 'localhost:3000';
+const serverBackEnd = 'https://restix.herokuapp.com';
 
 // déclaration des routes:
 const appRoutes: Routes = [

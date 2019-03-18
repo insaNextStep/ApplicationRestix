@@ -19,8 +19,8 @@ export class EmployeService {
   // transactionSubject:  new Subject<MTransaction[]>();
 
   employeSubject = new Subject<MEmploye[]>();
-  private uri = "http://localhost:3000/employes";
-  // private uri = 'https://restix.herokuapp.com/employes';
+  // private uri = "http://localhost:3000/employes";
+  private uri = 'https://restix.herokuapp.com/employes';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
