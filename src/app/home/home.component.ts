@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   // parallaxImage = '../../assets/imgs/background-photo.jpg';
-  backgroundImage = '../assets/imgs/background-photo.jpg';
+  backgroundImage = '/assets/imgs/background-photo.jpg';
   colorFlag: string;
   isBackgroundRed: string;
 

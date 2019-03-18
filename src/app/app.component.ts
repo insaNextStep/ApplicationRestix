@@ -26,7 +26,7 @@ export class AppComponent {
   }
 
   getUrl() {
-    return `url(../assets/imgs/background-photo.jpg)`;
+    return `url(/assets/imgs/background-photo.jpg)`;
   }
 
   // totalTransaction = 0;
