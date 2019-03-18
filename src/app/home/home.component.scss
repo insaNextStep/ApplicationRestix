@@ -45,10 +45,14 @@ h5 {
 
 
 .bgimg {
-  background-image: url('/assets/img/background-photo.jpg');
+  background: url('/assets/img/background-photo.jpg') ;
   height:100vh;
-  background-repeat: no-repeat;
-  background-attachment: fixed;    
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;    
   // position: fixed
   // widows: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;  
 }

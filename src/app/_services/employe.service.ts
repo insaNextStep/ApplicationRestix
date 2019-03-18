@@ -1,21 +1,20 @@
 import { Injectable } from "@angular/core";
 // importer les fonctionnalité de HTTP pour travailler avec les méthode réposne/header
 // import { Http, Response, Headers } from '@angular/http';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 import { IEmploye } from "../_models/employe.interface";
 import { map } from "rxjs/operators";
 import { Observable, Subject } from "rxjs";
 import { MEmploye } from "../_models/employe.model";
 import { ITransaction } from "../_models/transaction.interface";
-import { MTransaction } from "../_models/transactions.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class EmployeService {
   private employes: MEmploye[] = [];
-  private transactions: ITransaction[] = [];
+  // private transactions: ITransaction[] = [];
   // transactionSubject:  new Subject<MTransaction[]>();
 
   employeSubject = new Subject<MEmploye[]>();

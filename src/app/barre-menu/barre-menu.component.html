@@ -1,49 +1,51 @@
-<!--div class="bandeau_top"></div>
-<div class="logo">
-  <div class="container">
-    <div class="row">
-      <img src="../../assets/img/logo.png" class=" img-fluid">
-    </div>
-  </div>
-</div-->
-<nav class="navbar navbar-default barNav">
+<!--div class="bandeau_top"></div-->
+
+<!--nav class="navbar navbar-default barNav"-->
+
+<div class="topnav" id="myTopnav" >
+  <a class="nav-link" routerLink="/" routerLinkActive="active" >RESTIX</a>
+  <a class="nav-link" *ngIf="menuEmploye" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
+  <a class="nav-link" *ngIf="menuEmploye" routerLink="/ActiveCompte" routerLinkActive="active" >Mes dépenses</a>
+  <a class="nav-link" *ngIf="menuEntreprise" class="nav-link" (click)="ajouterEmployer()" >AjouterEmployer </a>
+  <a class="nav-link" *ngIf="menuEntreprise" routerLink="/mesEmployes" routerLinkActive="active">Mes employes</a>
+  <a class="nav-link" *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">Deconnexion</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+
+
+<!--nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <div class="container-fluid">
     <div class="navbar-header justify-content-start">
       <a class="navbar-brand font-weight-bold" routerLink="home" routerLinkActive="active">
-         <img src="/assets/img/logo.png" class=" img-fluid"></a>
+        <img src="/assets/img/logo.png" class=" img-fluid"></a>
     </div>
     <hr>
 
-    <nav class="nav  nav-pills justify-content-start" *ngIf="menuEmploye">
-      <li class="nav-item"><a class="nav-link" routerLink="/listEntreprises" routerLinkActive="active">
-       Opposition carte </a></li>
-      <li class="nav-item"><a class="nav-link" (click)="editProfil(actuelUtilisateur)">
-       Mon profile</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/ActiveCompte" routerLinkActive="active">
-       Mes dépenses</a></li>
-    </nav>
+
 
     <nav class="nav  nav-pills justify-content-start" *ngIf="menuEntreprise">
-        <li class="nav-item"><a class="nav-link" href="#">
-         Demande carte </a></li>
-         <li class="nav-item"><a class="nav-link" (click)="ajouterEmployer()">
-          employe+ </a></li>         
-        <li class="nav-item"><a class="nav-link" >
-         Mon profile</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/mesEmployes" routerLinkActive="active">
-         Mes employes</a></li>
-      </nav>   
-      
-      <nav class="nav  nav-pills justify-content-start" *ngIf="menuCommercant">
-          <li class="nav-item"><a class="nav-link" (click)="editProfil(actuelUtilisateur)">
-           Mon profile</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/mesVentes" routerLinkActive="active">
-           Mes ventes</a></li>
-        </nav>   
+      <li class="nav-item"><a class="nav-link" href="#">
+          Demande carte </a></li>
+      <li class="nav-item"><a class="nav-link" (click)="ajouterEmployer()">
+          employe+ </a></li>
+      <li class="nav-item"><a class="nav-link">
+          Mon profile</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/mesEmployes" routerLinkActive="active">
+          Mes employes</a></li>
+    </nav>
+
+    <nav class="nav  nav-pills justify-content-start" *ngIf="menuCommercant">
+      <li class="nav-item"><a class="nav-link" (click)="editProfil(actuelUtilisateur)">
+          Mon profile</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/mesVentes" routerLinkActive="active">
+          Mes ventes</a></li>
+    </nav>
 
     <hr>
     <nav class="nav  nav-pills justify-content-end">
-      <!-- Dropdown-->
 
       <li class="nav-item"><a *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">
           Deconnexion</a></li>
@@ -52,4 +54,4 @@
   </div>
 
 </nav>
-  <div class="bandeau_bottom"></div>
+<div class="bandeau_bottom"></div-->

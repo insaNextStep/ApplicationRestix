@@ -39,9 +39,13 @@
 
 .bgimg {
   background-image: url('src/assets/img/employeur.jpg');
-  height:100vh;
-  background-repeat: no-repeat;
-  background-attachment: fixed;    
+  height: 100vh;
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
   // position: fixed
   // widows: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;  
 }

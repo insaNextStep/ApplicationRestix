@@ -13,6 +13,7 @@ export class BarreMenuComponent implements OnInit {
   menuEmploye = false;
   menuEntreprise = false;
   menuCommercant = false;
+  menuActif = false;
   actuelUtilisateur = '';
   constructor(
     public _authService: AuthService,
@@ -34,29 +35,30 @@ export class BarreMenuComponent implements OnInit {
               this.menuEmploye = true;
               this.menuCommercant = false;
               this.menuEntreprise = false;
+              this.menuActif = true;
             }
             break;
           case 'COMMERCANT':
-            if (event.url === '/mesVentes') {
+            if (event.url === '/mesVentes' && this._authService.loggedIn()) {
               this.menuEmploye = false;
               this.menuCommercant = true;
               this.menuEntreprise = false;
+              this.menuActif = true;
             }
             break;
           case 'ADMIN':
             break;
           case 'ENTREPRISE':
-            if (event.url === '/mesEmployes') {
+            if (event.url === '/mesEmployes' && this._authService.loggedIn()) {
               this.menuEmploye = false;
               this.menuCommercant = false;
               this.menuEntreprise = true;
+              this.menuActif = true;
             }
             break;
           default:
             console.log('aucun menu');
-            this.menuEmploye = false;
-            this.menuCommercant = false;
-            this.menuEntreprise = false;
+            this.menuActif = false;
             break;
         }
       });
