@@ -20,15 +20,10 @@ import { ResizedEvent } from 'angular-resize-event';
   providers: [AuthService]
 })
 export class MesEmployesComponent implements OnInit {
-  // initialisation d'un tableau d'employés vide :
-  // liste: any;
   listeEmployes: IEmploye[];
   smallSize = false;
-  // listeEntreprise: IEntreprise[];
-  // listeEmployes = new MatTableDataSource<IEntreprise>();
-  // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  // EntrepriseSubscription: Subscription;
   displayColumns = [ 'nom', 'restix', 'action', 'editer', 'supprimer'];
+  nomEntreprise = '';
 
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -45,9 +40,6 @@ export class MesEmployesComponent implements OnInit {
     this._entrepriseService.getMesEmployes(id).subscribe(
       (res: any) => {
         this.listeEmployes = res.employes;
-        console.log('\n\n\npaginator');
-        // console.log(this.paginator);
-        console.log(this.listeEmployes);
       },
       err => {
         if (err instanceof HttpErrorResponse) {
@@ -81,12 +73,16 @@ export class MesEmployesComponent implements OnInit {
   }
 
   onResized(event: ResizedEvent) {
+
     if (event.newWidth > 700) {
-      this.smallSize = false;
+      // this.smallSize = false;
       this.displayColumns = [ 'nom', 'restix', 'editer', 'supprimer'];
-    } else {
-      this.smallSize = true;
+    } if (event.newWidth > 450) {
+      // this.smallSize = true;
       this.displayColumns = [ 'nom', 'restix', 'action'];
+    } else {
+      // this.smallSize = true;
+      this.displayColumns = [ 'nom', 'action'];
     }
   }
 
@@ -96,6 +92,7 @@ export class MesEmployesComponent implements OnInit {
     console.log(userValue);
     // décoder le token et récupérer l'id de l'employe
     const decodeToken = this._jwtHelperService.decodeToken(userValue.token);
+    this.nomEntreprise = decodeToken.nomEntreprise;
     return decodeToken.subject;
   }
 

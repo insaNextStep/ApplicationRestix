@@ -12,7 +12,7 @@
   <a class="nav-link navleft" *ngIf="menuCommercant" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
   <a class="nav-link navleft" *ngIf="menuCommercant" routerLink="/mesVentes" routerLinkActive="active">Mes ventes</a>  
   <a class="nav-link  pull-right" *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">Deconnexion</a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+  <a href="javascript:void(0);" class="icon" onclick="barMenu()">
     <i class="fa fa-bars"></i>
   </a>
 </div>

@@ -13,7 +13,7 @@ import { EntrepriseService } from 'src/app/_services/entreprise.service';
 @Component({
   selector: 'app-new-employe',
   templateUrl: './new-employe.component.html',
-  styleUrls: ['./new-employe.component.scss'],
+  styleUrls: ['./new-employe.component.scss']
 })
 export class NewEmployeComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
@@ -40,7 +40,6 @@ export class NewEmployeComponent implements OnInit {
       this.status = 'Editer profil';
       // this.statusBoutton = 'Mise à jour';
     }
-
 
     this.route.paramMap.subscribe(params => {
       this.idEmploye = params.get('id');
@@ -82,7 +81,7 @@ export class NewEmployeComponent implements OnInit {
   onSubmitForm(event) {
     const formValue = this.employeForm.value;
     formValue.entreprise = this.actuelEntreprise;
-    const newEmploye = new MEmploye (
+    const newEmploye = new MEmploye(
       formValue['nom'],
       formValue['prenom'],
       formValue['tel'],
@@ -90,7 +89,8 @@ export class NewEmployeComponent implements OnInit {
       formValue['entreprise']
     );
     console.log(newEmploye);
-    if (event === 'Formulaire d\'inscription') {
+    console.log('event :', event);
+    if (event === 'Nouvel Employe') {
       console.log('event : add');
       this._employeService.addNewEmploye(newEmploye);
       this._router.navigate(['/mesEmployes']);
