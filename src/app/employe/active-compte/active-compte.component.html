@@ -1,9 +1,11 @@
 <div class="bgimg">
   <div class="container" id="zoneAffichage">
-    <h2 style="text-align: center; margin-top:20%"> {{utilisateur}} </h2>
-    <h5 style="text-align: center" > Numéro Restix : {{restix}} </h5>
-    <h3 style="text-align: center" > Solde total : {{soldeT}}€ </h3>
-    <h3 style="text-align: center" > Solde journalier {{soldeJ}}€ </h3>
+    <div class="block">
+        <h2 style="text-align: center" id="infoNom"> {{utilisateur}} </h2>
+        <h5 style="text-align: center" > Numéro Restix : {{restix}} </h5>
+        <h3 style="text-align: center" id="infoSolde"> Solde total : {{soldeT}}€ </h3>
+        <h3 style="text-align: center" id="infoSolde"> Solde journalier {{soldeJ}}€ </h3>
+    </div>
     <table class="table">
       <thead>
         <tr>

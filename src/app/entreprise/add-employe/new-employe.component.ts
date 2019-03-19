@@ -37,7 +37,7 @@ export class NewEmployeComponent implements OnInit {
   ) {
     console.log(this.status);
     if (this.route.params['value'].id) {
-      this.status = 'Editez votre profile';
+      this.status = 'Editer profil';
       // this.statusBoutton = 'Mise à jour';
     }
 

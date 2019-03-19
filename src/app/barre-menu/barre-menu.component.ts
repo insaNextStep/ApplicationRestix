@@ -39,7 +39,7 @@ export class BarreMenuComponent implements OnInit {
             }
             break;
           case 'COMMERCANT':
-            if (event.url === '/mesVentes' && this._authService.loggedIn()) {
+            if ((event.url === ('/mesVentes')) && this._authService.loggedIn()) {
               this.menuEmploye = false;
               this.menuCommercant = true;
               this.menuEntreprise = false;
@@ -49,7 +49,7 @@ export class BarreMenuComponent implements OnInit {
           case 'ADMIN':
             break;
           case 'ENTREPRISE':
-            if (event.url === '/mesEmployes' && this._authService.loggedIn()) {
+            if ((event.url === ('/mesEmployes' || '/newEmploye')) && this._authService.loggedIn()) {
               this.menuEmploye = false;
               this.menuCommercant = false;
               this.menuEntreprise = true;
@@ -94,10 +94,10 @@ export class BarreMenuComponent implements OnInit {
         this._router.navigate(['/editEmploye', id]);
         break;
       case 'ENTREPRISE':
-        this._router.navigate(['/editEmploye', id]);
+        this._router.navigate(['/editEntreprise', id]);
         break;
       case 'COMMERCANT':
-        this._router.navigate(['/editEmploye', id]);
+        this._router.navigate(['/editCommercant', id]);
         break;
       default:
         break;

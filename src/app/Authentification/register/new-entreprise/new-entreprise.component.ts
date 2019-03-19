@@ -27,7 +27,7 @@ export class NewEntrepriseComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     if (this.route.params['value'].id) {
-      this.status = 'Edité votre profile';
+      this.status = 'Editer profil';
       // this.statusBoutton = 'Mise à jour';
     }
 

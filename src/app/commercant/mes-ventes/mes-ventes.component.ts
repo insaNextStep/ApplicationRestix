@@ -26,6 +26,7 @@ export class MesVentesComponent implements OnInit {
   transactions: any;
   transactionsSubscription: Subscription;
   tableau = [];
+  utilisateur = '';
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -34,7 +35,9 @@ export class MesVentesComponent implements OnInit {
     private _authService: AuthService,
     private _jwtHelperService: JwtHelperService,
     private _commercantService: CommercantService
-  ) {}
+  ) {
+
+  }
 
   afficherListeVentes(id: string) {
     // initialisation de la méthode pour récupérer les employés
@@ -60,6 +63,8 @@ export class MesVentesComponent implements OnInit {
     console.log(userValue);
     // décoder le token et récupérer l'id de l'employe
     const decodeToken = this._jwtHelperService.decodeToken(userValue.token);
+    this.utilisateur = decodeToken.nomCommercant;
+    console.log('decodeToken', decodeToken);
     return decodeToken.subject;
   }
 

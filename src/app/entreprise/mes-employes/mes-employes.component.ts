@@ -11,6 +11,7 @@ import { IEmploye } from 'src/app/_models/employe.interface';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ResizedEvent } from 'angular-resize-event';
 
 @Component({
   selector: 'app-mes-employes',
@@ -22,11 +23,12 @@ export class MesEmployesComponent implements OnInit {
   // initialisation d'un tableau d'employés vide :
   // liste: any;
   listeEmployes: IEmploye[];
+  smallSize = false;
   // listeEntreprise: IEntreprise[];
   // listeEmployes = new MatTableDataSource<IEntreprise>();
   // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   // EntrepriseSubscription: Subscription;
-  displayColumns = [ 'nom', 'restix', 'action'];
+  displayColumns = [ 'nom', 'restix', 'action', 'editer', 'supprimer'];
 
   // @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -71,6 +73,20 @@ export class MesEmployesComponent implements OnInit {
           },
           err => console.log('Erreur : ' + err)
         );
+    }
+  }
+
+  getSize() {
+    return this.smallSize;
+  }
+
+  onResized(event: ResizedEvent) {
+    if (event.newWidth > 700) {
+      this.smallSize = false;
+      this.displayColumns = [ 'nom', 'restix', 'editer', 'supprimer'];
+    } else {
+      this.smallSize = true;
+      this.displayColumns = [ 'nom', 'restix', 'action'];
     }
   }
 

@@ -29,6 +29,7 @@ il vous faut importer  FormsModule  depuis
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BarreMenuComponent } from './barre-menu/barre-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularResizedEventModule } from 'angular-resize-event';
 // import { from } from 'rxjs';
 
 // component créer
@@ -197,6 +198,7 @@ const appRoutes: Routes = [
     WavesModule,
     ButtonsModule,
     BrowserAnimationsModule,
+    AngularResizedEventModule,
     HttpClientModule,
     NgxMaskModule,
     ReactiveFormsModule,

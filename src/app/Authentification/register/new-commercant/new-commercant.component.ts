@@ -24,7 +24,7 @@ export class NewCommercantComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     if (this.route.params['value'].id) {
-      this.status = 'Edité votre profile';
+      this.status = 'Editer profil';
       // this.statusBoutton = 'Mise à jour';
     }
 
@@ -68,7 +68,7 @@ export class NewCommercantComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       ibanCommercant: ['', Validators.required],
       siretCommercant: ['', Validators.required],
-      tpe: ['', Validators.required]
+      tpe: ['', [Validators.required, Validators.minLength(14), Validators.minLength(14)]]
     });
   }
 

@@ -1,4 +1,4 @@
-<div class="bgimg">
+<div class="bgimg" (resized)="onResized($event)">
   <div class="container mat-elevation-z8">
     <br>
     <table mat-table [dataSource]="listeEmployes" class="my-custom-scrollbar">
@@ -16,10 +16,28 @@
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="action" class="max-width: 50px">
+      <ng-container matColumnDef="action" style="max-width: 50px" *ngIf="smallSize">
         <th mat-header-cell *matHeaderCellDef> action </th>
-        <td mat-cell *matCellDef="let element" > <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)" style="margin-right: 15px; margin-left: 10px" ><i class="fas fa-user-cog fa-2x" aria-hidden="true"></i></a> 
-       <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)"><i class="fas fa-user-slash fa-2x" ></i></a>     </td>
+        <td mat-cell *matCellDef="let element"> <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)"
+            style="margin-right: 15px; margin-left: 10px"><i class="fas fa-user-cog fa-2x" aria-hidden="true"></i></a>
+          <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)"><i class="fas fa-user-slash fa-2x"></i></a>
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="editer" style="max-width: 50px" >
+        <th mat-header-cell *matHeaderCellDef> Editer </th>
+        <td mat-cell *matCellDef="let element"> <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)"
+            style="margin:auto" >Editer</a>
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="supprimer" style="max-width: 50px" >
+        <th mat-header-cell *matHeaderCellDef> Supprimer </th>
+        <td mat-cell *matCellDef="let element"> <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)"
+            style="margin:auto" >Supprimer</a>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>

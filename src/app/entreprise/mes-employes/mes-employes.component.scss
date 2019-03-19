@@ -2,7 +2,6 @@
 
 .container {
   background-color: rgba(255, 255, 255, 0.6);
-  width: 500px; 
 }
 
 .my-custom-scrollbar {
@@ -61,14 +60,16 @@ th {
     background-size: cover;  
   }
 
-  @media  screen and (max-width: 600px) {
+  @media  screen and (max-width: 700px) {
     div.container {
       float: center;
+      
     }
   }
 
-  @media  screen and (min-width: 600px) {
+  @media  screen and (min-width: 700px) {
     div.container {
       float: left;
+      margin-left: 30px;
     }
   }

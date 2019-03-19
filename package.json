@@ -30,6 +30,7 @@
     "angular-font-awesome": "^3.1.2",
     "angular-gauge-chart": "^0.5.0",
     "angular-material": "^1.1.13",
+    "angular-resize-event": "^1.0.0",
     "angular-user-idle": "^2.1.1",
     "angular2-fusioncharts": "^1.0.3",
     "boostrap": "^2.0.0",
