@@ -100,6 +100,10 @@ export class NewCommercantComponent implements OnInit {
     // this._router.navigate(['/listCommercants']);
   }
 
+  lireEnseigne(event: string) {
+    console.log('lireEnseigne', event['path'][0].value);
+  }
+
   focusOutFunction(event: string) {
     this.loginExist = false;
     if (event['path'][0].value) {

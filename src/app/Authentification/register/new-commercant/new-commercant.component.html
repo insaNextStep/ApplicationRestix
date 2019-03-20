@@ -9,7 +9,7 @@
               <form [formGroup]="commercantForm" (ngSubmit)="onSubmitForm(status)">
                 <div class="form-group">
                   <label for="nomCommercant">Enseigne commercant</label>
-                  <input type="text" class="form-control" id="nomCommercant" formControlName="nomCommercant" ngModel
+                  <input type="text" class="form-control" id="nomCommercant" formControlName="nomCommercant" (focusout)="lireEnseigne($event)" ngModel
                     required>
                 </div>
                 <div class="form-group">
