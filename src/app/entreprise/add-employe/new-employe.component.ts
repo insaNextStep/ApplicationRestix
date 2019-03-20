@@ -101,8 +101,11 @@ export class NewEmployeComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => {
-            this._location.back();
-            // this._router.navigate(['/mesEmployes']);
+            if (this._authService.getRole() !== 'EMPLOYE') {
+              this._router.navigate(['/mesEmployes']);
+            } else {
+              this._router.navigate(['/ActiveCompte']);
+            }
           },
           err => console.log('Erreur : ' + err)
         );

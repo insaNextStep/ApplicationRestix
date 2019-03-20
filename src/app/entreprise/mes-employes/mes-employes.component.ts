@@ -40,6 +40,7 @@ export class MesEmployesComponent implements OnInit {
     this._entrepriseService.getMesEmployes(id).subscribe(
       (res: any) => {
         this.listeEmployes = res.employes;
+        this.listeEmployes.sort((a, b) => a.nom.localeCompare(b.nom));
       },
       err => {
         if (err instanceof HttpErrorResponse) {
