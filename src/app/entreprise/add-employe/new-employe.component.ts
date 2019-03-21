@@ -22,7 +22,7 @@ export class NewEmployeComponent implements OnInit {
   status = 'Nouvel Employe';
   idEmploye = '';
   private actuelEntreprise: any;
-
+  submitted = false;
   loginExist = false;
 
   constructor(
@@ -72,14 +72,97 @@ export class NewEmployeComponent implements OnInit {
 
   initForm() {
     this.employeForm = this._formBuilder.group({
-      nom: ['', Validators.required],
-      prenom: ['', Validators.required],
-      tel: ['', Validators.required],
+      nom: ['', [Validators.required, Validators.minLength(4)]],
+      prenom: ['', [Validators.required, Validators.minLength(4)]],
+      tel: [
+        '',
+        [Validators.required, Validators.pattern(/^0[1-9]( *[0-9]{2}){4}$/)]
+      ],
       email: ['', [Validators.required, Validators.email]]
     });
   }
 
+  get f() {
+    return this.employeForm.controls;
+  }
+
   onSubmitForm(event) {
+    const email = this.f.email.value;
+    if (this.f.email.value) {
+      this._employeService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = true;
+          return;
+        } else {
+          this.loginExist = false;
+          this.faireSubmit(event);
+        }
+      });
+    }
+
+    this.submitted = true;
+
+    if (this.employeForm.invalid) {
+      if (this.employeForm['prenom'].errors) {
+        // console.log(this.employeForm['siretCommercant'].errors);
+      }
+
+      if (this.employeForm['nom'].errors) {
+        // console.log(this.employeForm['siretCommercant'].errors);
+      }
+
+      if (this.employeForm['tel'].errors) {
+        // console.log(this.employeForm['siretCommercant'].errors);
+      }
+
+      if (this.employeForm['email'].errors) {
+        // console.log(this.employeForm['siretCommercant'].errors);
+      }
+
+      this.submitted = false;
+      return;
+    }
+    // this._router.navigate(['/listEntreprise']);
+  }
+
+  ngOnInit() {
+    // console.log(this._authService.currentEmployeValue);
+    const token = this._authService.getToken();
+    console.log('token : ' + token);
+    if (token) {
+      const decodeToken = this._jwtHelperService.decodeToken(token);
+      console.log('entrepriseId : ' + decodeToken.subject);
+      this._entrepriseService.getEntrepriseName(decodeToken.subject).subscribe(
+        res => {
+          this.actuelEntreprise = res;
+          console.log(this.actuelEntreprise);
+        },
+        err => {
+          console.log('erreur :' + err);
+        }
+      );
+    } else {
+      this.actuelEntreprise = '';
+    }
+    // console.log(this._authService.currentEmployeValue);
+    this.initForm();
+  }
+
+  // focusOutFunction(event: string) {
+  //   this.loginExist = false;
+  //   if (event['path'][0].value) {
+  //     const email = event['path'][0].value;
+  //     this._employeService.emailExist(email).subscribe((res: any) => {
+  //       console.log(res);
+  //       if (res.message === 'err') {
+  //         this.loginExist = true;
+  //       }
+  //     });
+  //   }
+  // }
+
+  faireSubmit(event) {
     const formValue = this.employeForm.value;
     formValue.entreprise = this.actuelEntreprise;
     const newEmploye = new MEmploye(
@@ -110,43 +193,6 @@ export class NewEmployeComponent implements OnInit {
           },
           err => console.log('Erreur : ' + err)
         );
-    }
-    // this._router.navigate(['/listEntreprise']);
-  }
-
-  ngOnInit() {
-    // console.log(this._authService.currentEmployeValue);
-    const token = this._authService.getToken();
-    console.log('token : ' + token);
-    if (token) {
-      const decodeToken = this._jwtHelperService.decodeToken(token);
-      console.log('entrepriseId : ' + decodeToken.subject);
-      this._entrepriseService.getEntrepriseName(decodeToken.subject).subscribe(
-        res => {
-          this.actuelEntreprise = res;
-          console.log(this.actuelEntreprise);
-        },
-        err => {
-          console.log('erreur :' + err);
-        }
-      );
-    } else {
-      this.actuelEntreprise = '';
-    }
-    // console.log(this._authService.currentEmployeValue);
-    this.initForm();
-  }
-
-  focusOutFunction(event: string) {
-    this.loginExist = false;
-    if (event['path'][0].value) {
-      const email = event['path'][0].value;
-      this._employeService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
-        if (res.message === 'err') {
-          this.loginExist = true;
-        }
-      });
     }
   }
 }

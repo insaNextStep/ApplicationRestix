@@ -21,7 +21,7 @@
 
                 <div class="form-group">
                   <label for="tel">Telephone</label>
-                  <input type="text" class="form-control" id="tel" 
+                  <input type="number" class="form-control" id="tel" 
                   formControlName="tel" [ngClass]="{ 'is-invalid': submitted && f.tel.errors }" />
                   <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
                     <div *ngIf="f.tel.errors.required">Ce champ est obligatoire</div>
@@ -31,7 +31,7 @@
 
                 <div class="form-group">
                   <label for="email">Adresse Email</label>
-                  <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.siretCommercant.errors }" />
+                  <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.email.errors.email">Format 'nom@domaine.tld' doit etre respecté</div>
@@ -42,7 +42,7 @@
                 <div class="form-group">
                   <label for="ibanCommercant">IBAN</label>
                   <input type="text" class="form-control" id="ibanCommercant" formControlName="ibanCommercant"
-                    [ngClass]="{ 'is-invalid': submitted && f.siretCommercant.errors }" />
+                    [ngClass]="{ 'is-invalid': submitted && f.ibanCommercant.errors }" />
                   <div *ngIf="submitted && f.ibanCommercant.errors" class="invalid-feedback">
                     <div *ngIf="f.ibanCommercant.errors.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.ibanCommercant.errors.minlength">Au minimum 27 chiffres</div>
@@ -55,7 +55,7 @@
                   <label for="siretCommercant">SIRET</label>
                   <!--input type="string" class="form-control" id="siretCommercant" formControlName="siretCommercant"
                     ngModel required-->
-                  <input type="text" name="siretCommercant" id="siretCommercant" class="form-control" formControlName="siretCommercant"
+                  <input type="number" name="siretCommercant" id="siretCommercant" class="form-control" formControlName="siretCommercant"
                     [ngClass]="{ 'is-invalid': submitted && f.siretCommercant.errors }" />
                   <div *ngIf="submitted && f.siretCommercant.errors" class="invalid-feedback">
                     <div *ngIf="f.siretCommercant.errors.required">Ce champ est obligatoire</div>
@@ -67,7 +67,7 @@
 
                 <div class="form-group">
                   <label for="tpe">numero TPE</label>
-                  <input type="text" class="form-control" id="tpe" formControlName="tpe" [ngClass]="{ 'is-invalid': submitted && f.tpe.errors }" />
+                  <input type="number" class="form-control" id="tpe" formControlName="tpe" [ngClass]="{ 'is-invalid': submitted && f.tpe.errors }" />
                   <div *ngIf="submitted && f.tpe.errors" class="invalid-feedback">
                     <div *ngIf="f.tpe.errors.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.tpe.errors.minlength">Au minimum 12 chiffres</div>

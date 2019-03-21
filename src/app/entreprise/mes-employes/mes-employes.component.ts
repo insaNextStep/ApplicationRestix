@@ -33,7 +33,9 @@ export class MesEmployesComponent implements OnInit {
     private _authService: AuthService,
     private _jwtHelperService: JwtHelperService,
     private _employeService: EmployeService
-  ) {}
+  ) {
+    this.afficherListeEmployes(this.idEntreprise());
+  }
 
   afficherListeEmployes(id: string) {
     // initialisation de la méthode pour récupérer les employés

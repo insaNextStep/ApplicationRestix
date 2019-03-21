@@ -122,6 +122,27 @@ export class NewCommercantComponent implements OnInit {
       if (this.commercantForm['siretCommercant'].errors) {
         // console.log(this.commercantForm['siretCommercant'].errors);
       }
+
+      if (this.commercantForm['nomCommercant'].errors) {
+        // console.log(this.commercantForm['siretCommercant'].errors);
+      }
+
+      if (this.commercantForm['tel'].errors) {
+        // console.log(this.commercantForm['siretCommercant'].errors);
+      }
+
+      if (this.commercantForm['email'].errors) {
+        // console.log(this.commercantForm['siretCommercant'].errors);
+      }
+
+      if (this.commercantForm['ibanCommercant'].errors) {
+        // console.log(this.commercantForm['siretCommercant'].errors);
+      }
+
+      if (this.commercantForm['tpe'].errors) {
+        // console.log(this.commercantForm['siretCommercant'].errors);
+      }
+
       this.submitted = false;
       return;
     }
