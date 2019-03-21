@@ -51,9 +51,10 @@ export class NewEntrepriseComponent implements OnInit {
   }
 
   editEntreprise(entreprise) {
+    const tel = '0' + entreprise.tel;
     this.entrepriseForm.patchValue({
       nomEntreprise: entreprise.nomEntreprise,
-      tel: entreprise.tel,
+      tel: tel,
       email: entreprise.email,
       ibanEntreprise: entreprise.ibanEntreprise,
       siretEntreprise: entreprise.siretEntreprise

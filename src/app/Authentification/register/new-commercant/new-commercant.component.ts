@@ -16,6 +16,7 @@ export class NewCommercantComponent implements OnInit {
   status = 'Formulaire d\'inscription';
   idCommercant = '';
   loginExist = false;
+  submitted = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -47,9 +48,10 @@ export class NewCommercantComponent implements OnInit {
   }
 
   editCommercant(commercant) {
+    const tel = '0' + commercant.tel;
     this.commercantForm.patchValue({
       nomCommercant: commercant.nomCommercant,
-      tel: commercant.tel,
+      tel: tel,
       email: commercant.email,
       ibanCommercant: commercant.ibanCommercant,
       siretCommercant: commercant.siretCommercant,
@@ -58,21 +60,74 @@ export class NewCommercantComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initForm();
-  }
-
-  initForm() {
     this.commercantForm = this._formBuilder.group({
-      nomCommercant: ['', Validators.required],
-      tel: ['', Validators.required],
+      nomCommercant: ['', [Validators.required, Validators.minLength(4)]],
+      tel: [
+        '',
+        [Validators.required, Validators.pattern(/^0[1-9]( *[0-9]{2}){4}$/)]
+      ],
       email: ['', [Validators.required, Validators.email]],
-      ibanCommercant: ['', Validators.required],
-      siretCommercant: ['', Validators.required],
-      tpe: ['', [Validators.required, Validators.minLength(14), Validators.minLength(14)]]
+      ibanCommercant: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(27),
+          Validators.maxLength(27)
+        ]
+      ],
+      siretCommercant: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(14),
+          Validators.maxLength(14),
+          Validators.pattern(/^[1-9][0-9]{13}$/)
+        ]
+      ],
+      tpe: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(12),
+          Validators.maxLength(12),
+          Validators.pattern(/^1[0-9]{11}$/)
+        ]
+      ]
     });
   }
 
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.commercantForm.controls;
+  }
+
   onSubmitForm(event) {
+    const email = this.f.email.value;
+    if (this.f.email.value) {
+      this._commercantService.emailExist(email).subscribe((res: any) => {
+        console.log(res);
+        if (res.message === 'err') {
+          this.loginExist = true;
+          return;
+        } else {
+          this.loginExist = false;
+          this.faireSubmit(event);
+        }
+      });
+    }
+
+    this.submitted = true;
+
+    if (this.commercantForm.invalid) {
+      if (this.commercantForm['siretCommercant'].errors) {
+        // console.log(this.commercantForm['siretCommercant'].errors);
+      }
+      this.submitted = false;
+      return;
+    }
+  }
+
+  faireSubmit(event) {
     const formValue = this.commercantForm.value;
     const newCommercant = new MCommercant(
       formValue['nomCommercant'],
@@ -80,40 +135,26 @@ export class NewCommercantComponent implements OnInit {
       formValue['email'],
       formValue['ibanCommercant'],
       formValue['siretCommercant'],
-      formValue['tpe'],
+      formValue['tpe']
     );
+
     if (event === 'Formulaire d\'inscription') {
       console.log('event : add');
       this._commercantService.addCommercant(newCommercant);
       this._router.navigate(['/listCommercants']);
     } else {
       console.log('event : update');
-      this._commercantService.updateCommercant(newCommercant, this.idCommercant)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this._router.navigate(['/listCommercants']);
-        },
-        err => console.log('Erreur : ' + err)
-      );
+      this._commercantService
+        .updateCommercant(newCommercant, this.idCommercant)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._router.navigate(['/listCommercants']);
+          },
+          err => console.log('Erreur : ' + err)
+        );
     }
     // this._router.navigate(['/listCommercants']);
   }
 
-  lireEnseigne(event: string) {
-    console.log('lireEnseigne', event['path'][0].value);
-  }
-
-  focusOutFunction(event: string) {
-    this.loginExist = false;
-    if (event['path'][0].value) {
-      const email = event['path'][0].value;
-      this._commercantService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
-        if (res.message === 'err') {
-          this.loginExist = true;
-        }
-      });
-    }
-  }
 }

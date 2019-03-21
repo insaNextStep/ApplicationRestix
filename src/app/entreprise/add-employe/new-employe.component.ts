@@ -61,10 +61,11 @@ export class NewEmployeComponent implements OnInit {
   }
 
   editEmploye(employe) {
+    const tel = '0' + employe.tel;
     this.employeForm.patchValue({
       nom: employe.nom,
       prenom: employe.prenom,
-      tel: employe.tel,
+      tel: tel,
       email: employe.email
     });
   }
