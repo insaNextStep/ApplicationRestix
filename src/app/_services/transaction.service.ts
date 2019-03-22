@@ -19,8 +19,8 @@ export class TransactionService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  private uriEmploye = 'http://localhost:3000/employes/transactions';
-  // private uriEmploye = 'https://restix.herokuapp.com/employes/transactions';
+  // private uriEmploye = 'http://localhost:3000/employes/transactions';
+  private uriEmploye = 'https://restix.herokuapp.com/employes/transactions';
 
   emitTransaction() {
     this.transactionSubject.next(this.transactions.slice());
