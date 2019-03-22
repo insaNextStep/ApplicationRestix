@@ -3,9 +3,10 @@ export class MEntreprise {
   // _id: string;
   constructor(
     public nomEntreprise: string,
-    public tel: string,
+    public tel: number,
     public email: string,
     public ibanEntreprise: string,
-    public siretEntreprise: string,
+    public siretEntreprise: number,
+    public password?: string
   ) {}
 }

@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                   <label for="tel">Telephone</label>
-                  <input type="number" class="form-control" id="tel" 
+                  <input type="text" class="form-control" id="tel" 
                   formControlName="tel" [ngClass]="{ 'is-invalid': submitted && f.tel.errors }" />
                   <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
                     <div *ngIf="f.tel.errors.required">Ce champ est obligatoire</div>

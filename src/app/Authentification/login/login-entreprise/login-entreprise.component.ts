@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserIdleService } from 'angular-user-idle';
+import { Router } from '@angular/router';
+// import { UserIdleService } from 'angular-user-idle';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
-import { IEntreprise } from 'src/app/_models/entreprise.interface';
+// import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MLogin } from 'src/app/_models/login.model';
 
 @Component({
   selector: 'app-login-entreprise',
@@ -12,60 +14,64 @@ import { EntrepriseService } from 'src/app/_services/entreprise.service';
   styleUrls: ['./login-entreprise.component.scss']
 })
 export class LoginEntrepriseComponent implements OnInit {
+  entrepriseForm: FormGroup;
   compteUtilisateur: any = {};
   titre = 'Zone de connexion entreprise';
   loginExist = false;
   errPassword = false;
+  submitted = false;
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private userIdle: UserIdleService,
-    private route: ActivatedRoute,
+    // private userIdle: UserIdleService,
+    // private route: ActivatedRoute,
     private _appComponent: AppComponent,
-    private _entrepriseService: EntrepriseService
+    private _entrepriseService: EntrepriseService,
+    private _formBuilder: FormBuilder,
   ) {}
 
   ngOnInit() {
-    // Start watching for user inactivity.
-    // this.userIdle.startWatching();
-    // // Start watching when user idle is starting.
-    // this.userIdle.onTimerStart().subscribe(count => console.log(count));
-    // // Start watch when time is up.
-    // this.userIdle.onTimeout().subscribe(() => this._authService.logout());
+    this.entrepriseForm = this._formBuilder.group(
+      {
+        email: ['', Validators.required],
+        password: ['', Validators.required]
+      });
   }
 
-  // stop() {
-  //   console.log('stop');
-  //   this.userIdle.stopTimer();
-  // }
+  get f() {
+    return this.entrepriseForm.controls;
+  }
 
-  // stopWatching() {
-  //   console.log('stopWatching');
-  //   this.userIdle.stopWatching();
-  // }
+  onSubmitForm() {
+    this.submitted = true;
 
-  // startWatching() {
-  //   console.log('startWatching');
-  //   this.userIdle.startWatching();
-  // }
+    if (this.entrepriseForm.invalid) {
+      // this.submitted = false;
+      return;
+    } else {
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.donneesFormulaire();
+    }
+  }
 
-  // restart() {
-  //   console.log('restart');
-  //   this.userIdle.resetTimer();
-  // }
 
   donneesFormulaire() {
-    console.log('login Entreprise :');
-    console.log(this.compteUtilisateur);
-    this._authService.loginEntreprise(this.compteUtilisateur).subscribe(
+    console.log('login entreprise :');
+    const formValue = this.entrepriseForm.value;
+    const newLogin = new MLogin(
+      formValue['email'],
+      formValue['password']
+    );
+
+
+    // console.log(this.compteUtilisateur);
+    this._authService.loginEntreprise(newLogin).subscribe(
       res => {
         console.log(res);
-        //       // enregistrement local du token
-        // const token = localStorage.setItem('token', res.token);
-        // const role = localStorage.setItem('role', res.role);
-        //       console.log('token : ' + token + '\nrole : ' + role);
         this._appComponent.isAuth = true;
+        this.errPassword = false;
         this._router.navigate(['/mesEmployes']);
       },
       err => this.errPassword = true
@@ -85,3 +91,34 @@ export class LoginEntrepriseComponent implements OnInit {
       });
   }}
 }
+
+  // donneesFormulaire() {
+  //   console.log('login Entreprise :');
+  //   console.log(this.compteUtilisateur);
+  //   this._authService.loginEntreprise(this.compteUtilisateur).subscribe(
+  //     res => {
+  //       console.log(res);
+  //       //       // enregistrement local du token
+  //       // const token = localStorage.setItem('token', res.token);
+  //       // const role = localStorage.setItem('role', res.role);
+  //       //       console.log('token : ' + token + '\nrole : ' + role);
+  //       this._appComponent.isAuth = true;
+  //       this._router.navigate(['/mesEmployes']);
+  //     },
+  //     err => this.errPassword = true
+  //   );
+  // }
+
+  // focusOutFunction(event: string) {
+  //   if (event['path'][0].value) {
+  //     const email = event['path'][0].value;
+  //     this._entrepriseService.emailExist(email).subscribe((res: any) => {
+  //       console.log(res);
+  //       if (res.message === 'err') {
+  //         this.loginExist = false;
+  //       } else {
+  //          this.loginExist = true;
+  //       }
+  //     });
+  // }}
+// }

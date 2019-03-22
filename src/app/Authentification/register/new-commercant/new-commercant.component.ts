@@ -4,9 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommercantService } from 'src/app/_services/commercant.service';
 import { MCommercant } from 'src/app/_models/commercant.model';
 import { first } from 'rxjs/operators';
-// import custom validator to validate that password and confirm password fields match
+import { AuthService } from 'src/app/_services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
-// import { UniqueEmail } from 'src/app/_helpers/must-unique-email.validator';
+import { resolveTimingValue } from '@angular/animations/browser/src/util';
 
 @Component({
   selector: 'app-new-commercant',
@@ -16,93 +17,36 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 })
 export class NewCommercantComponent implements OnInit {
   commercantForm: FormGroup;
-  commercant: MCommercant;
-  status = 'Formulaire d\'inscription';
-  idCommercant = '';
-  loginExist = false;
+  // commercant: MCommercant;
+  // statusForm = 'Formulaire d\'inscription';
+  // idCommercant = '';
+  // loginExist = false;
   submitted = false;
-  hinibPW = false;
+  // originEmail = '';
+  tableDonnees: {
+    email: true,
+    iban: true,
+    tpe: true,
+    siret: true
+  };
+
+  eleUnique = {
+    email: true,
+    iban: true,
+    tpe: true,
+    siret: true
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _commercantService: CommercantService,
-    private route: ActivatedRoute
+    // private route: ActivatedRoute,
+    private _authService: AuthService
   ) {
-    this.route.paramMap.subscribe(params => {
-      this.idCommercant = params.get('id');
-      if (this.idCommercant) {
-        this.recupererCommercant(this.idCommercant);
-      }
-    });
-  }
-
-  UniqueEmailValidator(controlName: string) {
-    console.log('controle mail');
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName].value;
-      if (control) {
-        this._commercantService.emailExist(control).subscribe((res: any) => {
-          console.log(res);
-          if (res.message === 'err') {
-            control.setErrors(null);
-          } else {
-            control.setErrors({ uniqueEmail: true });
-          }
-        });
-      }
-    };
-  }
-  // statusBoutton = 'Soumettre';
-  recupererCommercant(id: string) {
-    this._commercantService
-      .getCommercant(id)
-      .subscribe(
-        commercant => this.editCommercant(commercant),
-        err => console.log('Erreur chargement : ' + err)
-      );
-  }
-
-  faireSubmit(event) {
-    const formValue = this.commercantForm.value;
-    const newCommercant = new MCommercant(
-      formValue['nomCommercant'],
-      formValue['tel'],
-      formValue['email'],
-      formValue['ibanCommercant'],
-      formValue['siretCommercant'],
-      formValue['tpe'],
-      formValue['password']
-    );
-
-    if (event === 'Formulaire d\'inscription') {
-      console.log('event : add');
-      this._commercantService.addCommercant(newCommercant);
-      this._router.navigate(['/mesVentes']);
-    } else {
-      console.log('event : update');
-      this._commercantService
-        .updateCommercant(newCommercant, this.idCommercant)
-        .pipe(first())
-        .subscribe(
-          () => {
-            this._router.navigate(['/mesVentes']);
-          },
-          err => console.log('Erreur : ' + err)
-        );
-    }
-    // this._router.navigate(['/listCommercants']);
-  }
-
-  editCommercant(commercant) {
-    const tel = '0' + commercant.tel;
-    this.commercantForm.patchValue({
-      nomCommercant: commercant.nomCommercant,
-      tel: tel,
-      email: commercant.email,
-      ibanCommercant: commercant.ibanCommercant,
-      siretCommercant: commercant.siretCommercant,
-      tpe: commercant.tpe
+    this._commercantService.getAll().subscribe(res => {
+      console.log(res);
+      this.tableDonnees = res as any;
     });
   }
 
@@ -128,8 +72,7 @@ export class NewCommercantComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(14),
-            Validators.maxLength(14),
-            Validators.pattern(/^[1-9][0-9]{13}$/)
+            Validators.maxLength(14)
           ]
         ],
         tpe: [
@@ -137,10 +80,11 @@ export class NewCommercantComponent implements OnInit {
           [
             Validators.required,
             Validators.minLength(12),
-            Validators.maxLength(12),
-            Validators.pattern(/^1[0-9]{11}$/)
+            Validators.maxLength(12)
           ]
-        ]
+        ],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required]
       },
       {
         validator: MustMatch('password', 'confirmPassword')
@@ -148,52 +92,87 @@ export class NewCommercantComponent implements OnInit {
     );
   }
 
+  testUnique(tableau, valeur) {
+    const resltat = tableau.find(el => {
+      return el === valeur;
+    });
+    return resltat === valeur ? false : true;
+  }
+
+  uniqueElement(element) {
+    console.log('zone de control unique');
+    switch (element) {
+      case 'email':
+        this.eleUnique.email = this.testUnique(
+          this.tableDonnees.email,
+          this.f.email.value
+        );
+        // console.log('email unique ? ' + this.eleUnique.email);
+        break;
+
+      case 'tpe':
+        this.eleUnique.tpe = this.testUnique(
+          this.tableDonnees.tpe,
+          this.f.tpe.value
+        );
+        // console.log('tpe unique ? ' + this.eleUnique.tpe);
+        break;
+
+      case 'siret':
+        this.eleUnique.siret = this.testUnique(
+          this.tableDonnees.siret,
+          this.f.siretCommercant.value
+        );
+        // console.log('siret unique ? ' + this.eleUnique.siret);
+        break;
+
+      case 'iban':
+        this.eleUnique.iban = this.testUnique(
+          this.tableDonnees.iban,
+          this.f.ibanCommercant.value
+        );
+        // console.log('iban unique ? ' + this.eleUnique.iban);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   // convenience getter for easy access to form fields
   get f() {
     return this.commercantForm.controls;
   }
 
-  onSubmitForm(event) {
+  onSubmitForm() {
     this.submitted = true;
-    console.log(this.commercantForm);
-
-    const email = this.f.email.value;
-    if (email && !this.hinibPW) {
-      this._commercantService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
-        if (res.message === 'err') {
-          this.loginExist = true;
-          return;
-        } else {
-          this.loginExist = false;
-        }
-      });
-    }
 
     if (this.commercantForm.invalid) {
-      // if (this.commercantForm.invalid) {
-      if (this.commercantForm['nomCommercant'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-
-      if (this.commercantForm['tel'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-
-      if (this.commercantForm['email'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-
-      if (this.commercantForm['ibanCommercant'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-      if (this.commercantForm['tpe'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-      this.submitted = false;
+      // this.submitted = false;
       return;
     } else {
-      this.faireSubmit(event);
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.faireSubmit();
     }
+  }
+
+  faireSubmit() {
+    const formValue = this.commercantForm.value;
+    const newCommercant = new MCommercant(
+      formValue['nomCommercant'],
+      formValue['tel'],
+      formValue['email'],
+      formValue['ibanCommercant'],
+      formValue['siretCommercant'],
+      formValue['tpe'],
+      formValue['password']
+    );
+
+    console.log('event : create');
+    const resultat = this._authService.registerCommercant(newCommercant);
+    console.log('resultat', resultat);
+    this._authService.regUser(resultat);
+    this._router.navigate(['/mesVentes']);
   }
 }

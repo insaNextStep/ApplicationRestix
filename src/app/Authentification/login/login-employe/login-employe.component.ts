@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserIdleService } from 'angular-user-idle';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
-import { IEmploye } from 'src/app/_models/employe.interface';
-import { AlertService } from 'src/app/_services/alert.service';
 import { EmployeService } from 'src/app/_services/employe.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MLogin } from 'src/app/_models/login.model';
 
 @Component({
   selector: 'app-login-employe',
@@ -13,67 +12,62 @@ import { EmployeService } from 'src/app/_services/employe.service';
   styleUrls: ['./login-employe.component.scss']
 })
 export class LoginEmployeComponent implements OnInit {
-
+  employeForm: FormGroup;
   compteUtilisateur: any = {};
   titre = 'Zone de connexion employé';
   loginExist = false;
   errPassword = false;
+  submitted = false;
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private _alertService: AlertService,
-    private _userIdle: UserIdleService,
-    private _route: ActivatedRoute,
     private _employeService: EmployeService,
-    private _appComponent: AppComponent
-  ) { }
+    private _appComponent: AppComponent,
+    private _formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
-    // Start watching for user inactivity.
-    // this.userIdle.startWatching();
-
-    // // Start watching when user idle is starting.
-    // this.userIdle.onTimerStart().subscribe(count => console.log(count));
-
-    // // Start watch when time is up.
-    // this.userIdle.onTimeout().subscribe(() => this._authService.logout());
+    this.employeForm = this._formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  // stop() {
-  //   console.log('stop');
-  //   this.userIdle.stopTimer();
-  // }
+  get f() {
+    return this.employeForm.controls;
+  }
 
-  // stopWatching() {
-  //   console.log('stopWatching');
-  //   this.userIdle.stopWatching();
-  // }
+  onSubmitForm() {
+    this.submitted = true;
 
-  // startWatching() {
-  //   console.log('startWatching');
-  //   this.userIdle.startWatching();
-  // }
-
-  // restart() {
-  //   console.log('restart');
-  //   this.userIdle.resetTimer();
-  // }
+    if (this.employeForm.invalid) {
+      // this.submitted = false;
+      return;
+    } else {
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.donneesFormulaire();
+    }
+  }
 
   donneesFormulaire() {
-    console.log('this.compteUtilisateur :');
-    console.log(this.compteUtilisateur);
-    this._authService.loginEmploye(this.compteUtilisateur).subscribe(
+    console.log('login employe :');
+    const formValue = this.employeForm.value;
+    const newLogin = new MLogin(
+      formValue['email'],
+      formValue['password']
+      );
+
+    // console.log(this.compteUtilisateur);
+    this._authService.loginEmploye(newLogin).subscribe(
       res => {
         console.log(res);
-        //       // enregistrement local du token
-        // const token = localStorage.setItem('currentUser', res.token);
-        // const role = localStorage.setItem('currentUser', res.role);
-        //       console.log('token : ' + token + '\nrole : ' + role);
         this._appComponent.isAuth = true;
-        this._router.navigate(['/ActiveCompte']);
+        this.errPassword = false;
+        this._router.navigate(['/mesTransactions']);
       },
-        err => this.errPassword = true
+      err => this.errPassword = true
     );
   }
 
@@ -85,8 +79,9 @@ export class LoginEmployeComponent implements OnInit {
         if (res.message === 'err') {
           this.loginExist = false;
         } else {
-           this.loginExist = true;
+          this.loginExist = true;
         }
       });
-  }}
+    }
+  }
 }

@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 import { MEntreprise } from 'src/app/_models/entreprise.model';
 import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
+import { MustMatch } from 'src/app/_helpers/must-match.validator';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-new-entreprise',
@@ -14,180 +16,141 @@ import { EntrepriseService } from 'src/app/_services/entreprise.service';
 export class NewEntrepriseComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   entrepriseForm: FormGroup;
-  entreprise: IEntreprise;
-  status = 'Formulaire d\'inscription';
-  idEntreprise = '';
+  // entreprise: IEntreprise;
+  // status = 'Formulaire d\'inscription';
+  // idEntreprise = '';
   submitted = false;
 
-  loginExist = false;
+  tableDonnees: {
+    email;
+    iban;
+    siret;
+  };
+
+  eleUnique = {
+    email: true,
+    iban: true,
+    siret: true
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _entrepriseService: EntrepriseService,
-    private route: ActivatedRoute
+    // private route: ActivatedRoute,
+    private _authService: AuthService
   ) {
-    if (this.route.params['value'].id) {
-      this.status = 'Editer profil';
-      // this.statusBoutton = 'Mise à jour';
-    }
-
-    this.route.paramMap.subscribe(params => {
-      this.idEntreprise = params.get('id');
-      if (this.idEntreprise) {
-        this.recupererEntreprise(this.idEntreprise);
-      }
-    });
-  }
-
-  statusBoutton = 'Soumettre';
-
-  recupererEntreprise(id: string) {
-    this._entrepriseService
-      .getEntreprise(id)
-      .subscribe(
-        entreprise => this.editEntreprise(entreprise),
-        err => console.log('Erreur chargement : ' + err)
-      );
-  }
-
-  editEntreprise(entreprise) {
-    const tel = '0' + entreprise.tel;
-    this.entrepriseForm.patchValue({
-      nomEntreprise: entreprise.nomEntreprise,
-      tel: tel,
-      email: entreprise.email,
-      ibanEntreprise: entreprise.ibanEntreprise,
-      siretEntreprise: entreprise.siretEntreprise
+    this._entrepriseService.getAll().subscribe(res => {
+      console.log(res);
+      this.tableDonnees = res as any;
     });
   }
 
   ngOnInit(): void {
-    this.entrepriseForm = this._formBuilder.group({
-      nomEntreprise: ['', [Validators.required, Validators.minLength(4)]],
-      tel: [
-        '',
-        [Validators.required, Validators.pattern(/^0[1-9]( *[0-9]{2}){4}$/)]
-      ],
-      email: ['', [Validators.required, Validators.email]],
-      ibanEntreprise: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(27),
-          Validators.maxLength(27)
-        ]
-      ],
-      siretEntreprise: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(14),
-          Validators.maxLength(14),
-          Validators.pattern(/^[1-9][0-9]{13}$/)
-        ]
-      ]
-    });
+    this.entrepriseForm = this._formBuilder.group(
+      {
+        nomEntreprise: ['', [Validators.required, Validators.minLength(4)]],
+        tel: [
+          '',
+          [Validators.required, Validators.pattern(/^0[1-9]( *[0-9]{2}){4}$/)]
+        ],
+        email: ['', [Validators.required, Validators.email]],
+        ibanEntreprise: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(27),
+            Validators.maxLength(27)
+          ]
+        ],
+        siretEntreprise: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(14),
+            Validators.maxLength(14)
+          ]
+        ],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required]
+      },
+      {
+        validator: MustMatch('password', 'confirmPassword')
+      }
+    );
   }
 
-  // initForm() {
-  //   this.entrepriseForm = this._formBuilder.group({
-  //     nomEntreprise: ['', Validators.required],
-  //     tel: ['', Validators.required],
-  //     email: ['', [Validators.required, Validators.email]],
-  //     ibanEntreprise: ['', Validators.required],
-  //     siretEntreprise: ''
-  //   });
-  // }
+  testUnique(tableau, valeur) {
+    const resltat = tableau.find(el => {
+      return el === valeur;
+    });
+    return resltat === valeur ? false : true;
+  }
+
+  uniqueElement(element) {
+    console.log('zone de control unique');
+    switch (element) {
+      case 'email':
+        this.eleUnique.email = this.testUnique(
+          this.tableDonnees.email,
+          this.f.email.value
+        );
+        // console.log('email unique ? ' + this.eleUnique.email);
+        break;
+
+      case 'siret':
+        this.eleUnique.siret = this.testUnique(
+          this.tableDonnees.siret,
+          this.f.siretEntreprise.value
+        );
+        // console.log('siret unique ? ' + this.eleUnique.siret);
+        break;
+
+      case 'iban':
+        this.eleUnique.iban = this.testUnique(
+          this.tableDonnees.iban,
+          this.f.ibanEntreprise.value
+        );
+        // console.log('iban unique ? ' + this.eleUnique.iban);
+        break;
+
+      default:
+        break;
+    }
+  }
 
   get f() {
     return this.entrepriseForm.controls;
   }
 
-  onSubmitForm(event) {
-    const email = this.f.email.value;
-    if (this.f.email.value) {
-      this._entrepriseService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
-        if (res.message === 'err') {
-          this.loginExist = true;
-          return;
-        } else {
-          this.loginExist = false;
-          this.faireSubmit(event);
-        }
-      });
-    }
-
+  onSubmitForm() {
     this.submitted = true;
 
     if (this.entrepriseForm.invalid) {
-      if (this.entrepriseForm['siretCommercant'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['nomCommercant'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['tel'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['email'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['ibanCommercant'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      this.submitted = false;
+      // this.submitted = false;
       return;
+    } else {
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.faireSubmit();
     }
   }
 
-  // focusOutFunction(event: string) {
-  //   this.loginExist = false;
-
-  //   if (event['path'][0].value) {
-  //     const email = event['path'][0].value;
-  //     this._entrepriseService.emailExist(email).subscribe((res: any) => {
-  //       console.log(res);
-  //       if (res.message === 'err') {
-  //         this.loginExist = true;
-  //       }
-  //     });
-  //   }
-  // }
-
-  faireSubmit (event) {
+  faireSubmit() {
     const formValue = this.entrepriseForm.value;
     const newEntreprise = new MEntreprise(
       formValue['nomEntreprise'],
       formValue['tel'],
       formValue['email'],
       formValue['ibanEntreprise'],
-      formValue['siretEntreprise']
+      formValue['siretEntreprise'],
+      formValue['password']
     );
 
-    if (event === 'Formulaire d\'inscription') {
-      console.log('event : add');
-      this._entrepriseService.addEntreprise(newEntreprise);
-      this._router.navigate(['/listEmployes']);
-    } else {
-      console.log('event : update');
-      this._entrepriseService
-        .updateEntreprise(newEntreprise, this.idEntreprise)
-        .pipe(first())
-        .subscribe(
-          () => {
-            this._router.navigate(['/listEmployes']);
-          },
-          err => console.log('Erreur : ' + err)
-        );
-    }
-    // this._router.navigate(['/listEntreprises']);
+    console.log('event : create');
+    const resultat = this._authService.registerEntreprise(newEntreprise);
+    console.log('resultat', resultat);
+    this._authService.regUser(resultat);
+    this._router.navigate(['/mesEmployes']);
   }
-
 }

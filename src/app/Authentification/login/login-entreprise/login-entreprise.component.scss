@@ -37,14 +37,15 @@
 
 
 .bgimg {
-  background-image: url('/assets/img/employeur.jpg');
+  background: url('/assets/img/employeur.jpg') no-repeat center center fixed;
   height:100vh;
-  background-repeat: no-repeat;
-  background-attachment: fixed;   
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;   
+  // background: url(images/bg.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;  
+  background-size: cover;   
   // position: fixed
   // widows: 100%;
 }

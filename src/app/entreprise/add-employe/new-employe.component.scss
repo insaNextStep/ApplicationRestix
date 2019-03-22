@@ -38,16 +38,17 @@
 
 
 .bgimg {
-  background-image: url('src/assets/img/employeur.jpg');
-  height: 100vh;
+  background: url('/assets/img/employeur.jpg') no-repeat center center fixed;
+  height:100vh;
   // background-repeat: no-repeat;
-  // background-attachment: fixed;
-  // position: fixed
-  // widows: 100%;
+  // background-attachment: fixed;   
+  // background: url(images/bg.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;  
+  background-size: cover;   
+  // position: fixed
+  // widows: 100%;
 }
 
 @media  screen and (max-width: 700px) {

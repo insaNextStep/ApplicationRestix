@@ -7,64 +7,92 @@
             <div class="card" id="cardInt">
               <br>
 
-              <form [formGroup]="entrepriseForm" (ngSubmit)="onSubmitForm(status)">
+              <form [formGroup]="entrepriseForm" (ngSubmit)="onSubmitForm()">
 
                 <div class="form-group">
-                  <label for="nomEntreprise">Nom entreprise</label>
-                  <input type="text" class="form-control" id="nomEntreprise" formControlName="nomEntreprise"
-                    formControlName="nomEntreprise" [ngClass]="{ 'is-invalid': submitted && f.nomEntreprise.errors }" />
-                  <div *ngIf="submitted && f.nomEntreprise.errors" class="invalid-feedback">
-                    <div *ngIf="f.nomEntreprise.errors.required">Ce champ est obligatoire</div>
-                    <div *ngIf="f.nomEntreprise.errors.minlength">Au minimum 4 caractères</div>
+                  <label for="nomEntreprise">Enseigne Entreprise</label>
+                  <input type="text" class="form-control" formControlName="nomEntreprise"
+                    [ngClass]="{ 'is-invalid': (submitted || f.nomEntreprise.touched ) && f.nomEntreprise.errors }" />
+                  <div *ngIf="(submitted || f.nomEntreprise.touched) && f.nomEntreprise.errors"
+                    class="invalid-feedback">
+                    <div *ngIf="f.nomEntreprise.errors?.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.nomEntreprise.errors?.minlength">Au minimum 4 caractères</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label for="tel">Telephone</label>
-                  <input type="number" class="form-control" id="tel" formControlName="tel" formControlName="tel"
-                    [ngClass]="{ 'is-invalid': submitted && f.tel.errors }" />
-                  <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
-                    <div *ngIf="f.tel.errors.required">Ce champ est obligatoire</div>
-                    <div *ngIf="f.tel.errors.pattern">Le format '0[0-9]*9' doit etre respecté</div>
+                  <input type="text" class="form-control" formControlName="tel"
+                    [ngClass]="{ 'is-invalid': (submitted || f.tel.touched ) && f.tel.errors }" />
+                  <div *ngIf="(submitted || f.tel.touched ) && f.tel.errors" class="invalid-feedback">
+                    <div *ngIf="f.tel.errors?.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.tel.errors?.pattern">Le format '0[0-9]*9' doit etre respecté</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="email">email</label>
-                  <input type="email" class="form-control" id="email" formControlName="email"
-                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required">Ce champ est obligatoire</div>
-                    <div *ngIf="f.email.errors.email">Format 'nom@domaine.tld' doit etre respecté</div>
-                  </div>
-                  <div *ngIf="loginExist" class="invalid-feedback">L'adresse mail est déjà utilisée</div>
-                </div>
-
-                <div class="form-group">
-                  <label for="ibanEntreprise">ibanEntreprise</label>
-                  <input type="text" class="form-control" id="ibanEntreprise" formControlName="ibanEntreprise"
-                    [ngClass]="{ 'is-invalid': submitted && f.ibanEntreprise.errors }" />
-                  <div *ngIf="submitted && f.ibanEntreprise.errors" class="invalid-feedback">
-                    <div *ngIf="f.ibanEntreprise.errors.required">Ce champ est obligatoire</div>
-                    <div *ngIf="f.ibanEntreprise.errors.minlength">Au minimum 27 chiffres</div>
-                    <div *ngIf="f.ibanEntreprise.errors.maxlength">Au maximum 27 chiffres</div>
+                  <label for="email">Adresse Email</label>
+                  <input type="email" class="form-control" formControlName="email" (keyup)="uniqueElement('email')"
+                    [ngClass]="{ 'is-invalid': (submitted ||  f.email.touched ) && (f.email.errors || !eleUnique.email) }" />
+                  <div *ngIf="(submitted ||  f.email.touched ) && (f.email.errors || !eleUnique.email)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.email.errors?.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.email.errors?.email">Format 'nom@domaine.tld' doit etre respecté</div>
+                    <div *ngIf="!eleUnique.email">L'adresse mail est associé a un autre utilisateur</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="siretEntreprise">siretEntreprise</label>
-                  <input type="number" class="form-control" id="siretEntreprise" class="form-control"
-                    formControlName="siretEntreprise"
-                    [ngClass]="{ 'is-invalid': submitted && f.siretEntreprise.errors }" />
-                  <div *ngIf="submitted && f.siretEntreprise.errors" class="invalid-feedback">
-                    <div *ngIf="f.siretEntreprise.errors.required">Ce champ est obligatoire</div>
-                    <div *ngIf="f.siretEntreprise.errors.minlength">Au minimum 14 chiffres</div>
-                    <div *ngIf="f.siretEntreprise.errors.maxlength">Au maximum 14 chiffres</div>
-                    <div *ngIf="f.siretEntreprise.errors.pattern">Le format '[1-9][0-9]*13' doit etre respecté</div>
+                  <label for="ibanEntreprise">IBAN</label>
+                  <input type="text" class="form-control" formControlName="ibanEntreprise"
+                    (keyup)="uniqueElement('iban')"
+                    [ngClass]="{ 'is-invalid':  (submitted || f.ibanEntreprise.touched ) && (f.ibanEntreprise.errors || !eleUnique.iban) }" />
+                  <div *ngIf="(submitted || f.ibanEntreprise.touched ) && (f.ibanEntreprise.errors || !eleUnique.iban)"
+                    class="invalid-feedback">
+                    <div *ngIf="f.ibanEntreprise.errors?.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.ibanEntreprise.errors?.minlength || f.ibanEntreprise.errors?.maxlength">Ce champ doit
+                      contenir 27 chiffres</div>
+                    <div *ngIf="!eleUnique.iban">Le numéro IBAN est associé a un autre utilisateur</div>
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Soumettre</button>
+                <div class="form-group">
+                  <label for="siretEntreprise">SIRET</label>
+                  <input type="number" name="siretEntreprise" class="form-control" formControlName="siretEntreprise"
+                    (keyup)="uniqueElement('siret')"
+                    [ngClass]="{ 'is-invalid': (submitted ||  f.siretEntreprise.touched ) && (f.siretEntreprise.errors || !eleUnique.siret) }" />
+                  <div
+                    *ngIf=" (submitted || f.siretEntreprise.touched ) && (f.siretEntreprise.errors || !eleUnique.siret)"
+                    class="invalid-feedback">
+                    <div *ngIf="!eleUnique.siret">Le numéro SIRET est associé a un autre utilisateur</div>
+                    <div *ngIf="f.siretEntreprise.errors?.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.siretEntreprise.errors?.minlength || f.siretEntreprise.errors?.maxlength">Ce champ
+                      doit contenir 12 chiffres</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Mot de passe</label>
+                  <input type="password" formControlName="password" class="form-control"
+                    [ngClass]="{ 'is-invalid': (submitted || f.password.touched) && f.password.errors }" />
+                  <div *ngIf="(submitted || f.password.touched ) && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors?.required">Password is required</div>
+                    <div *ngIf="f.password.errors?.minlength">Password must be at least 6 characters</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Confirmer mot de passe</label>
+                  <input type="password" formControlName="confirmPassword" class="form-control"
+                    [ngClass]="{ 'is-invalid': (submitted || f.confirmPassword.touched) && f.confirmPassword.errors }" />
+                  <div *ngIf="(submitted || f.confirmPassword.touched) && f.confirmPassword.errors "
+                    class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors?.required">Confirm Password is required</div>
+                    <div *ngIf="f.confirmPassword.errors?.mustMatch">Passwords must match</div>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="entrepriseForm.invalid">Soumettre</button>
               </form>
             </div>
           </div>

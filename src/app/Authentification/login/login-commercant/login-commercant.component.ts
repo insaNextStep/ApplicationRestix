@@ -4,6 +4,8 @@ import { UserIdleService } from 'angular-user-idle';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
 import { CommercantService } from 'src/app/_services/commercant.service';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { MLogin } from 'src/app/_models/login.model';
 
 @Component({
   selector: 'app-login-commercant',
@@ -11,57 +13,61 @@ import { CommercantService } from 'src/app/_services/commercant.service';
   styleUrls: ['./login-commercant.component.scss']
 })
 export class LogincommercantComponent implements OnInit {
+  commercantForm: FormGroup;
   compteUtilisateur: any = {};
   titre = 'Zone de connexion commercant';
   loginExist = false;
   errPassword = false;
+  submitted = false;
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
     private _appComponent: AppComponent,
-    private _commercantService: CommercantService
+    private _commercantService: CommercantService,
+    private _formBuilder: FormBuilder,
   ) {}
 
   ngOnInit() {
-    // Start watching for user inactivity.
-    // this.userIdle.startWatching();
-    // // Start watching when user idle is starting.
-    // this.userIdle.onTimerStart().subscribe(count => console.log(count));
-    // // Start watch when time is up.
-    // this.userIdle.onTimeout().subscribe(() => this._authService.logout());
+
+    this.commercantForm = this._formBuilder.group(
+      {
+        email: ['', Validators.required],
+        password: ['', Validators.required]
+      });
   }
 
-  // stop() {
-  //   console.log('stop');
-  //   this.userIdle.stopTimer();
-  // }
+  get f() {
+    return this.commercantForm.controls;
+  }
 
-  // stopWatching() {
-  //   console.log('stopWatching');
-  //   this.userIdle.stopWatching();
-  // }
+  onSubmitForm() {
+    this.submitted = true;
 
-  // startWatching() {
-  //   console.log('startWatching');
-  //   this.userIdle.startWatching();
-  // }
+    if (this.commercantForm.invalid) {
+      // this.submitted = false;
+      return;
+    } else {
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.donneesFormulaire();
+    }
+  }
 
-  // restart() {
-  //   console.log('restart');
-  //   this.userIdle.resetTimer();
-  // }
 
   donneesFormulaire() {
     console.log('login commercant :');
-    console.log(this.compteUtilisateur);
-    this._authService.loginCommercant(this.compteUtilisateur).subscribe(
+    const formValue = this.commercantForm.value;
+    const newLogin = new MLogin(
+      formValue['email'],
+      formValue['password']
+    );
+
+
+    // console.log(this.compteUtilisateur);
+    this._authService.loginCommercant(newLogin).subscribe(
       res => {
         console.log(res);
-        //       // enregistrement local du token
-        // const token = localStorage.setItem('token', res.token);
-        // const role = localStorage.setItem('role', res.role);
-        //       console.log('token : ' + token + '\nrole : ' + role);
         this._appComponent.isAuth = true;
         this.errPassword = false;
         this._router.navigate(['/mesVentes']);

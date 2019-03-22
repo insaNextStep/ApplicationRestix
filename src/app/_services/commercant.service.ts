@@ -14,8 +14,8 @@ export class CommercantService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  // private uri = 'http://localhost:3000/commercants';
-  private uri = 'https://restix.herokuapp.com/commercants';
+  private uri = 'http://localhost:3000/commercants';
+  // private uri = 'https://restix.herokuapp.com/commercants';
 
   emitCommercant() {
     this.commercantSubject.next(this.commercants.slice());
@@ -41,16 +41,14 @@ export class CommercantService {
   }
 
   addCommercant(commercant: MCommercant) {
-    return this._httpClient
-      .post(`${this.uri}/add/`, commercant)
-      .subscribe(
-        (res: any) => {
-          console.log('Enregistrement terminé');
-          this.commercants.push(res);
-          this.emitCommercant();
-        },
-        err => console.log('Erreur : ' + err)
-      );
+    return this._httpClient.post(`${this.uri}/add/`, commercant).subscribe(
+      (res: any) => {
+        console.log('Enregistrement terminé');
+        this.commercants.push(res);
+        this.emitCommercant();
+      },
+      err => console.log('Erreur : ' + err)
+    );
   }
 
   updateCommercant(commercant, id) {
@@ -60,18 +58,25 @@ export class CommercantService {
       .pipe(map(res => res));
   }
 
-
   deleteCommercant(id: string) {
-    return this._httpClient.delete(`${this.uri}/delete/${id}`).pipe(map(res => res));
+    return this._httpClient
+      .delete(`${this.uri}/delete/${id}`)
+      .pipe(map(res => res));
   }
 
   emailExist(email: string): Observable<MCommercant[]> {
-    return this._httpClient.get<MCommercant[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
+    return this._httpClient
+      .get<MCommercant[]>(`${this.uri}/email/${email}`)
+      .pipe(map(res => res));
   }
 
   getMesVentes(id) {
     return this._httpClient
-    .get(`${this.uri}/mesVentes/${id}`)
-    .pipe(map(res => res));
+      .get(`${this.uri}/mesVentes/${id}`)
+      .pipe(map(res => res));
+  }
+
+  getAll() {
+    return this._httpClient.get(`${this.uri}/getAll`).pipe(map(res => res));
   }
 }

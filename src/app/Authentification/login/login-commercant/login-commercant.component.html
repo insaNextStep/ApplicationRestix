@@ -4,39 +4,50 @@
       <div class="container cadreForm">
         <div class="row">
           <div class="card" id="divCard">
-              <div class="card" id="cardInt">
-                  <br>
-                  <form>
-                    <div class="form-group">
-                      <label for="num_ident">EMAIL</label>
-                      <input [(ngModel)]="compteUtilisateur.email" type="email" class="form-control" name="email" (focusout)="focusOutFunction($event)">
-                      <p class="alert-danger" *ngIf="loginExist" style="text-align: center">Utilisateur inconnu</p>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">MOT DE PASSE</label>
-                      <input [(ngModel)]="compteUtilisateur.password" type="password" class="form-control" name="password">
-                      <p class="alert-danger" *ngIf="errPassword" style="text-align: center">Erreur de mot de passe</p>
-                    </div>
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="souvenir">
-                      <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label><br /><br />
-                    </div>
-                    <div class="form-group">
-                      <h6> J'ai oublié mon <a href="mailto:mon@adresse.fr">mot de passe</a></h6>
-                    </div>
-                    <br />
-                    <div style="margin:auto">
-                      <a (click)="donneesFormulaire()" class="ombre btn btn-danger  btn-block" >Accéder à mon compte</a><br />
-                      <div class="hr">OU</div>
-                      <br />
-                      <button routerLink="/newCommercant" routerLinkActive="active" class="ombre btn btn-info btn-block">Créer
-                        un compte</button>
-                        <br>
-                    </div>
-                  </form>
+            <div class="card" id="cardInt">
+              <br>
+              <form [formGroup]="commercantForm" (ngSubmit)="onSubmitForm()">
+
+              <div class="form-group">
+                <label for="email">Adresse Email</label>
+                <input type="email" class="form-control" formControlName="email" (focusout)="focusOutFunction($event)"
+                  [ngClass]="{ 'is-invalid': (submitted ||  f.email.touched ) && loginExist }" />
+                <div *ngIf="(submitted ||  f.email.touched ) && loginExist" class="invalid-feedback">
+                  <div *ngIf="loginExist">Erreur de login</div>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" formControlName="password" class="form-control"
+                  [ngClass]="{ 'is-invalid': (submitted || f.password.touched) && errPassword }" />
+                <div *ngIf="(submitted || f.password.touched ) && errPassword " class="invalid-feedback">
+                    <div *ngIf="errPassword">Erreur de mot de passe</div>
+                </div>
+              </div>
+
+
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="souvenir">
+                <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label><br /><br />
+              </div>
+              <div class="form-group">
+                <h6> J'ai oublié mon <a href="mailto:mon@adresse.fr">mot de passe</a></h6>
+              </div>
+              <br />
+              <div style="margin:auto">
+
+                <button type="submit" class="ombre btn btn-danger  btn-block"[disabled]="commercantForm.invalid">Soumettre</button>
+                <div class="hr">OU</div>
+                <br />
+                <button routerLink="/newCommercant" routerLinkActive="active" class="ombre btn btn-info btn-block">Créer
+                  un compte</button>
+                <br>
+              </div>
+              </form>
+            </div>
           </div>
-          
+
         </div>
       </div>
     </div>

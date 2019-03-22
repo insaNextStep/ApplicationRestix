@@ -16,8 +16,8 @@ export class EntrepriseService {
   private entreprises: MEntreprise[] = [];
   entrepriseSubject = new Subject<MEntreprise[]>();
 
-  // private uri = 'http://localhost:3000/entreprises';
-  private uri = 'https://restix.herokuapp.com/entreprises';
+  private uri = 'http://localhost:3000/entreprises';
+  // private uri = 'https://restix.herokuapp.com/entreprises';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
@@ -61,8 +61,10 @@ export class EntrepriseService {
       .subscribe(
         (res: any) => {
           console.log('Enregistrement terminé');
-          this.entreprises.push(res);
-          this.emitEntreprise();
+          // this.entreprises.push(res);
+          // this.emitEntreprise();
+          console.log(res);
+          return res;
         },
         err => console.log('Erreur : ' + err)
       );
@@ -82,4 +84,9 @@ export class EntrepriseService {
   emailExist(email: string): Observable<IEntreprise[]> {
     return this._httpClient.get<IEntreprise[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
   }
+
+  getAll() {
+    return this._httpClient.get(`${this.uri}/getAll`).pipe(map(res => res));
+  }
+
 }
