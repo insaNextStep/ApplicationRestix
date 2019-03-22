@@ -2,10 +2,11 @@
 export class MCommercant {
   constructor(
     public nomCommercant: string,
-    public tel: string,
+    public tel: number,
     public email: string,
     public ibanCommercant: string,
-    public siretCommercant: string,
-    public tpe: string,
+    public siretCommercant: number,
+    public tpe: number,
+    public password?: string,
   ) {}
 }

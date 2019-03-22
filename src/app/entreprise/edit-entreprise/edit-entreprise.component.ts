@@ -5,19 +5,21 @@ import { first } from 'rxjs/operators';
 import { MEntreprise } from 'src/app/_models/entreprise.model';
 import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
-  selector: 'app-new-entreprise',
-  templateUrl: './new-entreprise.component.html',
-  styleUrls: ['./new-entreprise.component.scss']
+  selector: 'app-edit-entreprise',
+  templateUrl: './edit-entreprise.component.html',
+  styleUrls: ['./edit-entreprise.component.scss']
 })
-export class NewEntrepriseComponent implements OnInit {
+export class EditEntrepriseComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   entrepriseForm: FormGroup;
   entreprise: IEntreprise;
-  status = 'Formulaire d\'inscription';
   idEntreprise = '';
   submitted = false;
+  originEmail = '';
 
   loginExist = false;
 
@@ -25,12 +27,26 @@ export class NewEntrepriseComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _entrepriseService: EntrepriseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _authService: AuthService,
+    private _jwtHelperService: JwtHelperService
   ) {
-    if (this.route.params['value'].id) {
-      this.status = 'Editer profil';
-      // this.statusBoutton = 'Mise à jour';
+    console.log('\n\n **************** EditEntrepriseComponent');
+
+    const token = this._authService.getToken();
+    console.log('token : ' + token);
+
+    // si token existe alors
+    if (token) {
+      // décoder le token et récupérer l'id de l'employe
+      const decodeToken = this._jwtHelperService.decodeToken(token);
+      console.log('decodeToken', decodeToken);
+      // this.afficherTransactions(decodeToken.subject);
+      this.originEmail = decodeToken.email;
+    } else {
+      this.originEmail = '';
     }
+    // console.log(this._authService.currentEmployeValue);
 
     this.route.paramMap.subscribe(params => {
       this.idEntreprise = params.get('id');
@@ -104,24 +120,13 @@ export class NewEntrepriseComponent implements OnInit {
     return this.entrepriseForm.controls;
   }
 
-  onSubmitForm(event) {
-    const email = this.f.email.value;
-    if (this.f.email.value) {
-      this._entrepriseService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
-        if (res.message === 'err') {
-          this.loginExist = true;
-          return;
-        } else {
-          this.loginExist = false;
-          this.faireSubmit(event);
-        }
-      });
-    }
+  onSubmitForm() {
+    console.log('onSubmitForme');
 
     this.submitted = true;
 
     if (this.entrepriseForm.invalid) {
+      console.log('invalide', this.entrepriseForm);
       if (this.entrepriseForm['siretCommercant'].errors) {
         // console.log(this.entrepriseForm['siretCommercant'].errors);
       }
@@ -144,6 +149,22 @@ export class NewEntrepriseComponent implements OnInit {
 
       this.submitted = false;
       return;
+    } else {
+      const email = this.f.email.value;
+      if (this.f.email.value && (this.f.email.value !== this.originEmail)) {
+        console.log('changement email');
+        this._entrepriseService.emailExist(email).subscribe((res: any) => {
+          // console.log(res);
+          if (res.message === 'err') {
+            this.loginExist = true;
+            return;
+          } else {
+            this.loginExist = false;
+          }
+        });
+      } else {
+        this.faireSubmit();
+      }
     }
   }
 
@@ -161,7 +182,7 @@ export class NewEntrepriseComponent implements OnInit {
   //   }
   // }
 
-  faireSubmit (event) {
+  faireSubmit() {
     const formValue = this.entrepriseForm.value;
     const newEntreprise = new MEntreprise(
       formValue['nomEntreprise'],
@@ -171,23 +192,18 @@ export class NewEntrepriseComponent implements OnInit {
       formValue['siretEntreprise']
     );
 
-    if (event === 'Formulaire d\'inscription') {
-      console.log('event : add');
-      this._entrepriseService.addEntreprise(newEntreprise);
-      this._router.navigate(['/listEmployes']);
-    } else {
-      console.log('event : update');
-      this._entrepriseService
-        .updateEntreprise(newEntreprise, this.idEntreprise)
-        .pipe(first())
-        .subscribe(
-          () => {
-            this._router.navigate(['/listEmployes']);
-          },
-          err => console.log('Erreur : ' + err)
-        );
-    }
+    console.log('event : update');
+    this._entrepriseService
+      .updateEntreprise(newEntreprise, this.idEntreprise)
+      .pipe(first())
+      .subscribe(
+        (resultat) => {
+          console.log('resultat', resultat);
+          this._authService.regUser(resultat);
+          this._router.navigate(['/mesEmployes']);
+        },
+        err => console.log('Erreur : ' + err)
+      );
     // this._router.navigate(['/listEntreprises']);
   }
-
 }

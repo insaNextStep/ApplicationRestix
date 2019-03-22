@@ -31,7 +31,8 @@
 
                 <div class="form-group">
                   <label for="email">email</label>
-                  <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                  <input type="email" class="form-control" id="email" formControlName="email"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.email.errors.email">Format 'nom@domaine.tld' doit etre respecté</div>
@@ -52,7 +53,8 @@
 
                 <div class="form-group">
                   <label for="siretEntreprise">siretEntreprise</label>
-                  <input type="number" class="form-control" id="siretEntreprise" class="form-control" formControlName="siretEntreprise"
+                  <input type="number" class="form-control" id="siretEntreprise" class="form-control"
+                    formControlName="siretEntreprise"
                     [ngClass]="{ 'is-invalid': submitted && f.siretEntreprise.errors }" />
                   <div *ngIf="submitted && f.siretEntreprise.errors" class="invalid-feedback">
                     <div *ngIf="f.siretEntreprise.errors.required">Ce champ est obligatoire</div>
@@ -62,7 +64,7 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" >Soumettre</button>
+                <button type="submit" class="btn btn-primary">Soumettre</button>
               </form>
             </div>
           </div>

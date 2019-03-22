@@ -51,10 +51,30 @@ table {
   background-size: cover;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 400px) {
   div.container {
     width: 350px;
     float: center;
+    padding: 0;
+  }
+  table {
+    font-size: 12px;
+  }
+
+  #infoNom {
+    font-size: 22px;
+  }
+
+  #infoSolde {
+    font-size: 17px;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  div.container {
+    width: 400px;
+    float: center;
+    padding: 0;
   }
 
   table {
@@ -80,7 +100,4 @@ table {
   table {
     font-size: 14px;
   }
-
 }
-
-

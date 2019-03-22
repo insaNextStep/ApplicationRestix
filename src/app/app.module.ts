@@ -42,7 +42,6 @@ import { LoginComponent } from './Authentification/login/login.component';
 import { NewEntrepriseComponent } from './Authentification/register/new-entreprise/new-entreprise.component';
 import { LoginEntrepriseComponent } from './Authentification/login/login-entreprise/login-entreprise.component';
 import { LoginEmployeComponent } from './Authentification/login/login-employe/login-employe.component';
-import { VueTransactionComponent } from './employe/vue-transaction/vue-transaction.component';
 import { EditProfileComponent } from './employe/edit-profile/edit-profile.component';
 import { ActiveCompteComponent } from './employe/active-compte/active-compte.component';
 import { NewCommercantComponent } from './Authentification/register/new-commercant/new-commercant.component';
@@ -69,6 +68,8 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AlertComponent } from './_directives/alert.component';
 import { AlertService } from './_services/alert.service';
 import { MesVentesComponent } from './commercant/mes-ventes/mes-ventes.component';
+import { EditEntrepriseComponent } from './entreprise/edit-entreprise/edit-entreprise.component';
+import { EditCommercantComponent } from './commercant/edit-commercant/edit-commercant.component';
 
 
 // import { CanActivate } from '@angular/router/src/utils/preactivation';
@@ -102,13 +103,13 @@ const appRoutes: Routes = [
   },
   {
     path: 'editEmploye/:id',
-    component: NewEmployeComponent,
+    component: EditProfileComponent,
     canActivate: [AuthGuard],
     data: { allowedRoles: ['ENTREPRISE', 'EMPLOYE', 'ADMIN'] }
   },
   {
     path: 'editEntreprise/:id',
-    component: NewEntrepriseComponent,
+    component: EditEntrepriseComponent,
     canActivate: [AuthGuard],
     data: { allowedRoles: ['ENTREPRISE', 'ADMIN'] }
   },
@@ -132,7 +133,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'editCommercant/:id',
-    component: NewCommercantComponent,
+    component: EditCommercantComponent,
     canActivate: [AuthGuard],
     data: { allowedRoles: ['COMMERCANT', 'ADMIN'] }
   },
@@ -171,7 +172,6 @@ const appRoutes: Routes = [
     NewEmployeComponent,
     LoginEntrepriseComponent,
     LoginEmployeComponent,
-    VueTransactionComponent,
     EditProfileComponent,
     ActiveCompteComponent,
     NewCommercantComponent,
@@ -179,7 +179,9 @@ const appRoutes: Routes = [
     MesEmployesComponent,
     LogincommercantComponent,
     AlertComponent,
-    MesVentesComponent
+    MesVentesComponent,
+    EditEntrepriseComponent,
+    EditCommercantComponent
   ],
   imports: [
     BrowserModule,

@@ -16,8 +16,8 @@ export class EntrepriseService {
   private entreprises: MEntreprise[] = [];
   entrepriseSubject = new Subject<MEntreprise[]>();
 
-  // private uri = 'http://localhost:3000/entreprises';
-  private uri = 'https://restix.herokuapp.com/entreprises';
+  private uri = 'http://localhost:3000/entreprises';
+  // private uri = 'https://restix.herokuapp.com/entreprises';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 

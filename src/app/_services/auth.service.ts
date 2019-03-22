@@ -17,13 +17,13 @@ import { CommercantService } from './commercant.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // déclaration des chemins d'accès
-  private _UrlEmploye = 'https://restix.herokuapp.com/employes';
-  private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
-  private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
+  // private _UrlEmploye = 'https://restix.herokuapp.com/employes';
+  // private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
+  // private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
 
-  // private _UrlEmploye = 'http://localhost:3000/employes';
-  // private _UrlEntreprise = 'http://localhost:3000/entreprises';
-  // private _UrlCommercant = 'http://localhost:3000/commercants';
+  private _UrlEmploye = 'http://localhost:3000/employes';
+  private _UrlEntreprise = 'http://localhost:3000/entreprises';
+  private _UrlCommercant = 'http://localhost:3000/commercants';
 
   private currentEmployeSubject: BehaviorSubject<IUser>;
   public currentEmploye: Observable<IUser>;
@@ -60,21 +60,21 @@ export class AuthService {
     console.log(localStorage.getItem('currentUser'));
     // console.log(decodeToken.role);
     // if (decodeToken !== null) {
-      // if (decodeToken.role === 'EMPLOYE') {
-        console.log('\n\n c\'est un employé');
-        this.currentUserSubject = new BehaviorSubject<IUser>(
-          JSON.parse(localStorage.getItem('currentUser'))
-        );
-        this.currentUser = this.currentUserSubject.asObservable();
-      // }
+    // if (decodeToken.role === 'EMPLOYE') {
+    console.log('\n\n c\'est un employé');
+    this.currentUserSubject = new BehaviorSubject<IUser>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+    // }
 
-      // if (decodeToken.role === 'ENTREPRISE') {
-      //   console.log('\n\n c\'est une entreprise');
-      //   this.currentEntrepriseSubject = new BehaviorSubject<IEntreprise>(
-      //     JSON.parse(localStorage.getItem('currentUser'))
-      //   );
-      //   this.currentEntreprise = this.currentEntrepriseSubject.asObservable();
-      // }
+    // if (decodeToken.role === 'ENTREPRISE') {
+    //   console.log('\n\n c\'est une entreprise');
+    //   this.currentEntrepriseSubject = new BehaviorSubject<IEntreprise>(
+    //     JSON.parse(localStorage.getItem('currentUser'))
+    //   );
+    //   this.currentEntreprise = this.currentEntrepriseSubject.asObservable();
+    // }
     // }
   }
 
@@ -123,7 +123,6 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-
   registerEmploye(employe) {
     return this._employeService.addNewEmploye(employe);
     // return this._httpClient.post<IEmploye>(`${this._UrlEmploye}/addEmploye`, employe);
@@ -148,13 +147,22 @@ export class AuthService {
           console.log('\n\n\n *************************** loginEmploye');
           console.log(user);
           console.log(user.token);
-          if (user && user.token) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-          }
-          return user;
+          // if (user && user.token) {
+          //   localStorage.setItem('currentUser', JSON.stringify(user));
+          //   this.currentUserSubject.next(user);
+          // }
+          return this.regUser(user) ;
         })
       );
+  }
+
+  regUser(user) {
+    if (user && user.token) {
+      localStorage.removeItem('currentUser');
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+    }
+    return user;
   }
 
   loginEntreprise(entreprise) {
@@ -163,8 +171,9 @@ export class AuthService {
       .post<any>(`${this._UrlEntreprise}/loginEntreprise`, entreprise)
       .pipe(
         map(user => {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          // localStorage.setItem('currentUser', JSON.stringify(user));
+          // this.currentUserSubject.next(user);
+          return this.regUser(user) ;
         })
       );
   }
@@ -175,8 +184,9 @@ export class AuthService {
       .post<any>(`${this._UrlCommercant}/loginCommercant`, commercant)
       .pipe(
         map(user => {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          // localStorage.setItem('currentUser', JSON.stringify(user));
+          // this.currentUserSubject.next(user);
+          return this.regUser(user) ;
         })
       );
   }

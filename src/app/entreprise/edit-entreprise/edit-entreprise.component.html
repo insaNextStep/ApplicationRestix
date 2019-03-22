@@ -1,0 +1,76 @@
+<div class="bgimg">
+  <div class="container">
+    <div class="formulaire">
+      <div class="container cadreForm">
+        <div class="row">
+          <div class="card" id="divCard">
+            <div class="card" id="cardInt">
+              <br>
+
+              <form [formGroup]="entrepriseForm" (ngSubmit)="onSubmitForm()">
+
+                <div class="form-group">
+                  <label for="nomEntreprise">Nom entreprise</label>
+                  <input type="text" class="form-control" id="nomEntreprise" formControlName="nomEntreprise"
+                    formControlName="nomEntreprise" [ngClass]="{ 'is-invalid': submitted && f.nomEntreprise.invalid }" />
+                  <div *ngIf="submitted && f.nomEntreprise.invalid" class="invalid-feedback">
+                    <div *ngIf="f.nomEntreprise.invalid.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.nomEntreprise.invalid.minlength">Au minimum 4 caractères</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="tel">Telephone</label>
+                  <input type="number" class="form-control" id="tel" formControlName="tel" formControlName="tel"
+                    [ngClass]="{ 'is-invalid': submitted && f.tel.invalid }" />
+                  <div *ngIf="submitted && f.tel.invalid" class="invalid-feedback">
+                    <div *ngIf="f.tel.invalid.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.tel.invalid.pattern">Le format '0[0-9]*9' doit etre respecté</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">email</label>
+                  <input type="email" class="form-control" id="email" formControlName="email"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.invalid }" />
+                  <div *ngIf="submitted && f.email.invalid" class="invalid-feedback">
+                    <div *ngIf="f.email.invalid.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.email.invalid.email">Format 'nom@domaine.tld' doit etre respecté</div>
+                  </div>
+                  <div *ngIf="loginExist" class="invalid-feedback">L'adresse mail est déjà utilisée</div>
+                </div>
+
+                <div class="form-group">
+                  <label for="ibanEntreprise">ibanEntreprise</label>
+                  <input type="text" class="form-control" id="ibanEntreprise" formControlName="ibanEntreprise"
+                    [ngClass]="{ 'is-invalid': submitted && f.ibanEntreprise.invalid }" />
+                  <div *ngIf="submitted && f.ibanEntreprise.invalid" class="invalid-feedback">
+                    <div *ngIf="f.ibanEntreprise.invalid.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.ibanEntreprise.invalid.minlength">Au minimum 27 chiffres</div>
+                    <div *ngIf="f.ibanEntreprise.invalid.maxlength">Au maximum 27 chiffres</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="siretEntreprise">siretEntreprise</label>
+                  <input type="number" class="form-control" id="siretEntreprise" class="form-control"
+                    formControlName="siretEntreprise"
+                    [ngClass]="{ 'is-invalid': submitted && f.siretEntreprise.invalid }" />
+                  <div *ngIf="submitted && f.siretEntreprise.invalid" class="invalid-feedback">
+                    <div *ngIf="f.siretEntreprise.invalid.required">Ce champ est obligatoire</div>
+                    <div *ngIf="f.siretEntreprise.invalid.minlength">Au minimum 14 chiffres</div>
+                    <div *ngIf="f.siretEntreprise.invalid.maxlength">Au maximum 14 chiffres</div>
+                    <div *ngIf="f.siretEntreprise.invalid.pattern">Le format '[1-9][0-9]*13' doit etre respecté</div>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Soumettre</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
