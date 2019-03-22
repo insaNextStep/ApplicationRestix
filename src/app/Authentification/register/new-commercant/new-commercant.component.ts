@@ -17,7 +17,7 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 export class NewCommercantComponent implements OnInit {
   commercantForm: FormGroup;
   commercant: MCommercant;
-  statusForm = 'Formulaire d\'inscription';
+  status = 'Formulaire d\'inscription';
   idCommercant = '';
   loginExist = false;
   submitted = false;
@@ -29,15 +29,6 @@ export class NewCommercantComponent implements OnInit {
     private _commercantService: CommercantService,
     private route: ActivatedRoute
   ) {
-    if (this.route.params['value'].id) {
-      this.statusForm = 'Editer profil';
-      // this.statusBoutton = 'Mise à jour';
-    }
-
-    if (this.statusForm !== 'Formulaire d\'inscription') {
-      this.hinibPW = true;
-    }
-
     this.route.paramMap.subscribe(params => {
       this.idCommercant = params.get('id');
       if (this.idCommercant) {
