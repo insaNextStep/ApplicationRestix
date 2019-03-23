@@ -17,11 +17,24 @@ export class EditEntrepriseComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   entrepriseForm: FormGroup;
   entreprise: IEntreprise;
+  oldEntreprise: IEntreprise;
   idEntreprise = '';
   submitted = false;
   originEmail = '';
 
   loginExist = false;
+
+  tableDonnees: {
+    email;
+    iban;
+    siret;
+  };
+
+  eleUnique = {
+    email: true,
+    iban: true,
+    siret: true
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -32,6 +45,11 @@ export class EditEntrepriseComponent implements OnInit {
     private _jwtHelperService: JwtHelperService
   ) {
     console.log('\n\n **************** EditEntrepriseComponent');
+
+    this._entrepriseService.getAll().subscribe(res => {
+      console.log(res);
+      this.tableDonnees = res as any;
+    });
 
     const token = this._authService.getToken();
     console.log('token : ' + token);
@@ -68,6 +86,8 @@ export class EditEntrepriseComponent implements OnInit {
   }
 
   editEntreprise(entreprise) {
+    this.oldEntreprise = entreprise;
+    console.log('oldentreprise', this.oldEntreprise);
     const tel = '0' + entreprise.tel;
     this.entrepriseForm.patchValue({
       nomEntreprise: entreprise.nomEntreprise,
@@ -99,88 +119,90 @@ export class EditEntrepriseComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(14),
-          Validators.maxLength(14),
-          Validators.pattern(/^[1-9][0-9]{13}$/)
+          Validators.maxLength(14)
         ]
       ]
     });
   }
 
-  // initForm() {
-  //   this.entrepriseForm = this._formBuilder.group({
-  //     nomEntreprise: ['', Validators.required],
-  //     tel: ['', Validators.required],
-  //     email: ['', [Validators.required, Validators.email]],
-  //     ibanEntreprise: ['', Validators.required],
-  //     siretEntreprise: ''
-  //   });
-  // }
+  uniqueElement(element) {
+    console.log('zone de control unique');
+    switch (element) {
+      case 'email':
+      console.log(typeof(this.oldEntreprise.email), typeof(this.f.email.value));
+      console.log(this.oldEntreprise.email, this.f.email.value);
+        if (this.oldEntreprise.email !== this.f.email.value) {
+          this.eleUnique.email = this.testUnique(
+            this.tableDonnees.email,
+            this.f.email.value
+          );
+        } else {
+          this.eleUnique.email = true;
+        }
+        // console.log('email unique ? ' + this.eleUnique.email);
+        break;
+
+      case 'siret':
+      const siretVal = parseInt(this.f.siretEntreprise.value, 10);
+      console.log(typeof(this.oldEntreprise.siretEntreprise), typeof(siretVal));
+      console.log(this.oldEntreprise.siretEntreprise, siretVal);
+        if (
+          this.oldEntreprise.siretEntreprise !== siretVal
+        ) {
+          this.eleUnique.siret = this.testUnique(
+            this.tableDonnees.siret,
+            siretVal
+          );
+        } else {
+          this.eleUnique.siret = true;
+        }
+        // console.log('siret unique ? ' + this.eleUnique.siret);
+        break;
+
+      case 'iban':
+      console.log(typeof(this.oldEntreprise.ibanEntreprise), typeof(this.f.ibanEntreprise.value));
+      console.log(this.oldEntreprise.ibanEntreprise, this.f.ibanEntreprise.value);
+        if (
+          this.oldEntreprise.ibanEntreprise !== this.f.ibanEntreprise.value
+        ) {
+          this.eleUnique.iban = this.testUnique(
+            this.tableDonnees.iban,
+            this.f.ibanEntreprise.value
+          );
+        } else {
+          this.eleUnique.iban = true;
+        }
+        // console.log('iban unique ? ' + this.eleUnique.iban);
+        break;
+
+      default:
+        break;
+    }
+  }
 
   get f() {
     return this.entrepriseForm.controls;
   }
 
-  onSubmitForm() {
-    console.log('onSubmitForme');
+  testUnique(tableau, valeur) {
+    const resltat = tableau.find(el => {
+      return el === valeur;
+    });
+    return resltat === valeur ? false : true;
+  }
 
+  onSubmitForm() {
     this.submitted = true;
 
     if (this.entrepriseForm.invalid) {
-      console.log('invalide', this.entrepriseForm);
-      if (this.entrepriseForm['siretCommercant'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['nomCommercant'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['tel'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['email'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      if (this.entrepriseForm['ibanCommercant'].errors) {
-        // console.log(this.entrepriseForm['siretCommercant'].errors);
-      }
-
-      this.submitted = false;
+      // this.submitted = false;
       return;
     } else {
-      const email = this.f.email.value;
-      if (this.f.email.value && (this.f.email.value !== this.originEmail)) {
-        console.log('changement email');
-        this._entrepriseService.emailExist(email).subscribe((res: any) => {
-          // console.log(res);
-          if (res.message === 'err') {
-            this.loginExist = true;
-            return;
-          } else {
-            this.loginExist = false;
-          }
-        });
-      } else {
-        this.faireSubmit();
-      }
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.faireSubmit();
     }
   }
-
-  // focusOutFunction(event: string) {
-  //   this.loginExist = false;
-
-  //   if (event['path'][0].value) {
-  //     const email = event['path'][0].value;
-  //     this._entrepriseService.emailExist(email).subscribe((res: any) => {
-  //       console.log(res);
-  //       if (res.message === 'err') {
-  //         this.loginExist = true;
-  //       }
-  //     });
-  //   }
-  // }
 
   faireSubmit() {
     const formValue = this.entrepriseForm.value;
@@ -197,13 +219,12 @@ export class EditEntrepriseComponent implements OnInit {
       .updateEntreprise(newEntreprise, this.idEntreprise)
       .pipe(first())
       .subscribe(
-        (resultat) => {
+        resultat => {
           console.log('resultat', resultat);
           this._authService.regUser(resultat);
           this._router.navigate(['/mesEmployes']);
         },
         err => console.log('Erreur : ' + err)
       );
-    // this._router.navigate(['/listEntreprises']);
   }
 }

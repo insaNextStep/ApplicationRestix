@@ -169,10 +169,15 @@ export class NewCommercantComponent implements OnInit {
       formValue['password']
     );
 
-    console.log('event : create');
-    const resultat = this._authService.registerCommercant(newCommercant);
-    console.log('resultat', resultat);
-    this._authService.regUser(resultat);
-    this._router.navigate(['/mesVentes']);
+    console.log('event : update');
+    this._authService.registerCommercant(newCommercant)
+      .pipe(first())
+      .subscribe(
+        (resultat) => {
+          this._authService.regUser(resultat);
+          this._router.navigate(['/mesVentes']);
+        },
+        err => console.log('Erreur : ' + err)
+      );
   }
 }

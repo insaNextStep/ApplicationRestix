@@ -11,16 +11,31 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   selector: 'app-edit-commercant',
   templateUrl: './edit-commercant.component.html',
   styleUrls: ['./edit-commercant.component.scss'],
-  providers: [CommercantService]
 })
 export class EditCommercantComponent implements OnInit {
   commercantForm: FormGroup;
   commercant: MCommercant;
+  oldCommercant: MCommercant;
   statusForm = 'Editer profil';
   idCommercant = '';
   loginExist = false;
   submitted = false;
   originEmail = '';
+
+  // originEmail = '';
+  tableDonnees: {
+    email: true,
+    iban: true,
+    tpe: true,
+    siret: true
+  };
+
+  eleUnique = {
+    email: true,
+    iban: true,
+    tpe: true,
+    siret: true
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -31,6 +46,11 @@ export class EditCommercantComponent implements OnInit {
     private _jwtHelperService: JwtHelperService,
   ) {
     console.log('\n\n **************** EditCommercantComponent');
+
+    this._commercantService.getAll().subscribe(res => {
+      console.log(res);
+      this.tableDonnees = res as any;
+    });
 
     const token = this._authService.getToken();
     console.log('token : ' + token);
@@ -46,6 +66,7 @@ export class EditCommercantComponent implements OnInit {
       this.originEmail = '';
     }
 
+
     this.route.paramMap.subscribe(params => {
       this.idCommercant = params.get('id');
       if (this.idCommercant) {
@@ -53,6 +74,8 @@ export class EditCommercantComponent implements OnInit {
       }
     });
   }
+
+  statusBoutton = 'Soumettre';
   // statusBoutton = 'Soumettre';
   recupererCommercant(id: string) {
     this._commercantService
@@ -64,6 +87,8 @@ export class EditCommercantComponent implements OnInit {
   }
 
   editCommercant(commercant) {
+    this.oldCommercant = commercant;
+    console.log('this.oldCommercant', this.oldCommercant);
     const tel = '0' + commercant.tel;
     this.commercantForm.patchValue({
       nomCommercant: commercant.nomCommercant,
@@ -96,8 +121,7 @@ export class EditCommercantComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(14),
-          Validators.maxLength(14),
-          Validators.pattern(/^[1-9][0-9]{13}$/)
+          Validators.maxLength(14)
         ]
       ],
       tpe: [
@@ -106,58 +130,100 @@ export class EditCommercantComponent implements OnInit {
           Validators.required,
           Validators.minLength(12),
           Validators.maxLength(12),
-          Validators.pattern(/^1[0-9]{11}$/)
         ]
       ]
     });
   }
 
-  // convenience getter for easy access to form fields
+  uniqueElement(element) {
+    console.log('zone de control unique');
+    switch (element) {
+      case 'email':
+        console.log(typeof(this.oldCommercant.email), typeof(this.f.email.value));
+        if (this.oldCommercant.email !== this.f.email.value) {
+          this.eleUnique.email = this.testUnique(
+            this.tableDonnees.email,
+            this.f.email.value
+          );
+        } else {
+          this.eleUnique.email = true;
+        }
+        // console.log('email unique ? ' + this.eleUnique.email);
+        break;
+
+      case 'siret':
+      const siretVal = parseInt(this.f.siretCommercant.value, 10);
+      console.log(typeof(this.oldCommercant.siretCommercant), typeof(siretVal));
+        if (
+          this.oldCommercant.siretCommercant !== this.f.siretCommercant.value
+        ) {
+          this.eleUnique.siret = this.testUnique(
+            this.tableDonnees.siret,
+            siretVal
+          );
+        } else {
+          this.eleUnique.siret = true;
+        }
+        // console.log('siret unique ? ' + this.eleUnique.siret);
+        break;
+
+      case 'iban':
+      console.log(typeof(this.oldCommercant.ibanCommercant), typeof(this.f.ibanCommercant.value));
+        if (
+          this.oldCommercant.ibanCommercant !== this.f.ibanCommercant.value
+        ) {
+          this.eleUnique.iban = this.testUnique(
+            this.tableDonnees.iban,
+            this.f.ibanCommercant.value
+          );
+        } else {
+          this.eleUnique.iban = true;
+        }
+        // console.log('iban unique ? ' + this.eleUnique.iban);
+        break;
+
+        case 'tpe':
+        const tpeVal = parseInt(this.f.tpe.value, 10);
+        console.log(typeof(this.oldCommercant.tpe), typeof(tpeVal));
+        if (
+          this.oldCommercant.tpe !== tpeVal
+        ) {
+          this.eleUnique.tpe = this.testUnique(
+            this.tableDonnees.tpe,
+            tpeVal
+          );
+        } else {
+          this.eleUnique.tpe = true;
+        }
+        // console.log('iban unique ? ' + this.eleUnique.iban);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   get f() {
     return this.commercantForm.controls;
+  }
+
+  testUnique(tableau, valeur) {
+    const resltat = tableau.find(el => {
+      return el === valeur;
+    });
+    return resltat === valeur ? false : true;
   }
 
   onSubmitForm() {
     this.submitted = true;
 
     if (this.commercantForm.invalid) {
-      // if (this.commercantForm.invalid) {
-      if (this.commercantForm['nomCommercant'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-
-      if (this.commercantForm['tel'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-
-      if (this.commercantForm['email'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-
-      if (this.commercantForm['ibanCommercant'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-      if (this.commercantForm['tpe'].errors) {
-        // console.log(this.commercantForm['siretCommercant'].errors);
-      }
-      this.submitted = false;
+      // this.submitted = false;
       return;
     } else {
-      const email = this.f.email.value;
-      if (this.f.email.value && this.f.email.value !== this.originEmail) {
-        this._commercantService.emailExist(email).subscribe((res: any) => {
-          console.log(res);
-          if (res.message === 'err') {
-            this.loginExist = true;
-            return;
-          } else {
-            // this.loginExist = false;
-            this.faireSubmit();
-          }
-        });
-      } else {
-        this.faireSubmit();
-      }
+      // this.submitted = true;
+      console.log('OK pour le formulaire');
+      this.faireSubmit();
     }
   }
 
@@ -177,12 +243,11 @@ export class EditCommercantComponent implements OnInit {
         .updateCommercant(newCommercant, this.idCommercant)
         .pipe(first())
         .subscribe(
-          (resultat) => {
+          resultat => {
             this._authService.regUser(resultat);
             this._router.navigate(['/mesVentes']);
           },
           err => console.log('Erreur : ' + err)
         );
-    // this._router.navigate(['/listCommercants']);
   }
 }

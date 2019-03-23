@@ -147,10 +147,16 @@ export class NewEntrepriseComponent implements OnInit {
       formValue['password']
     );
 
-    console.log('event : create');
-    const resultat = this._authService.registerEntreprise(newEntreprise);
-    console.log('resultat', resultat);
-    this._authService.regUser(resultat);
-    this._router.navigate(['/mesEmployes']);
+    console.log('event : update');
+    this._authService.registerEntreprise(newEntreprise)
+      .pipe(first())
+      .subscribe(
+        (resultat) => {
+          console.log('resultat', resultat);
+          this._authService.regUser(resultat);
+          this._router.navigate(['/mesEmployes']);
+        },
+        err => console.log('Erreur : ' + err)
+      );
   }
 }
