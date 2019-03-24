@@ -17,13 +17,13 @@ import { CommercantService } from './commercant.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // déclaration des chemins d'accès
-  private _UrlEmploye = 'https://restix.herokuapp.com/employes';
-  private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
-  private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
+  // private _UrlEmploye = 'https://restix.herokuapp.com/employes';
+  // private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
+  // private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
 
-  // private _UrlEmploye = 'http://localhost:3000/employes';
-  // private _UrlEntreprise = 'http://localhost:3000/entreprises';
-  // private _UrlCommercant = 'http://localhost:3000/commercants';
+  private _UrlEmploye = 'http://localhost:3000/employes';
+  private _UrlEntreprise = 'http://localhost:3000/entreprises';
+  private _UrlCommercant = 'http://localhost:3000/commercants';
 
   private currentEmployeSubject: BehaviorSubject<IUser>;
   public currentEmploye: Observable<IUser>;
@@ -134,12 +134,15 @@ export class AuthService {
   }
 
   registerCommercant(commercant) {
+    console.log('\n\nregisterCommercant');
     return this._commercantService.addCommercant(commercant);
+    // console.log('registerCommercant : ', data);
+    // return data;
     // return this._httpClient.post<IEntreprise>(`${this._UrlEntreprise}/addEntreprise`, entreprise);
   }
 
   loginEmploye(employe) {
-    console.log('loginEmploye');
+    console.log('loginEmploye', employe);
     return this._httpClient
       .post<any>(`${this._UrlEmploye}/loginEmploye`, employe)
       .pipe(

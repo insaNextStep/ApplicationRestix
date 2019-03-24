@@ -7,6 +7,7 @@ import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { AuthService } from 'src/app/_services/auth.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-new-entreprise',
@@ -38,7 +39,8 @@ export class NewEntrepriseComponent implements OnInit {
     private _router: Router,
     private _entrepriseService: EntrepriseService,
     // private route: ActivatedRoute,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _appComponent: AppComponent
   ) {
     this._entrepriseService.getAll().subscribe(res => {
       console.log(res);
@@ -147,16 +149,18 @@ export class NewEntrepriseComponent implements OnInit {
       formValue['password']
     );
 
-    console.log('event : update');
-    this._authService.registerEntreprise(newEntreprise)
-      .pipe(first())
-      .subscribe(
-        (resultat) => {
-          console.log('resultat', resultat);
-          this._authService.regUser(resultat);
+    this._authService.registerEntreprise(newEntreprise).subscribe(() => {
+      const login = {
+        password: newEntreprise.password,
+        email: newEntreprise.email
+      };
+      this._authService.loginEntreprise(login).subscribe(
+        res => {
+          console.log(res);
+          this._appComponent.isAuth = true;
           this._router.navigate(['/mesEmployes']);
-        },
-        err => console.log('Erreur : ' + err)
+        }
       );
+    });
   }
 }

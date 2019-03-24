@@ -16,8 +16,8 @@ export class EntrepriseService {
   private entreprises: MEntreprise[] = [];
   entrepriseSubject = new Subject<MEntreprise[]>();
 
-  // private uri = 'http://localhost:3000/entreprises';
-  private uri = 'https://restix.herokuapp.com/entreprises';
+  private uri = 'http://localhost:3000/entreprises';
+  // private uri = 'https://restix.herokuapp.com/entreprises';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
@@ -40,8 +40,8 @@ export class EntrepriseService {
   getEntreprise(id) {
     // implémentation de la route (repris de node js dans l'onglet route)
     return this._httpClient
-    .get<MEntreprise[]>(`${this.uri}/${id}`)
-    .pipe(map(res => res));
+      .get<MEntreprise[]>(`${this.uri}/${id}`)
+      .pipe(map(res => res));
   }
 
   getEntrepriseName(id) {
@@ -51,23 +51,20 @@ export class EntrepriseService {
 
   getMesEmployes(id) {
     return this._httpClient
-    .get(`${this.uri}/mesEmployes/${id}`)
-    .pipe(map(res => res));
+      .get(`${this.uri}/mesEmployes/${id}`)
+      .pipe(map(res => res));
   }
 
   addEntreprise(entreprise: MEntreprise) {
-    return this._httpClient
-      .post(`${this.uri}/add/`, entreprise)
-      .subscribe(
-        (res: any) => {
-          console.log('Enregistrement terminé');
-          // this.entreprises.push(res);
-          // this.emitEntreprise();
-          console.log(res);
-          return res;
-        },
-        err => console.log('Erreur : ' + err)
-      );
+    return this._httpClient.post(`${this.uri}/add/`, entreprise).pipe(
+      map((res: any) => {
+        console.log('Enregistrement terminé');
+        this.entreprises.push(res);
+        this.emitEntreprise();
+        // console.log(res);
+        // return res;
+      })
+    );
   }
 
   updateEntreprise(entreprise, id) {
@@ -78,15 +75,18 @@ export class EntrepriseService {
   }
 
   deleteEntreprise(id: string) {
-    return this._httpClient.delete(`${this.uri}/delete/${id}`).pipe(map(res => res));
+    return this._httpClient
+      .delete(`${this.uri}/delete/${id}`)
+      .pipe(map(res => res));
   }
 
   emailExist(email: string): Observable<IEntreprise[]> {
-    return this._httpClient.get<IEntreprise[]>(`${this.uri}/email/${email}`).pipe(map(res => res));
+    return this._httpClient
+      .get<IEntreprise[]>(`${this.uri}/email/${email}`)
+      .pipe(map(res => res));
   }
 
   getAll() {
     return this._httpClient.get(`${this.uri}/getAll`).pipe(map(res => res));
   }
-
 }

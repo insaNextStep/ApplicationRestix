@@ -1,3 +1,7 @@
+.container{
+  margin-bottom: 30px;
+}
+
 .cadreForm {
   width: 350px;
 }
@@ -37,7 +41,7 @@
 
 
 .bgimg {
-  background: url('/assets/img/employeur.jpg') no-repeat center center fixed;
+  background-image: url('/assets/img/employeur.jpg') no-repeat center center fixed;
   height:100vh;
   // background-repeat: no-repeat;
   // background-attachment: fixed;   

@@ -3,6 +3,7 @@ import { MCommercant } from '../_models/commercant.model';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+// import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class CommercantService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  // private uri = 'http://localhost:3000/commercants';
-  private uri = 'https://restix.herokuapp.com/commercants';
+  private uri = 'http://localhost:3000/commercants';
+  // private uri = 'https://restix.herokuapp.com/commercants';
 
   emitCommercant() {
     this.commercantSubject.next(this.commercants.slice());
@@ -41,15 +42,20 @@ export class CommercantService {
   }
 
   addCommercant(commercant: MCommercant) {
-    return this._httpClient.post(`${this.uri}/add/`, commercant).subscribe(
+    console.log('addCommercant');
+    return this._httpClient.post(`${this.uri}/add/`, commercant).pipe(map(
       (res: any) => {
-        console.log('Enregistrement terminé');
+        console.log('Enregistrement terminé', res);
         this.commercants.push(res);
         this.emitCommercant();
-      },
-      err => console.log('Erreur : ' + err)
-    );
+        // this._authService.loginCommercant();
+      }
+    ));
   }
+
+  //     err => console.log('Erreur : ' + err)
+  //   );
+  // }
 
   updateCommercant(commercant, id) {
     console.log(commercant);

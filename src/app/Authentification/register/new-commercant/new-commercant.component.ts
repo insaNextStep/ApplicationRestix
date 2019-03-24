@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { resolveTimingValue } from '@angular/animations/browser/src/util';
+import { reject } from 'q';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-new-commercant',
@@ -24,10 +26,10 @@ export class NewCommercantComponent implements OnInit {
   submitted = false;
   // originEmail = '';
   tableDonnees: {
-    email: true,
-    iban: true,
-    tpe: true,
-    siret: true
+    email: true;
+    iban: true;
+    tpe: true;
+    siret: true;
   };
 
   eleUnique = {
@@ -42,7 +44,8 @@ export class NewCommercantComponent implements OnInit {
     private _router: Router,
     private _commercantService: CommercantService,
     // private route: ActivatedRoute,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _appComponent: AppComponent
   ) {
     this._commercantService.getAll().subscribe(res => {
       console.log(res);
@@ -111,17 +114,19 @@ export class NewCommercantComponent implements OnInit {
         break;
 
       case 'tpe':
+        const tpeVal = parseInt(this.f.tpe.value, 10);
         this.eleUnique.tpe = this.testUnique(
           this.tableDonnees.tpe,
-          this.f.tpe.value
+          tpeVal
         );
         // console.log('tpe unique ? ' + this.eleUnique.tpe);
         break;
 
       case 'siret':
+      const siretVal = parseInt(this.f.siretCommercant.value, 10);
         this.eleUnique.siret = this.testUnique(
           this.tableDonnees.siret,
-          this.f.siretCommercant.value
+          siretVal
         );
         // console.log('siret unique ? ' + this.eleUnique.siret);
         break;
@@ -157,6 +162,20 @@ export class NewCommercantComponent implements OnInit {
     }
   }
 
+  // enregistrement(newCommercant) {
+  //   console.log('enregistrement new Commercant');
+
+  //   return Promise.resolve(retour).then(
+  //     () => {
+  //       return retour;
+  //     }
+  //   ).then(val => console.log(val));
+  //   // {
+  //   //   resolve(this._authService.registerCommercant(newCommercant)),
+  //   //   reject(console.log('erreur'));
+  //   // });
+  // }
+
   faireSubmit() {
     const formValue = this.commercantForm.value;
     const newCommercant = new MCommercant(
@@ -169,15 +188,18 @@ export class NewCommercantComponent implements OnInit {
       formValue['password']
     );
 
-    console.log('event : update');
-    this._authService.registerCommercant(newCommercant)
-      .pipe(first())
-      .subscribe(
-        (resultat) => {
-          this._authService.regUser(resultat);
+    this._authService.registerCommercant(newCommercant).subscribe(() => {
+      const login = {
+        password: newCommercant.password,
+        email: newCommercant.email
+      };
+      this._authService.loginCommercant(login).subscribe(
+        res => {
+          console.log(res);
+          this._appComponent.isAuth = true;
           this._router.navigate(['/mesVentes']);
-        },
-        err => console.log('Erreur : ' + err)
+        }
       );
+    });
   }
 }

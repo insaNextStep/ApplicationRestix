@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                   <label for="siretCommercant">SIRET</label>
-                  <input type="number" name="siretCommercant" class="form-control" formControlName="siretCommercant"
+                  <input type="text" name="siretCommercant" class="form-control" formControlName="siretCommercant"
                     (keyup)="uniqueElement('siret')"
                     [ngClass]="{ 'is-invalid': (submitted ||  f.siretCommercant.touched ) && (f.siretCommercant.errors || !eleUnique.siret) }" />
                   <div
@@ -73,14 +73,14 @@
 
                 <div class="form-group">
                   <label for="tpe">numero TPE</label>
-                  <input type="number" class="form-control" formControlName="tpe" (keyup)="uniqueElement('tpe')"
+                  <input type="text" class="form-control" formControlName="tpe" (keyup)="uniqueElement('tpe')"
                     [ngClass]="{ 'is-invalid': (submitted || f.tpe.touched ) && (f.tpe.errors || !eleUnique.tpe) }" />
                   <div *ngIf="(submitted ||f.tpe.touched ) && (f.tpe.errors || !eleUnique.tpe)"
                     class="invalid-feedback">
                     <div *ngIf="!eleUnique.tpe">Le numéro TPE est associé a un autre utilisateur</div>
                     <div *ngIf="f.tpe.errors?.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.tpe.errors?.minlength || f.tpe.errors?.maxlength">Ce champ doit contenir 12 chiffres
-                    <div *ngIf="f.tpe.errors?.pattern">Ce champ ne doit pas commencer par un '0'</div>
+                      <div *ngIf="f.tpe.errors?.pattern">Ce champ ne doit pas commencer par un '0'</div>
                     </div>
                   </div>
                 </div>
@@ -108,6 +108,26 @@
 
                 <button type="submit" class="btn btn-primary" [disabled]="commercantForm.invalid">Soumettre</button>
               </form>
+              <!--a  class="btn btn-primary" data-toggle="modal" href="#ignimyModal">Soumettre</a>
+              <div class="modal fade" id="ignimyModal" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button class="close" type="button" data-dismiss="modal" arial-label=""> <span>X</span> </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="thank-you-pop">
+                        <img src="" alt="image ici">
+                        <h1> Merci de votre connexion</h1>
+                        <p>info supplémentaire</p>
+                        <h3 class="cupon-pop">info complémentaire <span> id / mot de passe</span></h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div-->
+
+
             </div>
           </div>
 

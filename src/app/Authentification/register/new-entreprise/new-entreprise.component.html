@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                   <label for="siretEntreprise">SIRET</label>
-                  <input type="number" name="siretEntreprise" class="form-control" formControlName="siretEntreprise"
+                  <input type="text" name="siretEntreprise" class="form-control" formControlName="siretEntreprise"
                     (keyup)="uniqueElement('siret')"
                     [ngClass]="{ 'is-invalid': (submitted ||  f.siretEntreprise.touched ) && (f.siretEntreprise.errors || !eleUnique.siret) }" />
                   <div
