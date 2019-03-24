@@ -15,8 +15,8 @@ export class CommercantService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  private uri = 'http://localhost:3000/commercants';
-  // private uri = 'https://restix.herokuapp.com/commercants';
+  // private uri = 'http://localhost:3000/commercants';
+  private uri = 'https://restix.herokuapp.com/commercants';
 
   emitCommercant() {
     this.commercantSubject.next(this.commercants.slice());
