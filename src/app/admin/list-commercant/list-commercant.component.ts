@@ -26,7 +26,7 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
     this.commercantSubscription = this._commercantService.commercantSubject.subscribe(
       (commercants: MCommercant[]) => {
         this.commercants = commercants;
-        console.log(commercants);
+        // console.log(commercants);
       }
     );
     this._commercantService.emitCommercant();
@@ -37,7 +37,7 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
   }
 
   afficherListeCommercants() {
-    console.log('\n\n ********************* afficher liste des commercant ********************* \n');
+    // console.log('\n\n ********************* afficher liste des commercant ********************* \n');
     // initialisation de la méthode pour récupérer les employés
     this._commercantService.getListCommercant();
   }
@@ -57,7 +57,7 @@ export class ListCommercantComponent implements OnInit, OnDestroy {
           () => {
             this.afficherListeCommercants();
           },
-          err => console.log('Erreur : ' + err)
+          // err => console.log('Erreur : ' + err)
         );
     }
   }

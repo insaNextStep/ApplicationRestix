@@ -51,14 +51,14 @@ export class LoginEntrepriseComponent implements OnInit {
       return;
     } else {
       // this.submitted = true;
-      console.log('OK pour le formulaire');
+      // console.log('OK pour le formulaire');
       this.donneesFormulaire();
     }
   }
 
 
   donneesFormulaire() {
-    console.log('login entreprise :');
+    // console.log('login entreprise :');
     const formValue = this.entrepriseForm.value;
     const newLogin = new MLogin(
       formValue['email'],
@@ -69,7 +69,7 @@ export class LoginEntrepriseComponent implements OnInit {
     // console.log(this.compteUtilisateur);
     this._authService.loginEntreprise(newLogin).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         this._appComponent.isAuth = true;
         this.errPassword = false;
         this._router.navigate(['/mesEmployes']);
@@ -82,7 +82,7 @@ export class LoginEntrepriseComponent implements OnInit {
     if (event['path'][0].value) {
       const email = event['path'][0].value;
       this._entrepriseService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         if (res.message === 'err') {
           this.loginExist = false;
         } else {

@@ -6,6 +6,6 @@ export class MEmploye {
         public prenom: string,
         public tel: string,
         public email: string,
-        public entreprise: string
+        public entreprise?: string
         ) {}
 }

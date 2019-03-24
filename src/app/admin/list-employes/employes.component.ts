@@ -43,7 +43,7 @@ export class EmployesComponent implements OnInit {
       res => (this.liste = res),
       err => {
         if (err instanceof HttpErrorResponse) {
-          console.log('erreur :' + err);
+          // console.log('erreur :' + err);
           if (err.status === 401) {
             this._router.navigate(['login']);
           }
@@ -67,7 +67,7 @@ export class EmployesComponent implements OnInit {
           () => {
             this.afficherListeEmployes();
           },
-          err => console.log('Erreur : ' + err)
+          // err => console.log('Erreur : ' + err)
         );
     }
   }

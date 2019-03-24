@@ -5,15 +5,15 @@
         <div class="row">
           <div class="card" id="divCard">
             <div class="card" id="cardInt">
+              <h1 style="text-align: center"><span>{{status}}</span></h1>
 
-                <h1 style="text-align: center"><span>{{status}}</span></h1>
-
-              <form [formGroup]="employeForm" (ngSubmit)="onSubmitForm(status)">
+              <form [formGroup]="employeForm" (ngSubmit)="onSubmitForm()">
 
                 <div class="form-group">
                   <label for="nom">Nom</label>
-                  <input type="text" class="form-control" id="nom" formControlName="nom"[ngClass]="{ 'is-invalid': submitted && f.nom.errors }" />
-                  <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                  <input type="text" class="form-control" id="nom" formControlName="nom"
+                    [ngClass]="{ 'is-invalid': (submitted || f.nom.touched) && f.nom.errors }" />
+                  <div *ngIf="(submitted || f.nom.touched) && f.nom.errors" class="invalid-feedback">
                     <div *ngIf="f.nom.errors?.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.nom.errors?.minlength">Au minimum 4 caractères</div>
                   </div>
@@ -21,8 +21,9 @@
 
                 <div class="form-group">
                   <label for="prenom">Prenom</label>
-                  <input type="text" class="form-control" id="prenom" formControlName="prenom"[ngClass]="{ 'is-invalid': submitted && f.prenom.errors }" />
-                  <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                  <input type="text" class="form-control" id="prenom" formControlName="prenom"
+                    [ngClass]="{ 'is-invalid': (submitted || f.prenom.touched) && f.prenom.errors }" />
+                  <div *ngIf="(submitted || f.prenom.touched) && f.prenom.errors" class="invalid-feedback">
                     <div *ngIf="f.prenom.errors?.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.prenom.errors?.minlength">Au minimum 4 caractères</div>
                   </div>
@@ -30,9 +31,9 @@
 
                 <div class="form-group">
                   <label for="tel">Telephone</label>
-                  <input type="text" class="form-control" id="tel" 
-                  formControlName="tel" [ngClass]="{ 'is-invalid': submitted && f.tel.errors }" />
-                  <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
+                  <input type="text" class="form-control" id="tel" formControlName="tel"
+                    [ngClass]="{ 'is-invalid': (submitted || f.tel.touched) && f.tel.errors }" />
+                  <div *ngIf=" (submitted || f.tel.touched)  && f.tel.errors" class="invalid-feedback">
                     <div *ngIf="f.tel.errors?.required">Ce champ est obligatoire</div>
                     <div *ngIf="f.tel.errors?.pattern">Le format '0[0-9]*9' doit etre respecté</div>
                   </div>
@@ -40,19 +41,19 @@
 
                 <div class="form-group">
                   <label for="email">Adresse Email</label>
-                  <input type="email" class="form-control" id="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <input type="email" class="form-control" id="email" formControlName="email" (keyup)="uniqueElement('email')"
+                    [ngClass]="{ 'is-invalid': (submitted || f.email.touched) && (f.email.errors || !eleUnique.email) }" />
+                  <div *ngIf="(submitted || f.email.touched) && (f.email.errors || !eleUnique.email)" class="invalid-feedback">
                     <div *ngIf="f.email.errors?.required">Ce champ est obligatoire</div>
-                    <div *ngIf="loginExist" class="invalid-feedback">L'adresse mail est déjà utilisée</div>
                     <div *ngIf="f.email.errors?.email">Format 'nom@domaine.tld' doit etre respecté</div>
+                    <div *ngIf="!eleUnique.email">L'adresse mail est associé a un autre utilisateur</div>
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Soumettre</button>
+                <button type="submit" class="btn btn-primary" [disabled]="employeForm.invalid">Soumettre</button>
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </div>

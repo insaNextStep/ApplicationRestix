@@ -18,8 +18,8 @@ export class EmployeService {
   // transactionSubject:  new Subject<MTransaction[]>();
 
   employeSubject = new Subject<MEmploye[]>();
-  private uri = 'http://localhost:3000/employes';
-  // private uri = 'https://restix.herokuapp.com/employes';
+  // private uri = 'http://localhost:3000/employes';
+  private uri = 'https://restix.herokuapp.com/employes';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
@@ -44,11 +44,11 @@ export class EmployeService {
   addNewEmploye(newEmploye) {
     return this._httpClient.post(`${this.uri}/add/`, newEmploye).subscribe(
       (res: any) => {
-        console.log('Enregistrement terminé');
+        // console.log('Enregistrement terminé');
         this.employes.push(res);
         this.emitEmploye();
       },
-      err => console.log('Erreur : ' + err)
+      // err => console.log('Erreur : ' + err)
     );
     // implémentation de la route (repris de node js dans l'onglet route)
     // const headers = new HttpHeaders();
@@ -63,7 +63,7 @@ export class EmployeService {
   }
 
   DissocierEmploye(id: string): Observable<IEmploye[]> {
-    console.log('\n\n\n ************************** this.DissocierEmploye');
+    // console.log('\n\n\n ************************** this.DissocierEmploye');
     return this._httpClient.get<IEmploye[]>(
       `${this.uri}/dissocierEmploye/${id}`
     ); // .pipe(map(res => res));
@@ -74,7 +74,7 @@ export class EmployeService {
   // }
 
   getEmployeName(id: string) {
-    console.log(`getEmployeName(${id})`);
+    // console.log(`getEmployeName(${id})`);
     return this._httpClient.get(`${this.uri}/name/${id}`);
   }
 
@@ -85,14 +85,18 @@ export class EmployeService {
   }
 
   updateEmploye(employe, id) {
-    console.log(employe);
+    // console.log(employe);
     return this._httpClient
       .patch(`${this.uri}/update/${id}`, employe)
       .pipe(map(res => res));
   }
 
   getSolde(id) {
-    console.log(`getSolde(${id})`);
+    // console.log(`getSolde(${id})`);
     return this._httpClient.get(`${this.uri}/solde/${id}`);
+  }
+
+  getAll() {
+    return this._httpClient.get(`${this.uri}/getAll`).pipe(map(res => res));
   }
 }

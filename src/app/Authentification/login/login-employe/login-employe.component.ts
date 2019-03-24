@@ -46,13 +46,13 @@ export class LoginEmployeComponent implements OnInit {
       return;
     } else {
       // this.submitted = true;
-      console.log('OK pour le formulaire');
+      // console.log('OK pour le formulaire');
       this.donneesFormulaire();
     }
   }
 
   donneesFormulaire() {
-    console.log('login employe :');
+    // console.log('login employe :');
     const formValue = this.employeForm.value;
     const newLogin = new MLogin(
       formValue['email'],
@@ -62,10 +62,10 @@ export class LoginEmployeComponent implements OnInit {
     // console.log(this.compteUtilisateur);
     this._authService.loginEmploye(newLogin).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         this._appComponent.isAuth = true;
         this.errPassword = false;
-        this._router.navigate(['/mesTransactions']);
+        this._router.navigate(['/ActiveCompte']);
       },
       err => this.errPassword = true
     );
@@ -75,7 +75,7 @@ export class LoginEmployeComponent implements OnInit {
     if (event['path'][0].value) {
       const email = event['path'][0].value;
       this._employeService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         if (res.message === 'err') {
           this.loginExist = false;
         } else {

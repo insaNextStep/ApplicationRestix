@@ -17,13 +17,13 @@ import { CommercantService } from './commercant.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // déclaration des chemins d'accès
-  // private _UrlEmploye = 'https://restix.herokuapp.com/employes';
-  // private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
-  // private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
+  private _UrlEmploye = 'https://restix.herokuapp.com/employes';
+  private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
+  private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
 
-  private _UrlEmploye = 'http://localhost:3000/employes';
-  private _UrlEntreprise = 'http://localhost:3000/entreprises';
-  private _UrlCommercant = 'http://localhost:3000/commercants';
+  // private _UrlEmploye = 'http://localhost:3000/employes';
+  // private _UrlEntreprise = 'http://localhost:3000/entreprises';
+  // private _UrlCommercant = 'http://localhost:3000/commercants';
 
   private currentEmployeSubject: BehaviorSubject<IUser>;
   public currentEmploye: Observable<IUser>;
@@ -56,12 +56,12 @@ export class AuthService {
 
     // decode token to read the payload details
     // const decodeToken = this._jwtHelperService.decodeToken(currentUser); // || {'role': '', 'token': ''};
-    console.log('\n\n afficher decodeToken :');
-    console.log(localStorage.getItem('currentUser'));
+    // console.log('\n\n afficher decodeToken :');
+    // console.log(localStorage.getItem('currentUser'));
     // console.log(decodeToken.role);
     // if (decodeToken !== null) {
     // if (decodeToken.role === 'EMPLOYE') {
-    console.log('\n\n c\'est un employé');
+    // console.log('\n\n c\'est un employé');
     this.currentUserSubject = new BehaviorSubject<IUser>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
@@ -79,10 +79,10 @@ export class AuthService {
   }
 
   isAuthorized(allowedRoles: string[]): boolean {
-    console.log('roles :', allowedRoles);
+    // console.log('roles :', allowedRoles);
     // check if the list of allowed roles is empty, if empty, authorize the user to access the page
     if (allowedRoles == null || allowedRoles.length === 0) {
-      console.log('isAutho OK');
+      // console.log('isAutho OK');
       return true;
     }
 
@@ -91,12 +91,12 @@ export class AuthService {
 
     // decode token to read the payload details
     const decodeToken = this._jwtHelperService.decodeToken(token);
-    console.log('\n\n\n afficher decodeToken :');
-    console.log(decodeToken);
+    // console.log('\n\n\n afficher decodeToken :');
+    // console.log(decodeToken);
 
     // check if it was decoded successfully, if not the token is not valid, deny access
     if (!decodeToken) {
-      console.log('Invalid token');
+      // console.log('Invalid token');
       return false;
     }
     // check if the user roles is in the list of allowed roles, return true if allowed and false if not allowed
@@ -104,14 +104,14 @@ export class AuthService {
   }
 
   public get currentEmployeValue(): any {
-    console.log('\n\n ********************* currentEmployeValue');
-    console.log('current employe subject', this.currentUserSubject);
+    // console.log('\n\n ********************* currentEmployeValue');
+    // console.log('current employe subject', this.currentUserSubject);
     return this.currentUserSubject.value;
   }
 
   public get currentCommercantValue(): any {
-    console.log('\n\n ********************* currentCommercantValue');
-    console.log('current Commercant subject', this.currentUserSubject);
+    // console.log('\n\n ********************* currentCommercantValue');
+    // console.log('current Commercant subject', this.currentUserSubject);
     return this.currentUserSubject.value;
   }
 
@@ -134,7 +134,7 @@ export class AuthService {
   }
 
   registerCommercant(commercant) {
-    console.log('\n\nregisterCommercant');
+    // console.log('\n\nregisterCommercant');
     return this._commercantService.addCommercant(commercant);
     // console.log('registerCommercant : ', data);
     // return data;
@@ -142,14 +142,14 @@ export class AuthService {
   }
 
   loginEmploye(employe) {
-    console.log('loginEmploye', employe);
+    // console.log('loginEmploye', employe);
     return this._httpClient
       .post<any>(`${this._UrlEmploye}/loginEmploye`, employe)
       .pipe(
         map(user => {
-          console.log('\n\n\n *************************** loginEmploye');
-          console.log(user);
-          console.log(user.token);
+          // console.log('\n\n\n *************************** loginEmploye');
+          // console.log(user);
+          // console.log(user.token);
           // if (user && user.token) {
           //   localStorage.setItem('currentUser', JSON.stringify(user));
           //   this.currentUserSubject.next(user);
@@ -169,7 +169,7 @@ export class AuthService {
   }
 
   loginEntreprise(entreprise) {
-    console.log('loginEntreprise');
+    // console.log('loginEntreprise');
     return this._httpClient
       .post<any>(`${this._UrlEntreprise}/loginEntreprise`, entreprise)
       .pipe(
@@ -182,7 +182,7 @@ export class AuthService {
   }
 
   loginCommercant(commercant) {
-    console.log('loginCommercant');
+    // console.log('loginCommercant');
     return this._httpClient
       .post<any>(`${this._UrlCommercant}/loginCommercant`, commercant)
       .pipe(
@@ -200,7 +200,7 @@ export class AuthService {
   }
 
   logout() {
-    console.log('logout');
+    // console.log('logout');
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this._router.navigate(['home']);
@@ -209,7 +209,7 @@ export class AuthService {
   }
 
   getToken() {
-    console.log('getToken');
+    // console.log('getToken');
     // return this.currentUserValue['token'];
     if (!!this.currentUserValue) {
       return this.currentUserValue['token'];
@@ -220,7 +220,7 @@ export class AuthService {
   }
 
   getRole() {
-    console.log('GetRole');
+    // console.log('GetRole');
     if (!!this.currentUserValue) {
       return this.currentUserValue['role'];
     } else {

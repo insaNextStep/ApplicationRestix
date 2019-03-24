@@ -11,20 +11,29 @@ import { Location } from '@angular/common';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
 
 @Component({
-  selector: 'app-edit-profile',
-  templateUrl: './edit-profile.component.html',
-  styleUrls: ['./edit-profile.component.scss']
+  selector: 'app-edit-employe',
+  templateUrl: './edit-employe.component.html',
+  styleUrls: ['./edit-employe.component.scss']
 })
-export class EditProfileComponent implements OnInit {
+export class EditEmployeComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   employeForm: FormGroup;
   employe: MEmploye;
+  oldEmploye: MEmploye;
   status = 'Nouvel Employe';
   idEmploye = '';
   private actuelEntreprise: any;
   submitted = false;
   originEmail = '';
   loginExist = false;
+
+  tableDonnees: {
+    email;
+  };
+
+  eleUnique = {
+    email: true,
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -34,18 +43,22 @@ export class EditProfileComponent implements OnInit {
     private _jwtHelperService: JwtHelperService,
     private _entrepriseService: EntrepriseService,
     private _authService: AuthService,
-    private _location: Location
   ) {
-    console.log('\n\n **************** EditEntrepriseComponent');
+    // console.log('\n\n **************** EditEntrepriseComponent');
+
+    this._employeService.getAll().subscribe(res => {
+      // console.log(res);
+      this.tableDonnees = res as any;
+    });
 
     const token = this._authService.getToken();
-    console.log('token : ' + token);
+    // console.log('token : ' + token);
 
     // si token existe alors
     if (token) {
       // décoder le token et récupérer l'id de l'employe
       const decodeToken = this._jwtHelperService.decodeToken(token);
-      console.log('decodeToken', decodeToken);
+      // console.log('decodeToken', decodeToken);
       // this.afficherTransactions(decodeToken.subject);
       this.originEmail = decodeToken.email;
     } else {
@@ -68,11 +81,12 @@ export class EditProfileComponent implements OnInit {
       .getEmploye(id)
       .subscribe(
         employe => this.editEmploye(employe),
-        err => console.log('Erreur chargement : ' + err)
+        // err => console.log('Erreur chargement : ' + err)
       );
   }
 
   editEmploye(employe) {
+    this.oldEmploye = employe;
     const tel = '0' + employe.tel;
     this.employeForm.patchValue({
       nom: employe.nom,
@@ -92,71 +106,49 @@ export class EditProfileComponent implements OnInit {
       ],
       email: ['', [Validators.required, Validators.email]]
     });
+  }
 
-    // console.log(this._authService.currentEmployeValue);
-    // const token = this._authService.getToken();
-    // console.log('token : ' + token);
-    // if (token) {
-    //   const decodeToken = this._jwtHelperService.decodeToken(token);
-    //   console.log('entrepriseId : ' + decodeToken.subject);
-    //   this._entrepriseService.getEntrepriseName(decodeToken.subject).subscribe(
-    //     res => {
-    //       this.actuelEntreprise = res;
-    //       console.log(this.actuelEntreprise);
-    //     },
-    //     err => {
-    //       console.log('erreur :' + err);
-    //     }
-    //   );
-    // } else {
-    //   this.actuelEntreprise = '';
-    // }
-    // // console.log(this._authService.currentEmployeValue);
-    // this.initForm();
+  uniqueElement(element) {
+    // console.log('zone de control unique');
+    switch (element) {
+      case 'email':
+      // console.log(typeof(this.oldEmploye.email), typeof(this.f.email.value));
+      // console.log(this.oldEmploye.email, this.f.email.value);
+        if (this.oldEmploye.email !== this.f.email.value) {
+          this.eleUnique.email = this.testUnique(
+            this.tableDonnees.email,
+            this.f.email.value
+          );
+        } else {
+          this.eleUnique.email = true;
+        }
+        // console.log('email unique ? ' + this.eleUnique.email);
+        break;
+
+      default:
+        break;
+    }
   }
 
   get f() {
     return this.employeForm.controls;
   }
 
+  testUnique(tableau, valeur) {
+    const resltat = tableau.find(el => {
+      return el === valeur;
+    });
+    return resltat === valeur ? false : true;
+  }
+
   onSubmitForm() {
     this.submitted = true;
 
     if (this.employeForm.invalid) {
-      if (this.employeForm['prenom'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      if (this.employeForm['nom'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      if (this.employeForm['tel'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      if (this.employeForm['email'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      this.submitted = false;
       return;
     } else {
-      const email = this.f.email.value;
-      if (this.f.email.value && this.f.email.value !== this.originEmail) {
-        this._employeService.emailExist(email).subscribe((res: any) => {
-          // console.log(res);
-          if (res.message === 'err') {
-            this.loginExist = true;
-            return;
-          } else {
-            // this.loginExist = false;
-            this.faireSubmit();
-          }
-        });
-      } else {
-        this.faireSubmit();
-      }
+      // console.log('OK pour le formulaire');
+      this.faireSubmit();
     }
     // this._router.navigate(['/listEntreprise']);
   }
@@ -168,11 +160,10 @@ export class EditProfileComponent implements OnInit {
       formValue['nom'],
       formValue['prenom'],
       formValue['tel'],
-      formValue['email'],
-      formValue['entreprise']
+      formValue['email']
     );
 
-    console.log('event : update');
+    // console.log('event : update');
     this._employeService
       .updateEmploye(newEmploye, this.idEmploye)
       .pipe(first())
@@ -185,7 +176,7 @@ export class EditProfileComponent implements OnInit {
             this._router.navigate(['/ActiveCompte']);
           }
         },
-        err => console.log('Erreur : ' + err)
+        // err => console.log('Erreur : ' + err)
       );
   }
 }

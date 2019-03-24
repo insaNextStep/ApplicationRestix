@@ -16,8 +16,8 @@ export class EntrepriseService {
   private entreprises: MEntreprise[] = [];
   entrepriseSubject = new Subject<MEntreprise[]>();
 
-  private uri = 'http://localhost:3000/entreprises';
-  // private uri = 'https://restix.herokuapp.com/entreprises';
+  // private uri = 'http://localhost:3000/entreprises';
+  private uri = 'https://restix.herokuapp.com/entreprises';
   // création d'un instance avec http
   constructor(private _httpClient: HttpClient) {}
 
@@ -33,7 +33,7 @@ export class EntrepriseService {
         this.emitEntreprise();
         // console.log(this.commercants);
       },
-      err => console.log('Erreur : ' + err)
+      // err => console.log('Erreur : ' + err)
     );
   }
 
@@ -45,7 +45,7 @@ export class EntrepriseService {
   }
 
   getEntrepriseName(id) {
-    console.log(`getEntrepriseName(${id})`);
+    // console.log(`getEntrepriseName(${id})`);
     return this._httpClient.get(`${this.uri}/name/${id}`);
   }
 
@@ -58,7 +58,7 @@ export class EntrepriseService {
   addEntreprise(entreprise: MEntreprise) {
     return this._httpClient.post(`${this.uri}/add/`, entreprise).pipe(
       map((res: any) => {
-        console.log('Enregistrement terminé');
+        // console.log('Enregistrement terminé');
         this.entreprises.push(res);
         this.emitEntreprise();
         // console.log(res);
@@ -68,7 +68,7 @@ export class EntrepriseService {
   }
 
   updateEntreprise(entreprise, id) {
-    console.log(entreprise);
+    // console.log(entreprise);
     return this._httpClient
       .patch(`${this.uri}/update/${id}`, entreprise)
       .pipe(map(res => res));

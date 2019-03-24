@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
   role = '';
 
   ngOnInit() {
-    console.log('role : ' + this.role);
-    console.log('titre : ' + this.titre);
+    // console.log('role : ' + this.role);
+    // console.log('titre : ' + this.titre);
     // Start watching for user inactivity.
     this.userIdle.startWatching();
 
@@ -49,38 +49,38 @@ export class LoginComponent implements OnInit {
   }
 
   stop() {
-    console.log('stop');
+    // console.log('stop');
     this.userIdle.stopTimer();
   }
 
   stopWatching() {
-    console.log('stopWatching');
+    // console.log('stopWatching');
     this.userIdle.stopWatching();
   }
 
   startWatching() {
-    console.log('startWatching');
+    // console.log('startWatching');
     this.userIdle.startWatching();
   }
 
   restart() {
-    console.log('restart');
+    // console.log('restart');
     this.userIdle.resetTimer();
   }
 
   donneesFormulaire() {
-    console.log('this.compteUtilisateur :');
-    console.log(this.compteUtilisateur);
+    // console.log('this.compteUtilisateur :');
+    // console.log(this.compteUtilisateur);
     this._authService.loginEmploye(this.compteUtilisateur).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         //       // enregistrement local du token
         // const token = localStorage.setItem('token', res.token);
         // const role = localStorage.setItem('role', res.role);
         //       console.log('token : ' + token + '\nrole : ' + role);
         this._router.navigate(['employes']);
       },
-      err => console.log(err)
+      // err => console.log(err)
     );
   }
 }

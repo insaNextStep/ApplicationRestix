@@ -42,7 +42,7 @@ import { LoginComponent } from './Authentification/login/login.component';
 import { NewEntrepriseComponent } from './Authentification/register/new-entreprise/new-entreprise.component';
 import { LoginEntrepriseComponent } from './Authentification/login/login-entreprise/login-entreprise.component';
 import { LoginEmployeComponent } from './Authentification/login/login-employe/login-employe.component';
-import { EditProfileComponent } from './employe/edit-profile/edit-profile.component';
+import { EditEmployeComponent } from './employe/edit-employe/edit-employe.component';
 import { ActiveCompteComponent } from './employe/active-compte/active-compte.component';
 import { NewCommercantComponent } from './Authentification/register/new-commercant/new-commercant.component';
 import { ListCommercantComponent } from './admin/list-commercant/list-commercant.component';
@@ -103,7 +103,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'editEmploye/:id',
-    component: EditProfileComponent,
+    component: EditEmployeComponent,
     canActivate: [AuthGuard],
     data: { allowedRoles: ['ENTREPRISE', 'EMPLOYE', 'ADMIN'] }
   },
@@ -172,7 +172,7 @@ const appRoutes: Routes = [
     NewEmployeComponent,
     LoginEntrepriseComponent,
     LoginEmployeComponent,
-    EditProfileComponent,
+    EditEmployeComponent,
     ActiveCompteComponent,
     NewCommercantComponent,
     ListCommercantComponent,

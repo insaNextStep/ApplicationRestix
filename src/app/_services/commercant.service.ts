@@ -30,7 +30,7 @@ export class CommercantService {
         this.emitCommercant();
         // console.log(this.commercants);
       },
-      err => console.log('Erreur : ' + err)
+      // err => console.log('Erreur : ' + err)
     );
   }
 
@@ -42,10 +42,10 @@ export class CommercantService {
   }
 
   addCommercant(commercant: MCommercant) {
-    console.log('addCommercant');
+    // console.log('addCommercant');
     return this._httpClient.post(`${this.uri}/add/`, commercant).pipe(map(
       (res: any) => {
-        console.log('Enregistrement terminé', res);
+        // console.log('Enregistrement terminé', res);
         this.commercants.push(res);
         this.emitCommercant();
         // this._authService.loginCommercant();
@@ -58,7 +58,7 @@ export class CommercantService {
   // }
 
   updateCommercant(commercant, id) {
-    console.log(commercant);
+    // console.log(commercant);
     return this._httpClient
       .patch(`${this.uri}/update/${id}`, commercant)
       .pipe(map(res => res));

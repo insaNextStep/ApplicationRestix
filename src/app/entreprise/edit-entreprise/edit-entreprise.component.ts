@@ -44,21 +44,21 @@ export class EditEntrepriseComponent implements OnInit {
     private _authService: AuthService,
     private _jwtHelperService: JwtHelperService
   ) {
-    console.log('\n\n **************** EditEntrepriseComponent');
+    // console.log('\n\n **************** EditEntrepriseComponent');
 
     this._entrepriseService.getAll().subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.tableDonnees = res as any;
     });
 
     const token = this._authService.getToken();
-    console.log('token : ' + token);
+    // console.log('token : ' + token);
 
     // si token existe alors
     if (token) {
       // décoder le token et récupérer l'id de l'employe
       const decodeToken = this._jwtHelperService.decodeToken(token);
-      console.log('decodeToken', decodeToken);
+      // console.log('decodeToken', decodeToken);
       // this.afficherTransactions(decodeToken.subject);
       this.originEmail = decodeToken.email;
     } else {
@@ -81,13 +81,13 @@ export class EditEntrepriseComponent implements OnInit {
       .getEntreprise(id)
       .subscribe(
         entreprise => this.editEntreprise(entreprise),
-        err => console.log('Erreur chargement : ' + err)
+        // err => console.log('Erreur chargement : ' + err)
       );
   }
 
   editEntreprise(entreprise) {
     this.oldEntreprise = entreprise;
-    console.log('oldentreprise', this.oldEntreprise);
+    // console.log('oldentreprise', this.oldEntreprise);
     const tel = '0' + entreprise.tel;
     this.entrepriseForm.patchValue({
       nomEntreprise: entreprise.nomEntreprise,
@@ -126,11 +126,11 @@ export class EditEntrepriseComponent implements OnInit {
   }
 
   uniqueElement(element) {
-    console.log('zone de control unique');
+    // console.log('zone de control unique');
     switch (element) {
       case 'email':
-      console.log(typeof(this.oldEntreprise.email), typeof(this.f.email.value));
-      console.log(this.oldEntreprise.email, this.f.email.value);
+      // console.log(typeof(this.oldEntreprise.email), typeof(this.f.email.value));
+      // console.log(this.oldEntreprise.email, this.f.email.value);
         if (this.oldEntreprise.email !== this.f.email.value) {
           this.eleUnique.email = this.testUnique(
             this.tableDonnees.email,
@@ -144,8 +144,8 @@ export class EditEntrepriseComponent implements OnInit {
 
       case 'siret':
       const siretVal = parseInt(this.f.siretEntreprise.value, 10);
-      console.log(typeof(this.oldEntreprise.siretEntreprise), typeof(siretVal));
-      console.log(this.oldEntreprise.siretEntreprise, siretVal);
+      // console.log(typeof(this.oldEntreprise.siretEntreprise), typeof(siretVal));
+      // console.log(this.oldEntreprise.siretEntreprise, siretVal);
         if (
           this.oldEntreprise.siretEntreprise !== siretVal
         ) {
@@ -160,8 +160,8 @@ export class EditEntrepriseComponent implements OnInit {
         break;
 
       case 'iban':
-      console.log(typeof(this.oldEntreprise.ibanEntreprise), typeof(this.f.ibanEntreprise.value));
-      console.log(this.oldEntreprise.ibanEntreprise, this.f.ibanEntreprise.value);
+      // console.log(typeof(this.oldEntreprise.ibanEntreprise), typeof(this.f.ibanEntreprise.value));
+      // console.log(this.oldEntreprise.ibanEntreprise, this.f.ibanEntreprise.value);
         if (
           this.oldEntreprise.ibanEntreprise !== this.f.ibanEntreprise.value
         ) {
@@ -195,11 +195,10 @@ export class EditEntrepriseComponent implements OnInit {
     this.submitted = true;
 
     if (this.entrepriseForm.invalid) {
-      // this.submitted = false;
       return;
     } else {
       // this.submitted = true;
-      console.log('OK pour le formulaire');
+      // console.log('OK pour le formulaire');
       this.faireSubmit();
     }
   }
@@ -214,17 +213,17 @@ export class EditEntrepriseComponent implements OnInit {
       formValue['siretEntreprise']
     );
 
-    console.log('event : update');
+    // console.log('event : update');
     this._entrepriseService
       .updateEntreprise(newEntreprise, this.idEntreprise)
       .pipe(first())
       .subscribe(
         resultat => {
-          console.log('resultat', resultat);
+          // console.log('resultat', resultat);
           this._authService.regUser(resultat);
           this._router.navigate(['/mesEmployes']);
         },
-        err => console.log('Erreur : ' + err)
+        // err => console.log('Erreur : ' + err)
       );
   }
 }

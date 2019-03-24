@@ -35,7 +35,7 @@ export class NewEmployeComponent implements OnInit {
     private _authService: AuthService,
     private _location: Location
   ) {
-    console.log(this.status);
+    // console.log(this.status);
     if (this.route.params['value'].id) {
       this.status = 'Editer profil';
       // this.statusBoutton = 'Mise à jour';
@@ -56,7 +56,7 @@ export class NewEmployeComponent implements OnInit {
       .getEmploye(id)
       .subscribe(
         employe => this.editEmploye(employe),
-        err => console.log('Erreur chargement : ' + err)
+        // err => console.log('Erreur chargement : ' + err)
       );
   }
 
@@ -86,42 +86,15 @@ export class NewEmployeComponent implements OnInit {
     return this.employeForm.controls;
   }
 
-  onSubmitForm(event) {
-    const email = this.f.email.value;
-    if (this.f.email.value) {
-      this._employeService.emailExist(email).subscribe((res: any) => {
-        console.log(res);
-        if (res.message === 'err') {
-          this.loginExist = true;
-          return;
-        } else {
-          this.loginExist = false;
-          this.faireSubmit(event);
-        }
-      });
-    }
-
+  onSubmitForm() {
     this.submitted = true;
 
     if (this.employeForm.invalid) {
-      if (this.employeForm['prenom'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      if (this.employeForm['nom'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      if (this.employeForm['tel'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      if (this.employeForm['email'].errors) {
-        // console.log(this.employeForm['siretCommercant'].errors);
-      }
-
-      this.submitted = false;
+      // this.submitted = false;
       return;
+    } else {
+      // console.log('OK pour le formulaire');
+      this.faireSubmit();
     }
     // this._router.navigate(['/listEntreprise']);
   }
@@ -129,17 +102,17 @@ export class NewEmployeComponent implements OnInit {
   ngOnInit() {
     // console.log(this._authService.currentEmployeValue);
     const token = this._authService.getToken();
-    console.log('token : ' + token);
+    // console.log('token : ' + token);
     if (token) {
       const decodeToken = this._jwtHelperService.decodeToken(token);
-      console.log('entrepriseId : ' + decodeToken.subject);
+      // console.log('entrepriseId : ' + decodeToken.subject);
       this._entrepriseService.getEntrepriseName(decodeToken.subject).subscribe(
         res => {
           this.actuelEntreprise = res;
-          console.log(this.actuelEntreprise);
+          // console.log(this.actuelEntreprise);
         },
         err => {
-          console.log('erreur :' + err);
+          // console.log('erreur :' + err);
         }
       );
     } else {
@@ -149,20 +122,7 @@ export class NewEmployeComponent implements OnInit {
     this.initForm();
   }
 
-  // focusOutFunction(event: string) {
-  //   this.loginExist = false;
-  //   if (event['path'][0].value) {
-  //     const email = event['path'][0].value;
-  //     this._employeService.emailExist(email).subscribe((res: any) => {
-  //       console.log(res);
-  //       if (res.message === 'err') {
-  //         this.loginExist = true;
-  //       }
-  //     });
-  //   }
-  // }
-
-  faireSubmit(event) {
+  faireSubmit() {
     const formValue = this.employeForm.value;
     formValue.entreprise = this.actuelEntreprise;
     const newEmploye = new MEmploye(
@@ -172,27 +132,9 @@ export class NewEmployeComponent implements OnInit {
       formValue['email'],
       formValue['entreprise']
     );
-    console.log(newEmploye);
-    console.log('event :', event);
-    if (event === 'Nouvel Employe') {
-      console.log('event : add');
-      this._employeService.addNewEmploye(newEmploye);
-      this._router.navigate(['/mesEmployes']);
-    } else {
-      console.log('event : update');
-      this._employeService
-        .updateEmploye(newEmploye, this.idEmploye)
-        .pipe(first())
-        .subscribe(
-          () => {
-            if (this._authService.getRole() !== 'EMPLOYE') {
-              this._router.navigate(['/mesEmployes']);
-            } else {
-              this._router.navigate(['/ActiveCompte']);
-            }
-          },
-          err => console.log('Erreur : ' + err)
-        );
-    }
+
+    // console.log('event : add');
+    this._employeService.addNewEmploye(newEmploye);
+    this._router.navigate(['/mesEmployes']);
   }
 }

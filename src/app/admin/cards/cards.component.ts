@@ -21,7 +21,7 @@ export class CardsComponent implements OnInit {
     // initialisation de la méthode pour récupérer les employés
     this.cardService.getListeCards().subscribe(creditCards => {
       this.listeCards = creditCards as Array<ICard>;
-      console.log(this.listeCards);
+      // console.log(this.listeCards);
     });
   }
 

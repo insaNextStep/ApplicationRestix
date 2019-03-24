@@ -26,10 +26,10 @@ export class CompaniesComponent implements OnInit, OnDestroy {
   }
 
   initList() {
-    console.log('initialisation affichage');
+    // console.log('initialisation affichage');
     this.entrepriseSubscription = this._EntrepriseService.entrepriseSubject.subscribe(
       (entreprises: any) => {
-        console.log('resultat affichage');
+        // console.log('resultat affichage');
         this.entreprises = entreprises;
       }
     );
@@ -61,7 +61,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
             this.afficherListeEntreprise();
             // this.initList();
           },
-          err => console.log('Erreur : ' + err)
+          // err => console.log('Erreur : ' + err)
         );
     }
   }
