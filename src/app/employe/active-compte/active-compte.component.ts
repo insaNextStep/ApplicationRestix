@@ -32,14 +32,14 @@ export class ActiveCompteComponent implements OnInit, OnDestroy {
   ) {
     // recupération du token
     const token = this._authService.getToken();
-    console.log('token : ' + token);
+    // console.log('token : ' + token);
 
     // si token existe alors
     if (token) {
       // décoder le token et récupérer l'id de l'employe
       const decodeToken = this._jwtHelperService.decodeToken(token);
 
-      console.log('employeId : ' + decodeToken);
+      // console.log('employeId : ' + decodeToken);
 
       // this.afficherTransactions(decodeToken.subject);
       this.utilisateur =
@@ -50,13 +50,13 @@ export class ActiveCompteComponent implements OnInit, OnDestroy {
     } else {
       this.actuelEmploye = '';
     }
-    console.log(this._authService.currentEmployeValue);
+    // console.log(this._authService.currentEmployeValue);
   }
 
   recupSolde(id) {
-    console.log('\n\n ********************  recupSolde');
+    // console.log('\n\n ********************  recupSolde');
     this._employeService.getSolde(id).subscribe((solde: any) => {
-      console.log('solde:', solde);
+      // console.log('solde:', solde);
       this.soldeJ = solde.soldeJour.toFixed(2);
       this.soldeT = solde.soldeTotal.toFixed(2);
     });
@@ -67,9 +67,9 @@ export class ActiveCompteComponent implements OnInit, OnDestroy {
       .getTransactions(id)
       .subscribe((transactions: MTransaction[]) => {
         this.transactions = transactions;
-        console.log(
-          this.transactions.sort((a, b) => b.date.localeCompare(a.date))
-        );
+        // console.log(
+          this.transactions.sort((a, b) => b.date.localeCompare(a.date));
+        // );
       });
   }
 

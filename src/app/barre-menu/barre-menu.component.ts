@@ -23,12 +23,12 @@ export class BarreMenuComponent implements OnInit {
     this._router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        console.log('currentUserValue', this.idUtilisateur());
+        // console.log('currentUserValue', this.idUtilisateur());
         const role = this._authService.getRole()
           ? this._authService.getRole()
           : '';
 
-        console.log(event.url, role);
+        // console.log(event.url, role);
         switch (role) {
           case 'EMPLOYE':
             if (event.url === '/ActiveCompte' && this._authService.loggedIn()) {
@@ -57,7 +57,7 @@ export class BarreMenuComponent implements OnInit {
             }
             break;
           default:
-            console.log('aucun menu');
+            // console.log('aucun menu');
             this.menuActif = false;
             this.menuEmploye = false;
             this.menuCommercant = false;
@@ -70,7 +70,7 @@ export class BarreMenuComponent implements OnInit {
   idUtilisateur() {
     // recupération du token
     const token = this._authService.getToken();
-    console.log('token : ' + token);
+    // console.log('token : ' + token);
     // si token existe alors
     if (token) {
       // décoder le token et récupérer l'id de l'employe
@@ -87,7 +87,7 @@ export class BarreMenuComponent implements OnInit {
 
   editProfil(id) {
     const role = this._authService.getRole() ? this._authService.getRole() : '';
-    console.log('id', id);
+    // console.log('id', id);
 
     switch (role) {
       case 'EMPLOYE':

@@ -43,7 +43,7 @@ export class NewEntrepriseComponent implements OnInit {
     private _appComponent: AppComponent
   ) {
     this._entrepriseService.getAll().subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.tableDonnees = res as any;
     });
   }
@@ -90,7 +90,7 @@ export class NewEntrepriseComponent implements OnInit {
   }
 
   uniqueElement(element) {
-    console.log('zone de control unique');
+    // console.log('zone de control unique');
     switch (element) {
       case 'email':
         this.eleUnique.email = this.testUnique(
@@ -133,7 +133,7 @@ export class NewEntrepriseComponent implements OnInit {
       return;
     } else {
       // this.submitted = true;
-      console.log('OK pour le formulaire');
+      // console.log('OK pour le formulaire');
       this.faireSubmit();
     }
   }
@@ -156,7 +156,7 @@ export class NewEntrepriseComponent implements OnInit {
       };
       this._authService.loginEntreprise(login).subscribe(
         res => {
-          console.log(res);
+          // console.log(res);
           this._appComponent.isAuth = true;
           this._router.navigate(['/mesEmployes']);
         }

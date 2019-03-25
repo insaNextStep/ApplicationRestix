@@ -44,11 +44,11 @@ export class MesVentesComponent implements OnInit {
     this._commercantService.getMesVentes(id).subscribe(
       (res: any) => {
         this.transactions = res;
-        console.log(this.transactions.sort((a, b) => b.date.localeCompare(a.date)));
+        // console.log(this.transactions.sort((a, b) => b.date.localeCompare(a.date)));
       },
       err => {
         if (err instanceof HttpErrorResponse) {
-          console.log('erreur :' + err);
+          // console.log('erreur :' + err);
           if (err.status === 401) {
             this._router.navigate(['login']);
           }
@@ -59,12 +59,12 @@ export class MesVentesComponent implements OnInit {
 
   private idCommercant() {
     const userValue = this._authService.currentUserValue;
-    console.log('userValue');
-    console.log(userValue);
+    // console.log('userValue');
+    // console.log(userValue);
     // décoder le token et récupérer l'id de l'employe
     const decodeToken = this._jwtHelperService.decodeToken(userValue.token);
     this.utilisateur = decodeToken.nomCommercant;
-    console.log('decodeToken', decodeToken);
+    // console.log('decodeToken', decodeToken);
     return decodeToken.subject;
   }
 

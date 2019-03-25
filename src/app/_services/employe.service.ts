@@ -79,7 +79,7 @@ export class EmployeService {
   }
 
   emailExist(email: string): Observable<IEmploye[]> {
-    console.log('get email');
+    // console.log('get email');
     return this._httpClient
       .get<any>(`${this.uri}/email/${email}`)
       .pipe(map(res => res));

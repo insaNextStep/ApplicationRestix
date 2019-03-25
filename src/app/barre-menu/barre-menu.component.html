@@ -7,8 +7,8 @@
   <a class="nav-link navleft" *ngIf="menuEmploye" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
   <a class="nav-link navleft" *ngIf="menuEmploye" routerLink="/ActiveCompte" routerLinkActive="active" >Mes dépenses</a>
   <a class="nav-link navleft" *ngIf="menuEntreprise" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
-  <a class="nav-link navleft" *ngIf="menuEntreprise" class="nav-link" (click)="ajouterEmployer()" >AjouterEmployer </a>
-  <a class="nav-link navleft" *ngIf="menuEntreprise" routerLink="/mesEmployes" routerLinkActive="active">Mes employes</a>
+  <a class="nav-link navleft" *ngIf="menuEntreprise" class="nav-link" (click)="ajouterEmployer()" >Ajouter Employé </a>
+  <a class="nav-link navleft" *ngIf="menuEntreprise" routerLink="/mesEmployes" routerLinkActive="active">Mes employés</a>
   <a class="nav-link navleft" *ngIf="menuCommercant" (click)="editProfil(actuelUtilisateur)" >Mon profil</a>
   <a class="nav-link navleft" *ngIf="menuCommercant" routerLink="/mesVentes" routerLinkActive="active">Mes ventes</a>  
   <a class="nav-link  pull-right" *ngIf="_authService.loggedIn()" class="nav-link" (click)="_authService.logout()">Deconnexion</a>

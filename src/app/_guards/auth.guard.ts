@@ -17,9 +17,9 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const allowedRoles = next.data.allowedRoles;
-    console.log('AuthGuard - allowedRoles : ' + allowedRoles);
+    // console.log('AuthGuard - allowedRoles : ' + allowedRoles);
     const isAuthorized = this._authService.isAuthorized(allowedRoles);
-    console.log('autorisation :', isAuthorized);
+    // console.log('autorisation :', isAuthorized);
     if (!isAuthorized) {
       if (this._authService.loggedIn()) {
         this._router.navigate(['accessdenied']);

@@ -46,7 +46,7 @@ export class MesEmployesComponent implements OnInit {
       },
       err => {
         if (err instanceof HttpErrorResponse) {
-          console.log('erreur :' + err);
+          // console.log('erreur :' + err);
           if (err.status === 401) {
             this._router.navigate(['login']);
           }
@@ -66,7 +66,7 @@ export class MesEmployesComponent implements OnInit {
           () => {
             this.afficherListeEmployes(this.idEntreprise());
           },
-          err => console.log('Erreur : ' + err)
+          // err => console.log('Erreur : ' + err)
         );
     }
   }
@@ -91,8 +91,8 @@ export class MesEmployesComponent implements OnInit {
 
   private idEntreprise() {
     const userValue = this._authService.currentUserValue;
-    console.log('userValue');
-    console.log(userValue);
+    // console.log('userValue');
+    // console.log(userValue);
     // décoder le token et récupérer l'id de l'employe
     const decodeToken = this._jwtHelperService.decodeToken(userValue.token);
     this.nomEntreprise = decodeToken.nomEntreprise;

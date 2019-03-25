@@ -20,9 +20,9 @@
       
       <ng-container matColumnDef="action" style="max-width: 50px">
         <th mat-header-cell *matHeaderCellDef> action </th>
-        <td mat-cell *matCellDef="let element"> <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)"
-            style="margin-right: 5px; margin-left: 5px"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
-          <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)"><i class="fas fa-user-times"></i></a>
+        <td mat-cell *matCellDef="let element"> <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)" title="Editer employé"
+            style="margin-right: 5px; margin-left: 5px"><i class="fas fa-user-edit"  aria-hidden="true"></i></a>
+          <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)" title="Dissocier employé de votre établissement"><i class="fas fa-user-times"></i></a>
         </td>
       </ng-container>
 

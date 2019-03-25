@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
     if (this._authService.loggedIn()) {
       switch (item) {
         case 'EMPLOYE':
-          console.log('employe', item);
+          // console.log('employe', item);
           if (item === this._authService.getRole()) {
             this._router.navigate(['/ActiveCompte']);
           } else {
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
           break;
 
         case 'ENTREPRISE':
-          console.log('entreprise', item);
+          // console.log('entreprise', item);
           if (item === this._authService.getRole()) {
             this._router.navigate(['/mesEmployes']);
           } else {
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
           break;
 
         case 'COMMERCANT':
-          console.log('commercant', item);
+          // console.log('commercant', item);
           if (item === this._authService.getRole()) {
             this._router.navigate(['/mesVentes']);
           } else {
@@ -76,17 +76,17 @@ export class HomeComponent implements OnInit {
     } else {
       switch (item) {
         case 'EMPLOYE':
-          console.log('non employe', item);
+          // console.log('non employe', item);
           this._router.navigate(['/login/employe']);
           break;
 
         case 'ENTREPRISE':
-          console.log('non entreprise', item);
+          // console.log('non entreprise', item);
           this._router.navigate(['/login/entreprise']);
           break;
 
         case 'COMMERCANT':
-          console.log('non entreprise', item);
+          // console.log('non entreprise', item);
           this._router.navigate(['/login/commercant']);
           break;
 

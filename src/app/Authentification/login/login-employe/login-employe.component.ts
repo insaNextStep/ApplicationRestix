@@ -74,7 +74,7 @@ export class LoginEmployeComponent implements OnInit {
   focusOutFunction() {
     const eMail = this.f.email.value;
     if (eMail) {
-      console.log(eMail);
+      // console.log(eMail);
       this._employeService.emailExist(eMail).subscribe((res: any) => {
         // console.log(res);
         if (res.message === 'err') {
