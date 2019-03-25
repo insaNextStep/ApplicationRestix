@@ -77,7 +77,7 @@ export class LoginEmployeComponent implements OnInit {
       console.log(eMail);
       this._employeService.emailExist(eMail).subscribe((res: any) => {
         // console.log(res);
-        if (res.message === "err") {
+        if (res.message === 'err') {
           this.loginExist = false;
         } else {
           this.loginExist = true;
