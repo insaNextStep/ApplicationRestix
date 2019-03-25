@@ -124,7 +124,7 @@ export class NewEmployeComponent implements OnInit {
   }
 
   annuler() {
-    this._location.back();
+    this._router.navigate(['/mesEmployes']);
   }
 
   faireSubmit() {

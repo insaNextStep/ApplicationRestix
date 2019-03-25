@@ -3,13 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommercantService } from 'src/app/_services/commercant.service';
 import { MCommercant } from 'src/app/_models/commercant.model';
-import { first } from 'rxjs/operators';
+// import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
-import { resolveTimingValue } from '@angular/animations/browser/src/util';
-import { reject } from 'q';
+// import { resolveTimingValue } from '@angular/animations/browser/src/util';
+// import { reject } from 'q';
 import { AppComponent } from 'src/app/app.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-commercant',
@@ -45,7 +46,8 @@ export class NewCommercantComponent implements OnInit {
     private _commercantService: CommercantService,
     // private route: ActivatedRoute,
     private _authService: AuthService,
-    private _appComponent: AppComponent
+    private _appComponent: AppComponent,
+    private _location: Location
   ) {
     this._commercantService.getAll().subscribe(res => {
       console.log(res);
@@ -201,5 +203,10 @@ export class NewCommercantComponent implements OnInit {
         }
       );
     });
+  }
+
+  annuler() {
+    // this._location.back();
+    this._router.navigate(['/']);
   }
 }

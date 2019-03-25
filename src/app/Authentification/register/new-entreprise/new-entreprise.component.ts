@@ -8,6 +8,7 @@ import { EntrepriseService } from 'src/app/_services/entreprise.service';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AppComponent } from 'src/app/app.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-entreprise',
@@ -40,7 +41,8 @@ export class NewEntrepriseComponent implements OnInit {
     private _entrepriseService: EntrepriseService,
     // private route: ActivatedRoute,
     private _authService: AuthService,
-    private _appComponent: AppComponent
+    private _appComponent: AppComponent,
+    private _location: Location
   ) {
     this._entrepriseService.getAll().subscribe(res => {
       // console.log(res);
@@ -162,5 +164,9 @@ export class NewEntrepriseComponent implements OnInit {
         }
       );
     });
+  }
+
+  annuler() {
+    this._router.navigate(['/']);
   }
 }
