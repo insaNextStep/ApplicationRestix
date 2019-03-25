@@ -25,16 +25,14 @@ export class LogincommercantComponent implements OnInit {
     private _router: Router,
     private _appComponent: AppComponent,
     private _commercantService: CommercantService,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-
-    this.commercantForm = this._formBuilder.group(
-      {
-        email: ['', Validators.required],
-        password: ['', Validators.required]
-      });
+    this.commercantForm = this._formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   get f() {
@@ -54,15 +52,10 @@ export class LogincommercantComponent implements OnInit {
     }
   }
 
-
   donneesFormulaire() {
     // console.log('login commercant :');
     const formValue = this.commercantForm.value;
-    const newLogin = new MLogin(
-      formValue['email'],
-      formValue['password']
-    );
-
+    const newLogin = new MLogin(formValue['email'], formValue['password']);
 
     // console.log(this.compteUtilisateur);
     this._authService.loginCommercant(newLogin).subscribe(
@@ -72,20 +65,21 @@ export class LogincommercantComponent implements OnInit {
         this.errPassword = false;
         this._router.navigate(['/mesVentes']);
       },
-      err => this.errPassword = true
+      err => (this.errPassword = true)
     );
   }
 
-  focusOutFunction(event: string) {
-    if (event['path'][0].value) {
-      const email = event['path'][0].value;
-      this._commercantService.emailExist(email).subscribe((res: any) => {
+  focusOutFunction() {
+    const eMail = this.f.email.value;
+    if (eMail) {
+      this._commercantService.emailExist(eMail).subscribe((res: any) => {
         // console.log(res);
         if (res.message === 'err') {
           this.loginExist = false;
         } else {
-           this.loginExist = true;
+          this.loginExist = true;
         }
       });
-  }}
+    }
+  }
 }

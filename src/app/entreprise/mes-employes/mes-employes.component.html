@@ -3,7 +3,7 @@
     <div class="block">
       <h2 style="text-align: center" id="infoNom"> {{nomEntreprise.toUpperCase()}} </h2>
     </div>
-    <table mat-table [dataSource]="listeEmployes" id="mytable" class="my-custom-scrollbar">
+    <table mat-table [dataSource]="listeEmployes">
 
       
       <ng-container matColumnDef="nom">
@@ -23,22 +23,6 @@
         <td mat-cell *matCellDef="let element"> <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)"
             style="margin-right: 5px; margin-left: 5px"><i class="fas fa-user-edit" aria-hidden="true"></i></a>
           <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)"><i class="fas fa-user-times"></i></a>
-        </td>
-      </ng-container>
-
-      
-      <ng-container matColumnDef="editer" style="max-width: 50px">
-        <th mat-header-cell *matHeaderCellDef> Editer </th>
-        <td mat-cell *matCellDef="let element"> <a class="btn btn-primary" (click)="actionEmploye('éditer',element._id)"
-            style="margin:auto">Editer</a>
-        </td>
-      </ng-container>
-
-      
-      <ng-container matColumnDef="supprimer" style="max-width: 50px">
-        <th mat-header-cell *matHeaderCellDef> Supprimer </th>
-        <td mat-cell *matCellDef="let element"> <a class="btn btn-danger" (click)="actionEmploye('supprimer',element._id)"
-            style="margin:auto">Supprimer</a>
         </td>
       </ng-container>
 

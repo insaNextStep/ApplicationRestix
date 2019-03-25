@@ -78,18 +78,20 @@ export class LoginEntrepriseComponent implements OnInit {
     );
   }
 
-  focusOutFunction(event: string) {
-    if (event['path'][0].value) {
-      const email = event['path'][0].value;
-      this._entrepriseService.emailExist(email).subscribe((res: any) => {
+  focusOutFunction() {
+    const eMail = this.f.email.value;
+    console.log(eMail);
+    if (eMail) {
+      this._entrepriseService.emailExist(eMail).subscribe((res: any) => {
         // console.log(res);
-        if (res.message === 'err') {
+        if (res.message === "err") {
           this.loginExist = false;
         } else {
-           this.loginExist = true;
+          this.loginExist = true;
         }
       });
-  }}
+    }
+  }
 }
 
   // donneesFormulaire() {

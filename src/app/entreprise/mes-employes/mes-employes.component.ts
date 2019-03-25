@@ -22,7 +22,7 @@ import { ResizedEvent } from 'angular-resize-event';
 export class MesEmployesComponent implements OnInit {
   listeEmployes: IEmploye[];
   smallSize = false;
-  displayColumns = [ 'nom', 'restix', 'action', 'editer', 'supprimer'];
+  displayColumns = [ 'nom', 'restix', 'action'];
   nomEntreprise = '';
 
   // @ViewChild(MatPaginator) paginator: MatPaginator;

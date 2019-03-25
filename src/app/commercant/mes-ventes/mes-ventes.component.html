@@ -6,7 +6,7 @@
     <table mat-table [dataSource]="transactions">
 
       <!-- Position Column -->
-      <ng-container matColumnDef="refTransaction" class="transfert">
+      <ng-container matColumnDef="refTransaction">
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.refTransaction}} </td>
       </ng-container>

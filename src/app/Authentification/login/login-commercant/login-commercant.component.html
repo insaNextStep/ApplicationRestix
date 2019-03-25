@@ -10,7 +10,7 @@
 
               <div class="form-group">
                 <label for="email">Adresse Email</label>
-                <input type="email" class="form-control" formControlName="email" (focusout)="focusOutFunction($event)"
+                <input type="email" class="form-control" formControlName="email" (focusout)="focusOutFunction()"
                   [ngClass]="{ 'is-invalid': (submitted ||  f.email.touched ) && loginExist }" />
                 <div *ngIf="(submitted ||  f.email.touched ) && loginExist" class="invalid-feedback">
                   <div *ngIf="loginExist">Erreur de login</div>
