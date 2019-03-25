@@ -10,6 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Location } from '@angular/common';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
 
+
 @Component({
   selector: 'app-new-employe',
   templateUrl: './new-employe.component.html',
@@ -120,6 +121,10 @@ export class NewEmployeComponent implements OnInit {
     }
     // console.log(this._authService.currentEmployeValue);
     this.initForm();
+  }
+
+  annuler() {
+    this._location.back();
   }
 
   faireSubmit() {

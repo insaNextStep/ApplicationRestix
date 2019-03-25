@@ -7,6 +7,7 @@ import { IEntreprise } from 'src/app/_models/entreprise.interface';
 import { EntrepriseService } from 'src/app/_services/entreprise.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-entreprise',
@@ -42,7 +43,8 @@ export class EditEntrepriseComponent implements OnInit {
     private _entrepriseService: EntrepriseService,
     private route: ActivatedRoute,
     private _authService: AuthService,
-    private _jwtHelperService: JwtHelperService
+    private _jwtHelperService: JwtHelperService,
+    private _location: Location
   ) {
     // console.log('\n\n **************** EditEntrepriseComponent');
 
@@ -225,5 +227,9 @@ export class EditEntrepriseComponent implements OnInit {
         },
         // err => console.log('Erreur : ' + err)
       );
+  }
+
+  annuler() {
+    this._location.back();
   }
 }

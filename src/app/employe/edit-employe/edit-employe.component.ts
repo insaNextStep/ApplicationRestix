@@ -43,6 +43,7 @@ export class EditEmployeComponent implements OnInit {
     private _jwtHelperService: JwtHelperService,
     private _entrepriseService: EntrepriseService,
     private _authService: AuthService,
+    private _location: Location
   ) {
     // console.log('\n\n **************** EditEntrepriseComponent');
 
@@ -178,5 +179,9 @@ export class EditEmployeComponent implements OnInit {
         },
         // err => console.log('Erreur : ' + err)
       );
+  }
+
+  annuler() {
+    this._location.back();
   }
 }

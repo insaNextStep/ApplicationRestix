@@ -6,6 +6,7 @@ import { MCommercant } from 'src/app/_models/commercant.model';
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-commercant',
@@ -44,6 +45,7 @@ export class EditCommercantComponent implements OnInit {
     private route: ActivatedRoute,
     private _authService: AuthService,
     private _jwtHelperService: JwtHelperService,
+    private _location: Location
   ) {
     console.log('\n\n **************** EditCommercantComponent');
 
@@ -250,4 +252,9 @@ export class EditCommercantComponent implements OnInit {
           err => console.log('Erreur : ' + err)
         );
   }
+
+  annuler() {
+    this._location.back();
+  }
+
 }
