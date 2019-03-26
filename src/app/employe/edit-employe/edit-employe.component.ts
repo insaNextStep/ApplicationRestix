@@ -39,7 +39,7 @@ export class EditEmployeComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _employeService: EmployeService,
-    // private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private _jwtHelperService: JwtHelperService,
     // private _entrepriseService: EntrepriseService,
     private _authService: AuthService,
@@ -69,13 +69,13 @@ export class EditEmployeComponent implements OnInit {
     }
     // console.log(this._authService.currentEmployeValue);
 
-    // this.route.paramMap.subscribe(params => {
-    //   this.idEmploye = params.get('id');
-    //   if (this.idEmploye) {
-    //     console.log(this.idEmploye);
-    //     this.recupererEmploye(this.idEmploye);
-    //   }
-    // });
+    this.route.paramMap.subscribe(params => {
+      this.idEmploye = params.get('id');
+      if (this.idEmploye) {
+        console.log(this.idEmploye);
+        this.recupererEmploye(this.idEmploye);
+      }
+    });
   }
 
   statusBoutton = 'Soumettre';
