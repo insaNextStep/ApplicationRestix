@@ -91,6 +91,7 @@ export class BarreMenuComponent implements OnInit {
 
     switch (role) {
       case 'EMPLOYE':
+      console.log('edit profil employé');
         this._router.navigate(['/editEmploye', id]);
         break;
       case 'ENTREPRISE':

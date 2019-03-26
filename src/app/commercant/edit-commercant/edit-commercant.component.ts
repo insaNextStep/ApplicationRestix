@@ -64,17 +64,19 @@ export class EditCommercantComponent implements OnInit {
       console.log('decodeToken', decodeToken);
       // this.afficherTransactions(decodeToken.subject);
       this.originEmail = decodeToken.email;
+      this.idCommercant = decodeToken.subject;
+      this.recupererCommercant(this.idCommercant);
     } else {
       this.originEmail = '';
     }
 
 
-    this.route.paramMap.subscribe(params => {
-      this.idCommercant = params.get('id');
-      if (this.idCommercant) {
-        this.recupererCommercant(this.idCommercant);
-      }
-    });
+    // this.route.paramMap.subscribe(params => {
+    //   this.idCommercant = params.get('id');
+    //   if (this.idCommercant) {
+    //     this.recupererCommercant(this.idCommercant);
+    //   }
+    // });
   }
 
   statusBoutton = 'Soumettre';
@@ -241,6 +243,7 @@ export class EditCommercantComponent implements OnInit {
     );
 
       console.log('event : update');
+      console.log('this.idCommercant', this.idCommercant);
       this._commercantService
         .updateCommercant(newCommercant, this.idCommercant)
         .pipe(first())

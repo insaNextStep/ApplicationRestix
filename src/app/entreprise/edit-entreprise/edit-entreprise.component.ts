@@ -63,17 +63,19 @@ export class EditEntrepriseComponent implements OnInit {
       // console.log('decodeToken', decodeToken);
       // this.afficherTransactions(decodeToken.subject);
       this.originEmail = decodeToken.email;
+      this.idEntreprise = decodeToken.subject;
+      this.recupererEntreprise(this.idEntreprise);
     } else {
       this.originEmail = '';
     }
     // console.log(this._authService.currentEmployeValue);
 
-    this.route.paramMap.subscribe(params => {
-      this.idEntreprise = params.get('id');
-      if (this.idEntreprise) {
-        this.recupererEntreprise(this.idEntreprise);
-      }
-    });
+    // this.route.paramMap.subscribe(params => {
+    //   this.idEntreprise = params.get('id');
+    //   if (this.idEntreprise) {
+    //     this.recupererEntreprise(this.idEntreprise);
+    //   }
+    // });
   }
 
   statusBoutton = 'Soumettre';
@@ -200,7 +202,7 @@ export class EditEntrepriseComponent implements OnInit {
       return;
     } else {
       // this.submitted = true;
-      // console.log('OK pour le formulaire');
+      console.log('OK pour le formulaire');
       this.faireSubmit();
     }
   }
@@ -215,17 +217,17 @@ export class EditEntrepriseComponent implements OnInit {
       formValue['siretEntreprise']
     );
 
-    // console.log('event : update');
+    console.log('event : update');
     this._entrepriseService
       .updateEntreprise(newEntreprise, this.idEntreprise)
       .pipe(first())
       .subscribe(
         resultat => {
-          // console.log('resultat', resultat);
+          console.log('resultat', resultat);
           this._authService.regUser(resultat);
           this._router.navigate(['/mesEmployes']);
         },
-        // err => console.log('Erreur : ' + err)
+        err => console.log('Erreur : ' + err)
       );
   }
 

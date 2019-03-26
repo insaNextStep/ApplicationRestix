@@ -39,55 +39,64 @@ export class EditEmployeComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _employeService: EmployeService,
-    private route: ActivatedRoute,
+    // private route: ActivatedRoute,
     private _jwtHelperService: JwtHelperService,
-    private _entrepriseService: EntrepriseService,
+    // private _entrepriseService: EntrepriseService,
     private _authService: AuthService,
     private _location: Location
   ) {
     // console.log('\n\n **************** EditEntrepriseComponent');
 
     this._employeService.getAll().subscribe(res => {
-      // console.log(res);
+      console.log(res);
       this.tableDonnees = res as any;
     });
 
     const token = this._authService.getToken();
-    // console.log('token : ' + token);
+    console.log('token : ' + token);
 
     // si token existe alors
     if (token) {
       // décoder le token et récupérer l'id de l'employe
       const decodeToken = this._jwtHelperService.decodeToken(token);
-      // console.log('decodeToken', decodeToken);
+      console.log('decodeToken', decodeToken);
       // this.afficherTransactions(decodeToken.subject);
       this.originEmail = decodeToken.email;
+      this.idEmploye = decodeToken.subject;
+      this.recupererEmploye(this.idEmploye);
     } else {
       this.originEmail = '';
     }
     // console.log(this._authService.currentEmployeValue);
 
-    this.route.paramMap.subscribe(params => {
-      this.idEmploye = params.get('id');
-      if (this.idEmploye) {
-        this.recupererEmploye(this.idEmploye);
-      }
-    });
+    // this.route.paramMap.subscribe(params => {
+    //   this.idEmploye = params.get('id');
+    //   if (this.idEmploye) {
+    //     console.log(this.idEmploye);
+    //     this.recupererEmploye(this.idEmploye);
+    //   }
+    // });
   }
 
   statusBoutton = 'Soumettre';
 
   recupererEmploye(id: string) {
+    console.log('\n\n edit recupererEmploye', id);
     this._employeService
       .getEmploye(id)
       .subscribe(
-        employe => this.editEmploye(employe),
-        // err => console.log('Erreur chargement : ' + err)
+        employe => {
+          console.log(employe);
+          this.editEmploye(employe);
+        },
+        err => console.log('Erreur chargement : ' + err)
       );
   }
 
   editEmploye(employe) {
+    console.log('\n\n edit employé', employe);
     this.oldEmploye = employe;
+    console.log(employe);
     const tel = '0' + employe.tel;
     this.employeForm.patchValue({
       nom: employe.nom,
@@ -110,11 +119,11 @@ export class EditEmployeComponent implements OnInit {
   }
 
   uniqueElement(element) {
-    // console.log('zone de control unique');
+    console.log('zone de control unique');
     switch (element) {
       case 'email':
-      // console.log(typeof(this.oldEmploye.email), typeof(this.f.email.value));
-      // console.log(this.oldEmploye.email, this.f.email.value);
+      console.log(typeof(this.oldEmploye.email), typeof(this.f.email.value));
+      console.log(this.oldEmploye.email, this.f.email.value);
         if (this.oldEmploye.email !== this.f.email.value) {
           this.eleUnique.email = this.testUnique(
             this.tableDonnees.email,
@@ -123,7 +132,7 @@ export class EditEmployeComponent implements OnInit {
         } else {
           this.eleUnique.email = true;
         }
-        // console.log('email unique ? ' + this.eleUnique.email);
+        console.log('email unique ? ' + this.eleUnique.email);
         break;
 
       default:
@@ -148,10 +157,10 @@ export class EditEmployeComponent implements OnInit {
     if (this.employeForm.invalid) {
       return;
     } else {
-      // console.log('OK pour le formulaire');
+      console.log('OK pour le formulaire');
       this.faireSubmit();
     }
-    // this._router.navigate(['/listEntreprise']);
+    this._router.navigate(['/listEntreprise']);
   }
 
   faireSubmit() {
@@ -164,7 +173,7 @@ export class EditEmployeComponent implements OnInit {
       formValue['email']
     );
 
-    // console.log('event : update');
+    console.log('event : update');
     this._employeService
       .updateEmploye(newEmploye, this.idEmploye)
       .pipe(first())
@@ -177,7 +186,7 @@ export class EditEmployeComponent implements OnInit {
             this._router.navigate(['/ActiveCompte']);
           }
         },
-        // err => console.log('Erreur : ' + err)
+        err => console.log('Erreur : ' + err)
       );
   }
 

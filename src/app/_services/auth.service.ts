@@ -17,13 +17,13 @@ import { CommercantService } from './commercant.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // déclaration des chemins d'accès
-  private _UrlEmploye = 'https://restix.herokuapp.com/employes';
-  private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
-  private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
+  // private _UrlEmploye = 'https://restix.herokuapp.com/employes';
+  // private _UrlEntreprise = 'https://restix.herokuapp.com/entreprises';
+  // private _UrlCommercant = 'https://restix.herokuapp.com/commercants';
 
-  // private _UrlEmploye = 'http://localhost:3000/employes';
-  // private _UrlEntreprise = 'http://localhost:3000/entreprises';
-  // private _UrlCommercant = 'http://localhost:3000/commercants';
+  private _UrlEmploye = 'http://localhost:3000/employes';
+  private _UrlEntreprise = 'http://localhost:3000/entreprises';
+  private _UrlCommercant = 'http://localhost:3000/commercants';
 
   private currentEmployeSubject: BehaviorSubject<IUser>;
   public currentEmploye: Observable<IUser>;

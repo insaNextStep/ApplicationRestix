@@ -44,7 +44,7 @@ export class MesVentesComponent implements OnInit {
     this._commercantService.getMesVentes(id).subscribe(
       (res: any) => {
         this.transactions = res;
-        // console.log(this.transactions.sort((a, b) => b.date.localeCompare(a.date)));
+        this.transactions.sort((a, b) => b.date.localeCompare(a.date));
       },
       err => {
         if (err instanceof HttpErrorResponse) {
